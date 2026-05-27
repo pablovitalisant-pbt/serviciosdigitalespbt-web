@@ -114,17 +114,25 @@
             backdrop-filter: blur(8px);
             border: 1px solid #E5E5E5;
         }
+        #lang-trigger { cursor: pointer; background: none; border: none; }
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
 <!-- TopNavBar -->
-<header class="bg-surface fixed top-0 w-full z-50 border-b border-outline-variant">
+<header class="bg-surface fixed top-0 w-full z-[100] border-b border-outline-variant">
 <div class="flex justify-between items-center w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-20">
 <img src="Logo Servicios Digitales PBT_sin fondo.png" alt="Servicios Digitales PBT" style="height: 48px; width: auto;">
 <nav class="hidden md:flex gap-8 items-center">
-<a class="text-label-bold font-label-bold text-on-surface-variant hover:text-primary transition-colors" href="#servicios">Servicios</a>
-<a class="text-label-bold font-label-bold text-on-surface-variant hover:text-primary transition-colors" href="#proceso">Proceso</a>
-<a class="bg-primary-container text-white px-6 py-3 font-label-bold text-label-bold rounded-lg hover:brightness-90 transition-all" href="#contacto">Contáctame</a>
+<a class="text-label-bold font-label-bold text-on-surface-variant hover:text-primary transition-colors" href="#servicios" data-i18n="nav_services">Servicios</a>
+<a class="text-label-bold font-label-bold text-on-surface-variant hover:text-primary transition-colors" href="#proceso" data-i18n="nav_process">Proceso</a>
+<a class="bg-primary-container text-white px-6 py-3 font-label-bold text-label-bold rounded-lg hover:brightness-90 transition-all" href="#contacto" data-i18n="nav_contact">Contáctame</a>
+<div id="lang-selector">
+  <button id="lang-trigger" class="flex items-center gap-1 text-label-bold font-label-bold text-on-surface-variant hover:text-primary transition-colors">
+    <span id="current-lang-flag">🌐</span>
+    <span id="current-lang-code">ES</span>
+    <span class="material-symbols-outlined text-sm">expand_more</span>
+  </button>
+</div>
 </nav>
 <button class="md:hidden text-on-surface">
 <span class="material-symbols-outlined">menu</span>
@@ -136,16 +144,16 @@
 <div class="grid md:grid-cols-12 gap-12 items-center">
 <div class="md:col-span-7">
 <h1 class="font-display-md text-headline-lg-mobile md:text-display-md text-on-surface leading-tight mb-6">
-                    Tu empresa tiene ideas digitales esperando. <br/>
-<span class="text-primary-container">Necesita a alguien que las haga realidad.</span>
+                    <span data-i18n="hero_headline_1">Tu empresa tiene ideas digitales esperando.</span> <br/>
+<span class="text-primary-container" data-i18n="hero_headline_2">Necesita a alguien que las haga realidad.</span>
 </h1>
 <div class="flex flex-col sm:flex-row gap-4 mt-12 max-w-2xl">
-<input id="hero-input" class="flex-grow p-4 border border-outline focus:ring-2 focus:ring-primary-container outline-none text-body-md rounded-lg" placeholder="¿Qué necesitas hacer realidad?" type="text"/>
-<button onclick="enviarAWhatsApp()" class="bg-primary-container text-white font-label-bold text-label-bold px-8 py-4 rounded-lg hover:brightness-90 transition-all uppercase tracking-widest whitespace-nowrap">
+<input id="hero-input" class="flex-grow p-4 border border-outline focus:ring-2 focus:ring-primary-container outline-none text-body-md rounded-lg" data-i18n-placeholder="hero_input_placeholder" placeholder="¿Qué necesitas hacer realidad?" type="text"/>
+<button onclick="enviarAWhatsApp()" class="bg-primary-container text-white font-label-bold text-label-bold px-8 py-4 rounded-lg hover:brightness-90 transition-all uppercase tracking-widest whitespace-nowrap" data-i18n="hero_cta">
                         Cuéntame tu idea
                     </button>
 </div>
-<p class="text-on-surface-variant text-sm mt-4 opacity-70">Sin compromiso. Respondo hoy.</p>
+<p class="text-on-surface-variant text-sm mt-4 opacity-70" data-i18n="hero_note">Sin compromiso. Respondo hoy.</p>
 </div>
 <div class="md:col-span-5 relative group">
 <div class="aspect-square bg-surface-container rounded-2xl overflow-hidden border border-outline-variant flex items-center justify-center relative">
@@ -159,26 +167,26 @@
 <!-- Pain Points -->
 <section class="bg-surface-container py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter">
 <div class="max-w-container-max mx-auto text-center mb-16">
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-4">¿Te suena alguna de estas situaciones?</h2>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-4" data-i18n="pain_title">¿Te suena alguna de estas situaciones?</h2>
 <div class="w-24 h-1 bg-primary-container mx-auto mb-6"></div>
-<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto">La mayoría de los dueños de empresa que me contactan no tienen un problema técnico. Tienen un problema de tiempo y de confianza.</p>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto" data-i18n="pain_body">La mayoría de los dueños de empresa que me contactan no tienen un problema técnico. Tienen un problema de tiempo y de confianza.</p>
 </div>
 <div class="max-w-container-max mx-auto grid md:grid-cols-2 gap-8">
 <div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
-<p class="font-body-lg text-on-surface italic">"Quiero tener un sitio web o una tienda online, pero no sé por dónde empezar ni en quién confiar."</p>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_1">"Quiero tener un sitio web o una tienda online, pero no sé por dónde empezar ni en quién confiar."</p>
 </div>
 <div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
-<p class="font-body-lg text-on-surface italic">"Tengo una idea para automatizar algo en mi negocio, pero no tengo el personal ni el tiempo para hacerlo."</p>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_2">"Tengo una idea para automatizar algo en mi negocio, pero no tengo el personal ni el tiempo para hacerlo."</p>
 </div>
 <div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
-<p class="font-body-lg text-on-surface italic">"Pedí cotización a una agencia y el precio me pareció excesivo para lo que realmente necesito."</p>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_3">"Pedí cotización a una agencia y el precio me pareció excesivo para lo que realmente necesito."</p>
 </div>
 <div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
-<p class="font-body-lg text-on-surface italic">"Ya contraté a alguien y desapareció con el adelanto, o entregó algo que no sirve."</p>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_4">"Ya contraté a alguien y desapareció con el adelanto, o entregó algo que no sirve."</p>
 </div>
 </div>
 </section>
@@ -186,18 +194,18 @@
 <section class="py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto" id="servicios">
 <div class="text-center mb-20">
 <h2 class="font-display-md text-headline-lg-mobile md:text-headline-lg leading-tight mb-4">
-                Convierto tus ideas digitales <br/>
-<span class="text-primary-container">en resultados concretos.</span>
+                <span data-i18n="services_title_1">Convierto tus ideas digitales</span> <br/>
+<span class="text-primary-container" data-i18n="services_title_2">en resultados concretos.</span>
 </h2>
-<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mt-6">No soy una agencia. Soy una persona real, local, que puedes llamar, ver en persona, y que responde cuando me necesitas. Uso inteligencia artificial para entregar en días lo que antes tardaba semanas.</p>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mt-6" data-i18n="services_body">No soy una agencia. Soy una persona real, local, que puedes llamar, ver en persona, y que responde cuando me necesitas. Uso inteligencia artificial para entregar en días lo que antes tardaba semanas.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 <div class="md:col-span-2 group relative overflow-hidden bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
 <div class="flex justify-between items-start">
 <div>
 <span class="material-symbols-outlined text-primary-container text-5xl mb-6">web</span>
-<h3 class="font-headline-md text-headline-md mb-4">Sitios web y landing pages</h3>
-<p class="text-on-surface-variant max-w-md">Para que tus clientes te encuentren, confíen en ti, y te contacten.</p>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_1_title">Sitios web y landing pages</h3>
+<p class="text-on-surface-variant max-w-md" data-i18n="service_1_desc">Para que tus clientes te encuentren, confíen en ti, y te contacten.</p>
 </div>
 <div class="opacity-10 group-hover:opacity-20 transition-opacity absolute -right-4 -bottom-4">
 <span class="material-symbols-outlined text-[120px]">responsive_layout</span>
@@ -206,28 +214,28 @@
 </div>
 <div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-6">shopping_cart</span>
-<h3 class="font-headline-md text-headline-md mb-4">Tiendas electrónicas</h3>
-<p class="text-on-surface-variant">Vende online sin complicaciones. Pagos, catálogo, pedidos.</p>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_2_title">Tiendas electrónicas</h3>
+<p class="text-on-surface-variant" data-i18n="service_2_desc">Vende online sin complicaciones. Pagos, catálogo, pedidos.</p>
 </div>
 <div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-6">smartphone</span>
-<h3 class="font-headline-md text-headline-md mb-4">Apps y software a medida</h3>
-<p class="text-on-surface-variant">Si tienes un proceso que debería automatizarse, lo automatizamos.</p>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_3_title">Apps y software a medida</h3>
+<p class="text-on-surface-variant" data-i18n="service_3_desc">Si tienes un proceso que debería automatizarse, lo automatizamos.</p>
 </div>
 <div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-6">psychology</span>
-<h3 class="font-headline-md text-headline-md mb-4">Contenido con IA</h3>
-<p class="text-on-surface-variant">Videos, imágenes y textos para tus redes sociales. Producción sin costos de agencia.</p>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_4_title">Contenido con IA</h3>
+<p class="text-on-surface-variant" data-i18n="service_4_desc">Videos, imágenes y textos para tus redes sociales. Producción sin costos de agencia.</p>
 </div>
 <div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-6">menu_book</span>
-<h3 class="font-headline-md text-headline-md mb-4">Libros con IA</h3>
-<p class="text-on-surface-variant">De la idea al libro impreso. Para posicionarte como experto en tu industria.</p>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_5_title">Libros con IA</h3>
+<p class="text-on-surface-variant" data-i18n="service_5_desc">De la idea al libro impreso. Para posicionarte como experto en tu industria.</p>
 </div>
 <div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
 <span class="material-symbols-outlined text-primary-container text-4xl mb-6">settings_suggest</span>
-<h3 class="font-headline-md text-headline-md mb-4">Automatizaciones</h3>
-<p class="text-on-surface-variant">Elimina tareas manuales repetitivas. Tu equipo hace lo que importa.</p>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_6_title">Automatizaciones</h3>
+<p class="text-on-surface-variant" data-i18n="service_6_desc">Elimina tareas manuales repetitivas. Tu equipo hace lo que importa.</p>
 </div>
 </div>
 </section>
@@ -236,14 +244,14 @@
 <div class="px-margin-mobile md:px-gutter max-w-container-max mx-auto">
 <div class="grid md:grid-cols-2 gap-16 items-center">
 <div>
-<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4">Caso real</p>
-<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-8">Lo que ya hice para una empresa importadora en Iquique</h3>
-<p class="font-body-lg text-surface-variant mb-6">Una empresa importadora-exportadora de la zona franca tenía una idea: necesitaban una aplicación para gestionar sus operaciones internas. No sabían cómo hacerlo. En pocos días tenían su app funcionando.</p>
+<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4" data-i18n="proof_label">Caso real</p>
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-8" data-i18n="proof_title">Lo que ya hice para una empresa importadora en Iquique</h3>
+<p class="font-body-lg text-surface-variant mb-6" data-i18n="proof_body">Una empresa importadora-exportadora de la zona franca tenía una idea: necesitaban una aplicación para gestionar sus operaciones internas. No sabían cómo hacerlo. En pocos días tenían su app funcionando.</p>
 <div class="flex items-center gap-4">
 <div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center font-bold text-white">—</div>
 <div>
-<p class="font-label-bold text-label-bold text-white">[Testimonio esta semana]</p>
-<p class="text-sm opacity-60 text-surface-variant">Dueño, empresa importadora-exportadora, Iquique</p>
+<p class="font-label-bold text-label-bold text-white" data-i18n="proof_testimonial">[Testimonio esta semana]</p>
+<p class="text-sm opacity-60 text-surface-variant" data-i18n="proof_attribution">Dueño, empresa importadora-exportadora, Iquique</p>
 </div>
 </div>
 </div>
@@ -252,9 +260,9 @@
 <span class="material-symbols-outlined text-primary-container text-6xl opacity-20">verified_user</span>
 </div>
 <div class="relative z-10">
-<h4 class="font-headline-md text-primary-container mb-4">Garantía de satisfacción</h4>
-<p class="font-display-md text-headline-lg-mobile md:text-headline-md leading-tight mb-6 text-white">Si no quedas satisfecho con el resultado, no pagas.</p>
-<p class="text-surface-variant">Así de simple. Trabajo para ganarme tu confianza, no para cobrarte y desaparecer.</p>
+<h4 class="font-headline-md text-primary-container mb-4" data-i18n="guarantee_title">Garantía de satisfacción</h4>
+<p class="font-display-md text-headline-lg-mobile md:text-headline-md leading-tight mb-6 text-white" data-i18n="guarantee_headline">Si no quedas satisfecho con el resultado, no pagas.</p>
+<p class="text-surface-variant" data-i18n="guarantee_body">Así de simple. Trabajo para ganarme tu confianza, no para cobrarte y desaparecer.</p>
 </div>
 </div>
 </div>
@@ -263,37 +271,37 @@
 <!-- Why Me checklist -->
 <section class="py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto">
 <div class="max-w-3xl">
-<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4">Por qué yo</p>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-12">Lo que no encontrarás en una agencia tradicional.</h2>
+<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4" data-i18n="diff_label">Por qué yo</p>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-12" data-i18n="diff_title">Lo que no encontrarás en una agencia tradicional.</h2>
 <ul class="space-y-8">
 <li class="flex gap-4">
 <span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
 <div>
-<p class="text-on-surface-variant">Soy de Iquique. Puedo reunirme contigo en persona, entender tu negocio de verdad, y estar disponible cuando me necesitas.</p>
+<p class="text-on-surface-variant" data-i18n="diff_1">Soy de Iquique. Puedo reunirme contigo en persona, entender tu negocio de verdad, y estar disponible cuando me necesitas.</p>
 </div>
 </li>
 <li class="flex gap-4">
 <span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
 <div>
-<p class="text-on-surface-variant">Trabajo con IA de última generación. Lo que antes tomaba semanas, hoy lo entrego en días, sin sacrificar calidad.</p>
+<p class="text-on-surface-variant" data-i18n="diff_2">Trabajo con IA de última generación. Lo que antes tomaba semanas, hoy lo entrego en días, sin sacrificar calidad.</p>
 </div>
 </li>
 <li class="flex gap-4">
 <span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
 <div>
-<p class="text-on-surface-variant">Sin estructura de agencia, sin costos inflados. Pagas por resultado, no por horas de reuniones y burocracia.</p>
+<p class="text-on-surface-variant" data-i18n="diff_3">Sin estructura de agencia, sin costos inflados. Pagas por resultado, no por horas de reuniones y burocracia.</p>
 </div>
 </li>
 <li class="flex gap-4">
 <span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
 <div>
-<p class="text-on-surface-variant">Un solo interlocutor: yo. El mismo que entiende tu idea, la ejecuta, y responde si algo necesita ajuste.</p>
+<p class="text-on-surface-variant" data-i18n="diff_4">Un solo interlocutor: yo. El mismo que entiende tu idea, la ejecuta, y responde si algo necesita ajuste.</p>
 </div>
 </li>
 <li class="flex gap-4">
 <span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
 <div>
-<p class="text-on-surface-variant">Trabajo con empresas de la zona franca, retail del mall, y negocios de servicios en toda la ciudad. Conozco el contexto local.</p>
+<p class="text-on-surface-variant" data-i18n="diff_5">Trabajo con empresas de la zona franca, retail del mall, y negocios de servicios en toda la ciudad. Conozco el contexto local.</p>
 </div>
 </li>
 </ul>
@@ -302,25 +310,25 @@
 <!-- How It Works -->
 <section class="bg-surface-container py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter" id="proceso">
 <div class="max-w-container-max mx-auto text-center mb-16">
-<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4">Cómo empezamos</p>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg">Simple. Sin formularios complicados.</h2>
+<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4" data-i18n="how_label">Cómo empezamos</p>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg" data-i18n="how_title">Simple. Sin formularios complicados.</h2>
 </div>
 <div class="max-w-container-max mx-auto grid md:grid-cols-3 gap-12 relative">
 <div class="hidden md:block absolute top-12 left-0 w-full h-px bg-outline-variant z-0"></div>
 <div class="relative z-10 flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-primary-container text-white rounded-full flex items-center justify-center font-display-md text-headline-lg mb-6 shadow-lg">1</div>
-<h4 class="font-headline-md text-headline-md mb-4">Me cuentas tu idea</h4>
-<p class="text-on-surface-variant">Por WhatsApp, teléfono, o en persona. Sin tecnicismos. Me dices qué tienes en mente y yo entiendo cómo convertirlo en algo real.</p>
+<h4 class="font-headline-md text-headline-md mb-4" data-i18n="how_1_title">Me cuentas tu idea</h4>
+<p class="text-on-surface-variant" data-i18n="how_1_desc">Por WhatsApp, teléfono, o en persona. Sin tecnicismos. Me dices qué tienes en mente y yo entiendo cómo convertirlo en algo real.</p>
 </div>
 <div class="relative z-10 flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-primary-container text-white rounded-full flex items-center justify-center font-display-md text-headline-lg mb-6 shadow-lg">2</div>
-<h4 class="font-headline-md text-headline-md mb-4">Te presento una propuesta clara</h4>
-<p class="text-on-surface-variant">Qué voy a hacer, cuánto cuesta, y cuándo lo tienes. Sin letra chica, sin sorpresas después.</p>
+<h4 class="font-headline-md text-headline-md mb-4" data-i18n="how_2_title">Te presento una propuesta clara</h4>
+<p class="text-on-surface-variant" data-i18n="how_2_desc">Qué voy a hacer, cuánto cuesta, y cuándo lo tienes. Sin letra chica, sin sorpresas después.</p>
 </div>
 <div class="relative z-10 flex flex-col items-center text-center">
 <div class="w-20 h-20 bg-primary-container text-white rounded-full flex items-center justify-center font-display-md text-headline-lg mb-6 shadow-lg">3</div>
-<h4 class="font-headline-md text-headline-md mb-4">Lo ejecutamos y lo recibes funcionando</h4>
-<p class="text-on-surface-variant">Trabajo rápido. En días tienes algo concreto, no promesas. Y seguimos en contacto si necesitas ajustes.</p>
+<h4 class="font-headline-md text-headline-md mb-4" data-i18n="how_3_title">Lo ejecutamos y lo recibes funcionando</h4>
+<p class="text-on-surface-variant" data-i18n="how_3_desc">Trabajo rápido. En días tienes algo concreto, no promesas. Y seguimos en contacto si necesitas ajustes.</p>
 </div>
 </div>
 </section>
@@ -328,18 +336,18 @@
 <section class="bg-[#111111] text-white py-section-gap-lg px-margin-mobile md:px-gutter relative overflow-hidden" id="contacto">
 <div class="max-w-container-max mx-auto text-center relative z-10">
 <h2 class="font-display-md text-headline-lg-mobile md:text-display-md mb-6">
-                ¿Tienes una idea digital esperando? <br/>
-<span class="text-primary-container">Hablemos hoy.</span>
+                <span data-i18n="cta_title_1">¿Tienes una idea digital esperando?</span> <br/>
+<span class="text-primary-container" data-i18n="cta_title_2">Hablemos hoy.</span>
 </h2>
-<p class="font-body-lg text-surface-variant max-w-xl mx-auto mb-12">Sin compromiso. Me cuentas qué tienes en mente y te digo honestamente si puedo hacerlo realidad, cuánto cuesta, y cuándo lo tienes.</p>
+<p class="font-body-lg text-surface-variant max-w-xl mx-auto mb-12" data-i18n="cta_body">Sin compromiso. Me cuentas qué tienes en mente y te digo honestamente si puedo hacerlo realidad, cuánto cuesta, y cuándo lo tienes.</p>
 <div class="flex flex-col sm:flex-row justify-center gap-6">
 <a class="bg-[#25D366] hover:brightness-110 transition-all text-white px-10 py-5 rounded-lg font-label-bold text-label-bold flex items-center justify-center gap-3" href="https://wa.me/56920948874">
 <span class="material-symbols-outlined">chat</span>
-                    Escribirme por WhatsApp
+                    <span data-i18n="cta_whatsapp">Escribirme por WhatsApp</span>
                 </a>
 <a class="border-2 border-white hover:bg-white hover:text-[#111111] transition-all text-white px-10 py-5 rounded-lg font-label-bold text-label-bold flex items-center justify-center gap-3" href="mailto:serviciosdigitalespbt@gmail.com">
 <span class="material-symbols-outlined">mail</span>
-                    Enviarme un correo
+                    <span data-i18n="cta_email">Enviarme un correo</span>
                 </a>
 </div>
 </div>
@@ -351,30 +359,124 @@
 <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
 <img src="Logo Servicios Digitales PBT_sin fondo.png" alt="Servicios Digitales PBT" style="height: 48px; width: auto;">
 <div class="text-center md:text-right">
-<p class="font-label-bold text-label-bold mb-2">© <span id="year"></span> Servicios Digitales PBT. Todos los derechos reservados.</p>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<p class="font-label-bold text-label-bold mb-2">© <span id="year"></span> Servicios Digitales PBT. <span data-i18n="footer_rights">Todos los derechos reservados.</span></p>
 </div>
 </div>
 </footer>
-<!-- Simple Hover Micro-interaction -->
+<!-- Lang menu portal — rendered at body level to avoid stacking context issues -->
+<div id="lang-menu" style="display:none; position:fixed; background:white; border:1px solid #e1bfb3; border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.12); min-width:148px; z-index:99999;">
+  <button data-lang="es" style="width:100%;text-align:left;padding:10px 16px;font-size:14px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#eeeeee'" onmouseout="this.style.background='none'">🇨🇱 Español</button>
+  <button data-lang="en" style="width:100%;text-align:left;padding:10px 16px;font-size:14px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#eeeeee'" onmouseout="this.style.background='none'">🇺🇸 English</button>
+  <button data-lang="hi" style="width:100%;text-align:left;padding:10px 16px;font-size:14px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#eeeeee'" onmouseout="this.style.background='none'">🇮🇳 हिन्दी</button>
+  <button data-lang="zh" style="width:100%;text-align:left;padding:10px 16px;font-size:14px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#eeeeee'" onmouseout="this.style.background='none'">🇨🇳 中文</button>
+  <button data-lang="ur" style="width:100%;text-align:left;padding:10px 16px;font-size:14px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#eeeeee'" onmouseout="this.style.background='none'">🇵🇰 اردو</button>
+  <button data-lang="ko" style="width:100%;text-align:left;padding:10px 16px;font-size:14px;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#eeeeee'" onmouseout="this.style.background='none'">🇰🇷 한국어</button>
+</div>
+<!-- i18n Script -->
 <script>
-        function enviarAWhatsApp() {
-            const texto = document.getElementById('hero-input').value.trim();
-            const mensaje = texto
-                ? 'Hola, te contacto desde tu sitio web. Necesito lo siguiente: ' + texto
-                : 'Hola, me gustaría contarte una idea que tengo para mi empresa.';
-            const url = 'https://wa.me/56920948874?text=' + encodeURIComponent(mensaje);
-            window.open(url, '_blank');
-        }
+const LANGS = {
+  es: { flag: '🇨🇱', code: 'ES' },
+  en: { flag: '🇺🇸', code: 'EN' },
+  hi: { flag: '🇮🇳', code: 'HI' },
+  zh: { flag: '🇨🇳', code: 'ZH' },
+  ur: { flag: '🇵🇰', code: 'UR' },
+  ko: { flag: '🇰🇷', code: 'KO' }
+};
+const RTL_LANGS = ['ur'];
+let translations = {};
+let menuOpen = false;
 
-        document.querySelectorAll('.group').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                el.style.setProperty('--mouse-x', `${x}px`);
-                el.style.setProperty('--mouse-y', `${y}px`);
-            });
-        });
-    </script>
+const menu = document.getElementById('lang-menu');
+const trigger = document.getElementById('lang-trigger');
+
+// Position and toggle menu
+function toggleLangMenu() {
+  if (menuOpen) {
+    menu.style.display = 'none';
+    menuOpen = false;
+    return;
+  }
+  const rect = trigger.getBoundingClientRect();
+  menu.style.top = (rect.bottom + 8) + 'px';
+  menu.style.left = Math.max(8, rect.right - 148) + 'px';
+  menu.style.display = 'block';
+  menuOpen = true;
+}
+
+trigger.addEventListener('click', function(e) {
+  e.stopPropagation();
+  toggleLangMenu();
+});
+
+// Close on outside click
+document.addEventListener('click', function(e) {
+  if (menuOpen && !menu.contains(e.target) && e.target !== trigger) {
+    menu.style.display = 'none';
+    menuOpen = false;
+  }
+});
+
+// Lang option clicks
+menu.querySelectorAll('button[data-lang]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const lang = this.getAttribute('data-lang');
+    menu.style.display = 'none';
+    menuOpen = false;
+    loadLang(lang);
+  });
+});
+
+async function loadLang(lang) {
+  try {
+    const res = await fetch('i18n/' + lang + '.json');
+    translations = await res.json();
+    applyTranslations(lang);
+    localStorage.setItem('pbt-lang', lang);
+    updateLangSelector(lang);
+  } catch(e) {
+    console.error('Error loading language:', lang, e);
+  }
+}
+
+function applyTranslations(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n');
+    if (translations[key]) el.textContent = translations[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[key]) el.placeholder = translations[key];
+  });
+  document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+}
+
+function updateLangSelector(lang) {
+  const info = LANGS[lang] || LANGS['es'];
+  document.getElementById('current-lang-flag').textContent = info.flag;
+  document.getElementById('current-lang-code').textContent = info.code;
+}
+
+function detectLang() {
+  const saved = localStorage.getItem('pbt-lang');
+  if (saved && LANGS[saved]) return saved;
+  const browser = navigator.language.split('-')[0].toLowerCase();
+  if (LANGS[browser]) return browser;
+  return 'es';
+}
+
+function enviarAWhatsApp() {
+  const texto = document.getElementById('hero-input').value.trim();
+  const prefix = translations['whatsapp_message_prefix'] || 'Hola, te contacto desde tu sitio web. Necesito lo siguiente: ';
+  const defaultMsg = translations['whatsapp_message_default'] || 'Hola, me gustaría contarte una idea que tengo para mi empresa.';
+  const mensaje = texto ? prefix + texto : defaultMsg;
+  window.open('https://wa.me/56920948874?text=' + encodeURIComponent(mensaje), '_blank');
+}
+
+// Dynamic year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Init
+loadLang(detectLang());
+</script>
 </body></html>
