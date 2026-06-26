@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-
-<html class="light" lang="es"><head>
+<html class="light" lang="es">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Servicios Digitales PBT | Casos de Éxito</title>
 <link rel="icon" type="image/x-icon" href="favico.ico"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -149,16 +148,14 @@
         ctaSection.style.backgroundColor = '#f26522';
 
         var titleSpan1 = ctaSection.querySelector('[data-i18n="cta_title_1"]');
-        if (titleSpan1) titleSpan1.textContent = '¿Quieres resultados como estos?';
+        if (titleSpan1) titleSpan1.setAttribute('data-i18n', 'casos_cta_title');
 
         var titleSpan2 = ctaSection.querySelector('[data-i18n="cta_title_2"]');
         if (titleSpan2) {
-          titleSpan2.textContent = 'Hablemos hoy.';
+          titleSpan2.setAttribute('data-i18n', 'casos_cta_subtitle');
           titleSpan2.classList.remove('text-primary-container');
           titleSpan2.style.color = '#000000';
         }
-
-        // Subtexto y botones: sin cambios (quedan igual)
       }
 
       tryInitI18n();
@@ -170,18 +167,20 @@
 <body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
 <div id="navbar-placeholder"></div>
 <main>
+
 <!-- Hero Section -->
 <section class="relative pt-24 pb-16 hero-pattern">
 <div class="max-w-container-max mx-auto px-gutter text-center">
-<span class="text-primary-container font-label-bold text-label-bold uppercase tracking-[0.2em] mb-4 block">Resultados concretos</span>
-<h1 class="font-display-lg text-display-lg max-w-4xl mx-auto mb-6 text-on-surface leading-tight">
-                    Caso de Éxito: <span class="text-primary-container">Transformación Digital</span> para Importadora Iquique
-                </h1>
-<p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto mb-10">
-                    Descubre cómo logramos escalar las operaciones y el alcance digital de Importadora Iquique mediante estrategias avanzadas de IA.
-                </p>
+<span class="text-primary-container font-label-bold text-label-bold uppercase tracking-[0.2em] mb-4 block" data-i18n="casos_hero_label">Resultados concretos</span>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg max-w-4xl mx-auto mb-6 text-on-surface leading-tight" data-i18n="casos_headline">
+  Vida Digital eliminó 2 meses de caos administrativo por cada viaje a China
+</h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto mb-10" data-i18n="casos_subtitle">
+  Cómo una importadora de ZOFRI pasó de cuadernos y Excel a tener su negocio al día — en tiempo real — sin depender de nadie para verlo.
+</p>
 </div>
 </section>
+
 <!-- Video Section -->
 <section class="pb-section-gap-md px-gutter">
 <div class="mt-10 flex flex-col items-center">
@@ -189,7 +188,7 @@
     <div style="position:relative;padding-bottom:56.25%;height:0;">
       <iframe
         src="https://www.youtube.com/embed/OJ658vgjdTU"
-        title="Caso de Éxito - Import Export Vida Digital Ltda"
+        title="Caso de Exito - Import Export Vida Digital Ltda"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
@@ -199,95 +198,196 @@
   </div>
 </div>
 </section>
+
 <!-- Project Story Section -->
 <section class="py-section-gap-md bg-white">
 <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-20">
-<div class="space-y-12">
-<div>
-<h2 class="font-headline-lg text-headline-lg mb-6 border-l-4 border-primary-container pl-6">El Desafío</h2>
-<p class="font-body-lg text-body-lg text-secondary">
-                            Importadora Iquique enfrentaba una saturación en sus canales tradicionales de venta y una gestión logística que no permitía el escalamiento. Su presencia digital era limitada, perdiendo oportunidades clave en un mercado cada vez más automatizado.
-                        </p>
-</div>
-<div>
-<h2 class="font-headline-lg text-headline-lg mb-6 border-l-4 border-primary-container pl-6">La Solución PBT</h2>
-<p class="font-body-lg text-body-lg text-secondary">
-                            Diseñamos una <span class="font-bold text-on-surface">Implementación con IA</span> personalizada. Integramos modelos de predicción de demanda y automatizamos el embudo de ventas digital, permitiendo que la marca llegara a nuevos segmentos de mercado con una precisión quirúrgica.
-                        </p>
-</div>
-</div>
-<div class="bg-surface-container p-10 rounded-xl border border-outline-variant shadow-sm self-start">
-<h3 class="font-headline-md text-headline-md mb-8">Impacto Generado</h3>
-<ul class="space-y-6">
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
-<div>
-<span class="block font-display-md text-[32px] text-on-surface">145%</span>
-<span class="font-body-md text-secondary">Aumento en conversión digital</span>
-</div>
-</li>
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
-<div>
-<span class="block font-display-md text-[32px] text-on-surface">3.2x</span>
-<span class="font-body-md text-secondary">Retorno de inversión (ROI)</span>
-</div>
-</li>
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
-<div>
-<span class="block font-display-md text-[32px] text-on-surface">-40%</span>
-<span class="font-body-md text-secondary">Reducción en tiempos operativos</span>
-</div>
-</li>
-</ul>
-</div>
+  <div class="space-y-8">
+
+    <!-- El Desafio -->
+    <div>
+      <h2 class="font-headline-lg text-headline-lg mb-6 border-l-4 border-primary-container pl-6" data-i18n="casos_challenge_title">El Desafío</h2>
+      <p class="font-body-lg text-body-lg text-secondary mb-4" data-i18n="casos_challenge_body_1">Pravin Arwani lleva 25 años en importación y exportación en ZOFRI.</p>
+      <p class="font-body-lg text-body-lg text-secondary mb-4" data-i18n="casos_challenge_body_2">Cada vez que viajaba a China, el negocio seguía funcionando. Pero cuando volvía, lo esperaban dos meses de trabajo acumulado.</p>
+      <p class="font-body-lg text-body-lg text-on-surface font-semibold mb-2" data-i18n="casos_challenge_body_3">Caja mayor. Cuentas bancarias. Stock. Notas de venta. Clientes.</p>
+      <p class="font-body-lg text-body-lg text-secondary mb-6" data-i18n="casos_challenge_body_4">Todo en papeles. Todo en Excel. Todo mezclado.</p>
+      <blockquote class="border-l-4 border-primary-container pl-6 italic font-body-lg text-body-lg text-on-surface mb-6" data-i18n="casos_challenge_quote">"Me costaba mucho mantener la caja mayor, el tema de las cuentas bancarias, el stock, las notas de ventas, los clientes. Era un tremendo desorden."</blockquote>
+      <p class="font-body-lg text-body-lg text-secondary" data-i18n="casos_challenge_body_5">Y cuando un cliente mayorista pedía un catálogo con precios, prepararlo tomaba horas.</p>
+    </div>
+
+    <!-- La Solucion -->
+    <div>
+      <h2 class="font-headline-lg text-headline-lg mb-6 border-l-4 border-primary-container pl-6" data-i18n="casos_solution_title">La Solución PBT</h2>
+      <p class="font-body-lg text-body-lg text-secondary mb-4" data-i18n="casos_solution_body_1">Construimos una aplicación a medida para Vida Digital.</p>
+      <p class="font-body-lg text-body-lg text-secondary mb-4" data-i18n="casos_solution_body_2">No una plantilla genérica. No un software de otro país que hay que adaptar.</p>
+      <p class="font-body-lg text-body-lg text-secondary" data-i18n="casos_solution_body_3">Una herramienta diseñada exactamente para cómo trabaja Pravin: su caja chica, su caja mayor, su stock, sus clientes, sus pedidos a China.</p>
+    </div>
+
+  </div>
+
+  <!-- Metricas -->
+  <div class="bg-surface-container p-10 rounded-xl border border-outline-variant shadow-sm self-start">
+    <h3 class="font-headline-md text-headline-md mb-8" data-i18n="casos_metrics_title">Impacto Generado</h3>
+    <ul class="space-y-8">
+      <li class="flex items-start gap-4">
+        <span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
+        <div>
+          <span class="block font-headline-md text-headline-md text-on-surface mb-1" data-i18n="casos_metric_1_value">¾ del trabajo administrativo eliminado</span>
+          <span class="font-body-md text-secondary" data-i18n="casos_metric_1_desc">Tiempo recuperado para ventas y crecimiento</span>
+        </div>
+      </li>
+      <li class="flex items-start gap-4">
+        <span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
+        <div>
+          <span class="block font-headline-md text-headline-md text-on-surface mb-1" data-i18n="casos_metric_2_value">2 meses → minutos</span>
+          <span class="font-body-md text-secondary" data-i18n="casos_metric_2_desc">Ponerse al día después de un viaje a China</span>
+        </div>
+      </li>
+      <li class="flex items-start gap-4">
+        <span class="material-symbols-outlined text-primary-container mt-1">check_circle</span>
+        <div>
+          <span class="block font-headline-md text-headline-md text-on-surface mb-1" data-i18n="casos_metric_3_value">Horas → segundos</span>
+          <span class="font-body-md text-secondary" data-i18n="casos_metric_3_desc">Tiempo para preparar un catálogo con precios</span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 </section>
+
 <!-- Testimonial Section -->
 <section class="py-section-gap-lg bg-on-surface text-white relative overflow-hidden">
 <div class="absolute top-0 right-0 p-20 opacity-10">
-<span class="material-symbols-outlined text-[200px]" data-weight="fill">format_quote</span>
+  <span class="material-symbols-outlined text-[200px]" data-weight="fill">format_quote</span>
 </div>
 <div class="max-w-4xl mx-auto px-gutter text-center relative z-10">
-<blockquote class="font-display-md text-[40px] md:text-display-md leading-tight mb-10">
-                    "La implementación de herramientas inteligentes de PBT no solo cambió nuestro marketing, cambió la forma en que entendemos nuestro propio negocio."
-                </blockquote>
-<div class="flex flex-col items-center">
-<div class="w-16 h-16 rounded-full bg-primary-container mb-4 overflow-hidden border-2 border-primary">
-<img class="w-full h-full object-cover" data-alt="A professional portrait of a confident Latin American entrepreneur in his 40s, wearing a clean white shirt against a neutral high-key background. He has a warm yet authoritative expression. The lighting is professional studio quality with soft shadows, consistent with a high-end minimalist business aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8RcVyLj38g4_ZqmqZIbrUVGZcVo6XEde5kYMCYo28ElLx8csnOQ-k0TXpFB85cIiSUEBSwkDNpNwIUwmN-oyBgrmsCGzt9zgqeJZZsPkfBTddQswthUDVfkwDraXLVNhMAX5_eD_d8aYjB9jfMrq_ajyYGJgSUED_J_5KztnPIIKoehRr9x-X_4l_qCLqtjEBDUNNa0HxKpww_q7CyddfO3nFtUlCzS9oRAMXZLwpDpSLIWIWoQA8NPyD2aeMk-qgZU-cx2za3jtI"/>
-</div>
-<cite class="not-italic">
-<span class="block font-label-bold text-label-bold uppercase tracking-widest">Director Ejecutivo</span>
-<span class="font-body-lg text-secondary-fixed-dim">Importadora Iquique</span>
-</cite>
-</div>
+  <blockquote class="font-display-md text-[28px] md:text-[40px] leading-tight mb-10" data-i18n="casos_testimonial_quote">
+    "Antes me costaba mucho. Mínimo dos meses de trabajo para ponerme al día. Ahora todo está al día en tiempo real. Casi tres cuartos de mi trabajo ha disminuido. Tiempo que ahora puedo dedicar a ventas."
+  </blockquote>
+  <div class="flex flex-col items-center">
+    <div class="w-16 h-16 rounded-full bg-primary-container mb-4 overflow-hidden border-2 border-primary">
+      <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8RcVyLj38g4_ZqmqZIbrUVGZcVo6XEde5kYMCYo28ElLx8csnOQ-k0TXpFB85cIiSUEBSwkDNpNwIUwmN-oyBgrmsCGzt9zgqeJZZsPkfBTddQswthUDVfkwDraXLVNhMAX5_eD_d8aYjB9jfMrq_ajyYGJgSUED_J_5KztnPIIKoehRr9x-X_4l_qCLqtjEBDUNNa0HxKpww_q7CyddfO3nFtUlCzS9oRAMXZLwpDpSLIWIWoQA8NPyD2aeMk-qgZU-cx2za3jtI" alt="Pravin Arwani"/>
+    </div>
+    <cite class="not-italic">
+      <span class="block font-label-bold text-label-bold uppercase tracking-widest" data-i18n="casos_testimonial_name">PRAVIN ARWANI</span>
+      <span class="block font-body-md text-secondary-fixed-dim mt-1" data-i18n="casos_testimonial_role">Representante Legal, Vida Digital</span>
+      <span class="font-body-md text-secondary-fixed-dim opacity-70" data-i18n="casos_testimonial_attr">Importador/Exportador — ZOFRI, Iquique</span>
+    </cite>
+  </div>
 </div>
 </section>
+
 </main>
 <div id="footer-placeholder"></div>
-<script>
-        // Simple micro-interactions for scroll effects
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-md', 'bg-white/90', 'backdrop-blur-md');
-            } else {
-                header.classList.remove('shadow-md', 'bg-white/90', 'backdrop-blur-md');
-            }
-        });
 
-        // Hover effects for the impact cards
-        const stats = document.querySelectorAll('.bg-surface-container');
-        stats.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-4px)';
-                card.style.boxShadow = '0px 10px 30px rgba(0,0,0,0.05)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-                card.style.boxShadow = 'none';
-            });
-        });
-    </script>
-</body></html>
+<script>
+function initI18n() {
+  const LANGS = {
+    es: { flag: '🇨🇱', code: 'ES' },
+    en: { flag: '🇺🇸', code: 'EN' },
+    hi: { flag: '🇮🇳', code: 'HI' },
+    zh: { flag: '🇨🇳', code: 'ZH' },
+    ur: { flag: '🇵🇰', code: 'UR' },
+    ko: { flag: '🇰🇷', code: 'KO' }
+  };
+  const RTL_LANGS = ['ur'];
+  let translations = {};
+  let menuOpen = false;
+
+  const menu = document.getElementById('lang-menu');
+  const trigger = document.getElementById('lang-trigger');
+
+  function toggleLangMenu() {
+    if (menuOpen) { menu.style.display = 'none'; menuOpen = false; return; }
+    const rect = trigger.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    menu.style.left = Math.max(8, rect.right - 148) + 'px';
+    menu.style.display = 'block';
+    menuOpen = true;
+  }
+
+  trigger.addEventListener('click', function(e) { e.stopPropagation(); toggleLangMenu(); });
+
+  document.addEventListener('click', function(e) {
+    if (menuOpen && !menu.contains(e.target) && e.target !== trigger) {
+      menu.style.display = 'none'; menuOpen = false;
+    }
+  });
+
+  menu.querySelectorAll('button[data-lang]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const lang = this.getAttribute('data-lang');
+      menu.style.display = 'none'; menuOpen = false;
+      loadLang(lang);
+    });
+  });
+
+  async function loadLang(lang) {
+    try {
+      const res = await fetch('i18n/' + lang + '.json');
+      translations = await res.json();
+      applyTranslations(lang);
+      localStorage.setItem('pbt-lang', lang);
+      updateLangSelector(lang);
+    } catch(e) {
+      console.error('Error loading language:', lang, e);
+    }
+  }
+
+  function applyTranslations(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      const key = el.getAttribute('data-i18n');
+      if (translations[key]) el.textContent = translations[key];
+    });
+    document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+  }
+
+  function updateLangSelector(lang) {
+    const info = LANGS[lang] || LANGS['es'];
+    document.getElementById('current-lang-flag').textContent = info.flag;
+    document.getElementById('current-lang-code').textContent = info.code;
+  }
+
+  function detectLang() {
+    const saved = localStorage.getItem('pbt-lang');
+    if (saved && LANGS[saved]) return saved;
+    const browser = navigator.language.split('-')[0].toLowerCase();
+    if (LANGS[browser]) return browser;
+    return 'es';
+  }
+
+  function toggleMobileMenu() {
+    const m = document.getElementById('mobile-menu');
+    const isOpen = m.style.display === 'flex';
+    m.style.display = isOpen ? 'none' : 'flex';
+  }
+
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').style.display = 'none';
+  }
+
+  function setMobileLang(lang) {
+    loadLang(lang);
+    closeMobileMenu();
+  }
+
+  window.toggleMobileMenu = toggleMobileMenu;
+  window.closeMobileMenu = closeMobileMenu;
+  window.setMobileLang = setMobileLang;
+
+  loadLang(detectLang());
+}
+
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (!header) return;
+  if (window.scrollY > 50) {
+    header.classList.add('shadow-md', 'bg-white/90', 'backdrop-blur-md');
+  } else {
+    header.classList.remove('shadow-md', 'bg-white/90', 'backdrop-blur-md');
+  }
+});
+</script>
+</body>
+</html>
