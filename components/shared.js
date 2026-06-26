@@ -25,6 +25,8 @@
 
     loadComponent('footer-placeholder', 'components/footer.html', function() {
       footerDone = true;
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
       tryInitI18n();
     });
   });
