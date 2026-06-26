@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<!--
+=============================================================
+  TEMPLATE.HTML — Plantilla base para nuevas páginas
+  Servicios Digitales PBT
+=============================================================
+
+  INSTRUCCIONES DE USO:
+  1. Duplica este archivo y renómbralo (ej: servicios.html)
+  2. Cambia el <title> en el <head>
+  3. Si la página tiene su propio CTA en el footer, lee la
+     sección "OVERRIDE DE FOOTER" más abajo.
+  4. Escribe el contenido de la página entre las etiquetas
+     <!-- PAGE CONTENT START --> y <!-- PAGE CONTENT END -->
+  5. Agrega las claves i18n del contenido nuevo a los 6 JSONs:
+     i18n/es.json, en.json, hi.json, ko.json, ur.json, zh.json
+
+  CHECKLIST antes de publicar una página nueva:
+  [ ] <title> actualizado
+  [ ] Favicon presente (ya incluido aquí)
+  [ ] Todo texto visible tiene data-i18n y su clave en los 6 JSONs
+  [ ] Si agregaste ítems al navbar: clave nueva en navbar.html
+      Y en los 6 JSONs (nav_NOMBREITEM)
+  [ ] Probado en ES, EN y al menos un idioma asiático (KO o ZH)
+  [ ] Probado en mobile (menú hamburguesa)
+=============================================================
+-->
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<!-- =====================================================
+  CAMBIAR: título de la página
+  Formato: "Servicios Digitales PBT | Nombre de la Página"
+====================================================== -->
+<title>Servicios Digitales PBT | Nueva Página</title>
+
+<!-- Favicon — no tocar -->
+<link rel="icon" type="image/x-icon" href="favico.ico"/>
+
+<!-- Tailwind + Fuentes — no tocar -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<!-- Design tokens — no tocar -->
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "primary-container": "#f26522",
+        "secondary-fixed-dim": "#c8c6c5",
+        "tertiary-fixed": "#e2e2e2",
+        "inverse-on-surface": "#f1f1f1",
+        "surface-container": "#eeeeee",
+        "on-surface": "#1a1c1c",
+        "on-secondary-fixed-variant": "#474746",
+        "on-error-container": "#93000a",
+        "tertiary-container": "#909191",
+        "on-tertiary-fixed-variant": "#454747",
+        "on-primary": "#ffffff",
+        "inverse-primary": "#ffb599",
+        "surface-container-high": "#e8e8e8",
+        "tertiary": "#5d5f5f",
+        "secondary-fixed": "#e5e2e1",
+        "surface-variant": "#e2e2e2",
+        "on-secondary-fixed": "#1c1b1b",
+        "on-primary-container": "#4f1800",
+        "surface-container-low": "#f3f3f3",
+        "on-tertiary": "#ffffff",
+        "secondary-container": "#e2dfde",
+        "surface-dim": "#dadada",
+        "surface-container-highest": "#e2e2e2",
+        "surface": "#f9f9f9",
+        "on-secondary-container": "#636262",
+        "primary": "#a63b00",
+        "on-tertiary-container": "#282a2b",
+        "on-primary-fixed": "#370e00",
+        "error-container": "#ffdad6",
+        "error": "#ba1a1a",
+        "on-primary-fixed-variant": "#7f2b00",
+        "on-surface-variant": "#594138",
+        "surface-container-lowest": "#ffffff",
+        "surface-bright": "#f9f9f9",
+        "on-tertiary-fixed": "#1a1c1c",
+        "tertiary-fixed-dim": "#c6c6c7",
+        "on-background": "#1a1c1c",
+        "background": "#f9f9f9",
+        "on-secondary": "#ffffff",
+        "on-error": "#ffffff",
+        "outline-variant": "#e1bfb3",
+        "inverse-surface": "#2f3131",
+        "primary-fixed": "#ffdbce",
+        "surface-tint": "#a63b00",
+        "primary-fixed-dim": "#ffb599",
+        "outline": "#8d7166",
+        "secondary": "#5f5e5e"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "container-max": "1280px",
+        "section-gap-md": "80px",
+        "unit": "8px",
+        "section-gap-lg": "120px",
+        "gutter": "24px",
+        "margin-mobile": "16px"
+      },
+      "fontFamily": {
+        "headline-md": ["Archivo Narrow"],
+        "body-lg": ["Hanken Grotesk"],
+        "display-md": ["Archivo Narrow"],
+        "body-md": ["Hanken Grotesk"],
+        "label-bold": ["Hanken Grotesk"],
+        "headline-lg": ["Archivo Narrow"],
+        "headline-lg-mobile": ["Archivo Narrow"],
+        "display-lg": ["Archivo Narrow"]
+      },
+      "fontSize": {
+        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+        "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+        "display-md": ["56px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+        "label-bold": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700"}],
+        "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+        "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    vertical-align: middle;
+  }
+  .hero-pattern {
+    background-image: radial-gradient(circle at 2px 2px, #e2e2e2 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+</style>
+
+<!--
+=============================================================
+  CARGA DE COMPONENTES + i18n
+  Caso normal (footer estándar): usar shared.js — descomentar
+  la línea de abajo y borrar el bloque <script> inline.
+
+  Caso con override de footer (como casos.html): mantener el
+  bloque <script> inline y comentar la línea shared.js.
+=============================================================
+-->
+
+<!-- OPCIÓN A: footer estándar (la mayoría de páginas) -->
+<script src="components/shared.js"></script>
+
+<!--
+  OPCIÓN B: footer con override — borrar la línea de arriba
+  y descomentar este bloque:
+
+<script>
+(function() {
+  function loadComponent(id, url, callback) {
+    fetch(url).then(r => r.text()).then(html => {
+      document.getElementById(id).innerHTML = html;
+      if (callback) callback();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var navbarDone = false;
+    var footerDone = false;
+
+    function tryInitI18n() {
+      if (navbarDone && footerDone && typeof initI18n === 'function') initI18n();
+    }
+
+    loadComponent('navbar-placeholder', 'components/navbar.html', function() {
+      navbarDone = true;
+      tryInitI18n();
+    });
+
+    loadComponent('footer-placeholder', 'components/footer.html', function() {
+      footerDone = true;
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // — OVERRIDE DEL CTA DEL FOOTER —
+      // Descomenta y ajusta las claves i18n que necesites:
+      //
+      // var ctaSection = document.querySelector('#footer-placeholder section#contacto');
+      // if (ctaSection) {
+      //   ctaSection.style.backgroundColor = '#f26522'; // fondo naranja
+      //   var t1 = ctaSection.querySelector('[data-i18n="cta_title_1"]');
+      //   if (t1) t1.setAttribute('data-i18n', 'MI_CLAVE_TITULO');
+      //   var t2 = ctaSection.querySelector('[data-i18n="cta_title_2"]');
+      //   if (t2) {
+      //     t2.setAttribute('data-i18n', 'MI_CLAVE_SUBTITULO');
+      //     t2.style.color = '#000000';
+      //   }
+      // }
+
+      tryInitI18n();
+    });
+  });
+})();
+</script>
+-->
+
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+
+<!-- Navbar — no tocar -->
+<div id="navbar-placeholder"></div>
+
+<main>
+
+  <!-- ==========================================================
+    PAGE CONTENT START
+    Escribe el contenido de la página aquí.
+    - Usa pt-24 en la primera sección para compensar el navbar fijo.
+    - Todo texto visible debe tener data-i18n="CLAVE" y su
+      traducción en los 6 archivos de i18n/.
+    - Clases de tipografía disponibles:
+        Títulos grandes : font-display-md text-display-md
+        Títulos medios  : font-headline-lg text-headline-lg
+        Títulos chicos  : font-headline-md text-headline-md
+        Cuerpo grande   : font-body-lg text-body-lg
+        Cuerpo normal   : font-body-md text-body-md
+        Labels/botones  : font-label-bold text-label-bold
+    - Color naranja de marca : text-primary-container
+    - Fondo con puntos      : clase hero-pattern
+  =========================================================== -->
+
+  <section class="relative pt-24 pb-16 hero-pattern">
+    <div class="max-w-container-max mx-auto px-gutter text-center">
+
+      <!-- EJEMPLO — borrar y reemplazar con el contenido real -->
+      <h1 class="font-display-md text-headline-lg-mobile md:text-display-md max-w-4xl mx-auto mb-6 text-on-surface leading-tight">
+        <span data-i18n="mi_pagina_headline">Título de la página</span>
+      </h1>
+      <p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto" data-i18n="mi_pagina_subtitle">
+        Subtítulo de la página.
+      </p>
+      <!-- FIN EJEMPLO -->
+
+    </div>
+  </section>
+
+  <!-- ==========================================================
+    PAGE CONTENT END
+  =========================================================== -->
+
+</main>
+
+<!-- Footer — no tocar -->
+<div id="footer-placeholder"></div>
+
+<!-- i18n engine — no tocar -->
+<script>
+function initI18n() {
+  const LANGS = {
+    es: { flag: '🇨🇱', code: 'ES' },
+    en: { flag: '🇺🇸', code: 'EN' },
+    hi: { flag: '🇮🇳', code: 'HI' },
+    zh: { flag: '🇨🇳', code: 'ZH' },
+    ur: { flag: '🇵🇰', code: 'UR' },
+    ko: { flag: '🇰🇷', code: 'KO' }
+  };
+  const RTL_LANGS = ['ur'];
+  let translations = {};
+  let menuOpen = false;
+
+  const menu = document.getElementById('lang-menu');
+  const trigger = document.getElementById('lang-trigger');
+
+  function toggleLangMenu() {
+    if (menuOpen) { menu.style.display = 'none'; menuOpen = false; return; }
+    const rect = trigger.getBoundingClientRect();
+    menu.style.top = (rect.bottom + 8) + 'px';
+    menu.style.left = Math.max(8, rect.right - 148) + 'px';
+    menu.style.display = 'block';
+    menuOpen = true;
+  }
+
+  trigger.addEventListener('click', function(e) { e.stopPropagation(); toggleLangMenu(); });
+
+  document.addEventListener('click', function(e) {
+    if (menuOpen && !menu.contains(e.target) && e.target !== trigger) {
+      menu.style.display = 'none'; menuOpen = false;
+    }
+  });
+
+  menu.querySelectorAll('button[data-lang]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const lang = this.getAttribute('data-lang');
+      menu.style.display = 'none'; menuOpen = false;
+      loadLang(lang);
+    });
+  });
+
+  async function loadLang(lang) {
+    try {
+      const res = await fetch('i18n/' + lang + '.json');
+      translations = await res.json();
+      applyTranslations(lang);
+      localStorage.setItem('pbt-lang', lang);
+      updateLangSelector(lang);
+    } catch(e) {
+      console.error('Error loading language:', lang, e);
+    }
+  }
+
+  function applyTranslations(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      const key = el.getAttribute('data-i18n');
+      if (translations[key]) el.textContent = translations[key];
+    });
+    document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+  }
+
+  function updateLangSelector(lang) {
+    const info = LANGS[lang] || LANGS['es'];
+    document.getElementById('current-lang-flag').textContent = info.flag;
+    document.getElementById('current-lang-code').textContent = info.code;
+  }
+
+  function detectLang() {
+    const saved = localStorage.getItem('pbt-lang');
+    if (saved && LANGS[saved]) return saved;
+    const browser = navigator.language.split('-')[0].toLowerCase();
+    if (LANGS[browser]) return browser;
+    return 'es';
+  }
+
+  function toggleMobileMenu() {
+    const m = document.getElementById('mobile-menu');
+    m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  function closeMobileMenu() {
+    document.getElementById('mobile-menu').style.display = 'none';
+  }
+
+  function setMobileLang(lang) {
+    loadLang(lang);
+    closeMobileMenu();
+  }
+
+  window.toggleMobileMenu = toggleMobileMenu;
+  window.closeMobileMenu = closeMobileMenu;
+  window.setMobileLang = setMobileLang;
+
+  loadLang(detectLang());
+}
+
+// Efecto sombra en scroll del navbar
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (!header) return;
+  if (window.scrollY > 50) {
+    header.classList.add('shadow-md', 'bg-white/90', 'backdrop-blur-md');
+  } else {
+    header.classList.remove('shadow-md', 'bg-white/90', 'backdrop-blur-md');
+  }
+});
+</script>
+
+</body>
+</html>
