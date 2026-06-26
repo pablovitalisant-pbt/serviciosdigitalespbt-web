@@ -110,7 +110,61 @@
             background-size: 40px 40px;
         }
     </style>
-<script src="components/shared.js"></script>
+<script>
+(function() {
+  function loadComponent(id, url, callback) {
+    fetch(url)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        document.getElementById(id).innerHTML = html;
+        if (callback) callback();
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var navbarDone = false;
+    var footerDone = false;
+
+    function tryInitI18n() {
+      if (navbarDone && footerDone && typeof initI18n === 'function') {
+        initI18n();
+      }
+    }
+
+    loadComponent('navbar-placeholder', 'components/navbar.html', function() {
+      navbarDone = true;
+      tryInitI18n();
+    });
+
+    loadComponent('footer-placeholder', 'components/footer.html', function() {
+      footerDone = true;
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Override CTA para casos.html — fondo naranja, texto adaptado
+      var ctaSection = document.querySelector('#footer-placeholder section#contacto');
+      if (ctaSection) {
+        ctaSection.classList.remove('bg-[#111111]');
+        ctaSection.style.backgroundColor = '#f26522';
+
+        var titleSpan1 = ctaSection.querySelector('[data-i18n="cta_title_1"]');
+        if (titleSpan1) titleSpan1.textContent = '¿Quieres resultados como estos?';
+
+        var titleSpan2 = ctaSection.querySelector('[data-i18n="cta_title_2"]');
+        if (titleSpan2) {
+          titleSpan2.textContent = 'Hablemos hoy.';
+          titleSpan2.classList.remove('text-primary-container');
+          titleSpan2.style.color = '#000000';
+        }
+
+        // Subtexto y botones: sin cambios (quedan igual)
+      }
+
+      tryInitI18n();
+    });
+  });
+})();
+</script>
 </head>
 <body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
 <div id="navbar-placeholder"></div>
@@ -206,23 +260,6 @@
 <span class="block font-label-bold text-label-bold uppercase tracking-widest">Director Ejecutivo</span>
 <span class="font-body-lg text-secondary-fixed-dim">Importadora Iquique</span>
 </cite>
-</div>
-</div>
-</section>
-<!-- Call to Action Section -->
-<section class="py-section-gap-lg bg-primary-container text-white">
-<div class="max-w-container-max mx-auto px-gutter text-center">
-<h2 class="font-display-md text-display-md mb-6">¿Quieres resultados como estos?</h2>
-<p class="font-headline-md text-headline-md mb-12 opacity-90">Hablemos sobre tu próximo salto digital.</p>
-<div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-<a class="bg-on-surface text-white px-10 py-5 font-label-bold text-label-bold uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-secondary transition-all w-full md:w-auto justify-center" href="#">
-<span class="material-symbols-outlined">mail</span>
-                        Email
-                    </a>
-<a class="bg-white text-primary-container px-10 py-5 font-label-bold text-label-bold uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-surface-container-highest transition-all w-full md:w-auto justify-center shadow-lg" href="#">
-<span class="material-symbols-outlined">chat_bubble</span>
-                        WhatsApp
-                    </a>
 </div>
 </div>
 </section>
