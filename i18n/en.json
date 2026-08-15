@@ -28,9 +28,6 @@
   "service_5_desc": "From idea to printed book. Position yourself as an expert in your industry.",
   "service_6_title": "Automations",
   "service_6_desc": "Eliminate repetitive manual tasks. Your team does what matters.",
-  "proof_label": "Real Case",
-  "proof_title": "What I already built for an import company in Iquique",
-  "proof_body": "An import-export company in the free trade zone had an idea: they needed an application to manage their internal operations. They didn't know how to do it. Within days they had their app up and running.",
   "proof_testimonial": "[Testimonial this week]",
   "proof_attribution": "Owner, import-export company, Iquique",
   "guarantee_title": "Satisfaction Guarantee",
@@ -91,5 +88,11 @@
   "casos_testimonial_attr": "Importer/Exporter — ZOFRI, Iquique",
   "casos_cta_title": "If you run your business in Excel or on paper, you already know how much that disorder is costing you.",
   "casos_whatsapp": "Hablemos por WhatsApp",
-  "casos_cta_subtitle": "Tell me how you work. I'll tell you in 24 hours if I can help you."
+  "casos_cta_subtitle": "Tell me how you work. I'll tell you in 24 hours if I can help you.",
+  "proof_bridge": "I don't sell generic applications. I build the tool your business needs, around how you already work — not the other way around.",
+  "proof_title": "Two business owners from the Free Trade Zone had digital ideas waiting. This is what happened when someone made them real.",
+  "proof_body": "One had been running his business for years on paper, Excel, and memory. The other needed to control inventory across locations without getting lost. Neither needed more technology. They needed a tool built around how they already worked.",
+  "proof_quote_pravin": "Almost three quarters of my work has decreased, which I can now dedicate to sales and other things I never had time for.",
+  "proof_label": "Real results",
+  "proof_quote_anil": "With Pablo the difference is that I told him how I wanted it, and he modified it my way. That difference felt like a tailor-made suit."
 }

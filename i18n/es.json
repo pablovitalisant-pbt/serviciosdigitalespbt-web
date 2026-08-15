@@ -28,9 +28,6 @@
   "service_5_desc": "De la idea al libro impreso. Para posicionarte como experto en tu industria.",
   "service_6_title": "Automatizaciones",
   "service_6_desc": "Elimina tareas manuales repetitivas. Tu equipo hace lo que importa.",
-  "proof_label": "Caso real",
-  "proof_title": "Lo que ya hice para una empresa importadora en Iquique",
-  "proof_body": "Una empresa importadora-exportadora de la zona franca tenía una idea: necesitaban una aplicación para gestionar sus operaciones internas. No sabían cómo hacerlo. En pocos días tenían su app funcionando.",
   "proof_testimonial": "[Testimonio esta semana]",
   "proof_attribution": "Dueño, empresa importadora-exportadora, Iquique",
   "guarantee_title": "Garantía de satisfacción",
@@ -91,5 +88,11 @@
   "casos_testimonial_attr": "Importador/Exportador — ZOFRI, Iquique",
   "casos_cta_title": "Si llevas tu negocio en Excel o en papel, ya sabes cuánto te cuesta ese desorden.",
   "casos_whatsapp": "Hablemos por WhatsApp",
-  "casos_cta_subtitle": "Cuéntame cómo trabajas. Te digo en 24 horas si puedo ayudarte."
+  "casos_cta_subtitle": "Cuéntame cómo trabajas. Te digo en 24 horas si puedo ayudarte.",
+  "proof_bridge": "No vendo aplicaciones genéricas. Construyo la herramienta que tu negocio necesita, alrededor de cómo tú ya trabajas — no al revés.",
+  "proof_title": "Dos empresarios de la Zona Franca tenían ideas digitales esperando. Esto pasó cuando alguien las hizo realidad.",
+  "proof_body": "Uno llevaba años administrando su negocio entre papeles, Excel y memoria. El otro necesitaba controlar inventario entre locales y bodega sin perderse en el camino. Ninguno necesitaba más tecnología. Necesitaban una herramienta construida alrededor de cómo ya trabajaban.",
+  "proof_quote_pravin": "Casi tres cuartos de mi trabajo ha disminuido, al cual yo puedo dedicar mi tiempo más en ventas y en otras cosas que siempre no he tenido tiempo para hacer.",
+  "proof_label": "Resultados reales",
+  "proof_quote_anil": "Con Pablo la diferencia es que yo le decía cómo lo quería, y él lo modificaba a mi manera. Esa diferencia se marcó como un traje a la medida."
 }

@@ -28,9 +28,6 @@
   "service_5_desc": "从创意到印刷成书。在您的行业中树立专家地位。",
   "service_6_title": "自动化",
   "service_6_desc": "消除重复的手动任务。让您的团队专注于重要的事情。",
-  "proof_label": "真实案例",
-  "proof_title": "我为伊基克一家进口公司所做的工作",
-  "proof_body": "自贸区的一家进出口公司有一个想法：他们需要一个应用程序来管理内部运营。他们不知道如何实现。几天之内，他们的应用就上线运行了。",
   "proof_testimonial": "[本周客户评价]",
   "proof_attribution": "业主，进出口公司，伊基克",
   "guarantee_title": "满意保证",
@@ -91,5 +88,11 @@
   "casos_testimonial_attr": "进口商/出口商 — ZOFRI，伊基克",
   "casos_cta_title": "如果您用Excel或纸张管理业务，您已经知道这种混乱让您付出了多少代价。",
   "casos_whatsapp": "Hablemos por WhatsApp",
-  "casos_cta_subtitle": "告诉我您如何工作。我会在24小时内告诉您我能否帮助您。"
+  "casos_cta_subtitle": "告诉我您如何工作。我会在24小时内告诉您我能否帮助您。",
+  "proof_bridge": "我不卖通用应用程序。我围绕您已有的工作方式，构建您的业务所需的工具。",
+  "proof_title": "自贸区的两位企业主有数字创意在等待。当有人将它们变为现实时，这就是发生的事情。",
+  "proof_body": "一位多年来用纸张、Excel和记忆管理业务。另一位需要在多个地点之间控制库存。两人都不需要更多技术。他们需要一个围绕他们已有工作方式构建的工具。",
+  "proof_quote_pravin": "我将近四分之三的工作减少了，这些时间我现在可以用于销售和其他一直没有时间做的事情。",
+  "proof_label": "真实成果",
+  "proof_quote_anil": "与Pablo合作的区别在于我告诉他我想要什么，他就按我的方式修改。这种差异就像量身定制的西装。"
 }
