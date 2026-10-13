@@ -12,8 +12,8 @@ Los UNICOS cambios permitidos son:
 1. Menu: el `<header>` propio de Stitch se reemplaza por el navbar compartido (`components/navbar.html`).
 2. Footer: el `<footer>` propio de Stitch se reemplaza por el footer compartido (`components/footer.html`).
 3. Multilingue: todo texto visible pasa a ser traducible en los 6 idiomas (es, en, hi, zh, ur, ko).
-4. Copy v2 (slice 12, 2026-10-13): excepcion ACOTADA Y CERRADA — solo los 9 textos
-   listados en la seccion "Copy v2" mas abajo. No habilita editar ningun otro texto.
+4. Copy v2 (slices 12-13, 2026-10-13): excepcion ACOTADA Y CERRADA — solo los 9 textos
+   y los 4 precios listados en la seccion "Copy v2" mas abajo. No habilita editar nada mas.
 
 Cualquier otro cambio (estilos, textos, links, estructura, head, clases) esta PROHIBIDO.
 Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
@@ -74,6 +74,7 @@ No crear infraestructura de flags.
 | 10 | i18n Preguntas frecuentes | 697-785 |
 | 11 | Navbar: item `nav_videos` -> videos.html (desktop + movil) + 6 JSON | components/navbar.html |
 | 12 | Copy v2: reposicionamiento a "negocios de todo rubro" + servicio 100% online (9 textos) | 17, 26, 144, 158, 191, 193, 249, 301, 810 |
+| 13 | Precios de planes p2/p3 (el precio por reel baja al subir de plan) + guardia G-PRICING | 362, 365, 407, 410 |
 
 Numeros de linea referidos al archivo original de Stitch; tras el slice 1 cambian. Ubicar por titulo de seccion.
 
@@ -118,3 +119,26 @@ siendo la excepcion cotizable (`videos_includes_note_body`), no la regla.
 
 Terminos en observacion, reportados y **no tocados**: `videos_faq_q4_body`
 ("atención de consultas") y `videos_problem_block2_body` ("editor profesional").
+
+### Copy v2 — Precios (slice 13, 2026-10-13)
+
+Decision de negocio de Pablo: el precio por reel debe **BAJAR** al subir de plan (comprar mas
+reels sale mas barato por reel). Solo cambian 4 valores; reels sueltos y video largo NO se tocan.
+
+| Plan | Mensual | Reels | Precio por reel |
+|------|---------|-------|-----------------|
+| p1 Economica | $80.000 (sin cambio) | 4 | $20.000 (sin cambio) |
+| p2 Equilibrada | $200.000 -> **$150.000** | 8 | $25.000 -> **$18.750** |
+| p3 Premium | $390.000 -> **$210.000** | 12 | $32.500 -> **$17.500** |
+
+Regla que debe cumplirse siempre: **mensual = reels x precio por reel** (80.000=4x20.000,
+150.000=8x18.750, 210.000=12x17.500, sin redondeo) y **precio por reel estrictamente
+decreciente** (20.000 > 18.750 > 17.500). `G-PRICING` (tests/i18n-sections.test.mjs) la vigila
+leyendo los 3 precios mensuales del HTML y los 2 textos de `reel_price` del HTML y de `es.json`.
+
+Los 2 precios mensuales son tokens puros (sin clave i18n): su cambio se declara en
+`COPY_V2_TOKENS`; los 2 textos `reel_price` (monto literal dentro de la frase traducida) en
+`COPY_V2`. Esas son las unicas divergencias que `G-COPYV2` blanquea: P8b/P9 siguen comparando
+byte a byte todo lo demas contra la base `8a5fa69`.
+
+Lo mismo que el copy v2: excepcion acotada, no habilita tocar ningun otro precio ni texto.

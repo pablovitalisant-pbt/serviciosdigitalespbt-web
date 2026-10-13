@@ -66,13 +66,14 @@ const JBASE = Object.fromEntries(
   LANGS.map((l) => [l, JSON.parse(stripBom(gitShowBaseline(BASE, `i18n/${l}.json`)))]),
 );
 
-// --- copy v2 (slice 12): divergencias DELIBERADAS del copy de Stitch -----------
+// --- copy v2 (slices 12-13): divergencias DELIBERADAS del copy de Stitch -------
 // Decision de negocio de Pablo (2026-10-13): la landing deja de vender "profesionales
 // de servicios en Chile" y pasa a "negocios de cualquier rubro, servicio 100% online".
 // Cada entrada declara el texto VIEJO (literal en la base 8a5fa69) y el NUEVO (= d.es[k]).
 // P8b y P9 aplican esta tabla a la base ANTES de comparar: es lo UNICO que puede blanquear
-// una divergencia, y solo estas 9 claves. G-COPYV2 vigila la tabla; agregar una entrada
+// una divergencia, y solo estas claves. G-COPYV2 vigila la tabla; agregar una entrada
 // exige tocar tambien su lista explicita (una decision visible, no un descuido).
+// Slice 13 (precios, 2026-10-13): +2 claves reel_price aca y +2 tokens puros en COPY_V2_TOKENS.
 const COPY_V2 = {
   videos_hero_badge: {
     old: 'Edición de reels para profesionales locales',
@@ -110,6 +111,24 @@ const COPY_V2 = {
     old: 'Atención personalizada para profesionales de Iquique, Tarapacá y todo Chile',
     new: 'Servicio 100% online: trabajamos con negocios de todo el mundo',
   },
+  // Slice 13: el precio por reel BAJA al subir de plan. Solo cambia el monto; la frase queda.
+  videos_plans_p2_reel_price: {
+    old: '$25.000 CLP por reel • Mayor presencia semanal',
+    new: '$18.750 CLP por reel • Mayor presencia semanal',
+  },
+  videos_plans_p3_reel_price: {
+    old: '$32.500 CLP por reel • Máxima frecuencia',
+    new: '$17.500 CLP por reel • Máxima frecuencia',
+  },
+};
+
+// Mitad del MISMO mecanismo de overrides declarados: los 2 precios mensuales no tienen
+// clave i18n (son tokens puros), asi que no pueden vivir en COPY_V2 (que exige UNION.has(k)
+// y o.new === d.es[k]). Formato token viejo -> token nuevo; secBaseV2 los aplica a la
+// seccion que los contenga, y G-COPYV2 vigila que sigan siendo divergencias reales.
+const COPY_V2_TOKENS = {
+  '$200.000': '$150.000',
+  '$390.000': '$210.000',
 };
 
 // Lista explicita, en el orden del contrato. G-COPYV2 la compara con las claves reales de
@@ -124,6 +143,8 @@ const COPY_V2_KEYS = [
   'videos_includes_card2_body',
   'videos_plans_subtitle',
   'videos_cta_footer',
+  'videos_plans_p2_reel_price',
+  'videos_plans_p3_reel_price',
 ];
 
 // --- tabla de descriptores ---------------------------------------------------
@@ -411,7 +432,7 @@ const SECTIONS = [
       videos_plans_p2_kicker: 'El equilibrio perfecto',
       videos_plans_p2_title: 'Plan Equilibrada',
       videos_plans_p2_unit: 'CLP / mes',
-      videos_plans_p2_reel_price: '$25.000 CLP por reel • Mayor presencia semanal',
+      videos_plans_p2_reel_price: '$18.750 CLP por reel • Mayor presencia semanal',
       videos_plans_p2_b1_n: '8 reels al mes',
       videos_plans_p2_b1_s: '(hasta 60s cada uno)',
       videos_plans_p2_b2: 'Estilo adaptado a la identidad de tu negocio',
@@ -454,13 +475,13 @@ const SECTIONS = [
     // Precios y monedas que van LITERALES en los 6 idiomas.
     literals: {
       videos_plans_p1_reel_price: '$20.000',
-      videos_plans_p2_reel_price: '$25.000',
+      videos_plans_p2_reel_price: '$18.750',
       videos_plans_p1_unit: 'CLP',
       videos_plans_p2_unit: 'CLP',
     },
     // Tokens puros: no se traducen ni llevan clave. Si alguno apareciera en el JSON o
     // desapareciera del HTML, el contrato se rompio.
-    pureTokens: ['$80.000', '$200.000'],
+    pureTokens: ['$80.000', '$150.000'],
     // Los nombres de plan SE TRADUCEN: no pueden quedar iguales al espanol (el slice 7
     // reutiliza exactamente estas traducciones para "Nivel Económica/Equilibrada/Premium").
     translatedKeys: ['videos_plans_p1_title', 'videos_plans_p2_title'],
@@ -519,7 +540,7 @@ const SECTIONS = [
       videos_plans_p3_kicker: 'Máximo impacto',
       videos_plans_p3_title: 'Plan Premium',
       videos_plans_p3_unit: 'CLP / mes',
-      videos_plans_p3_reel_price: '$32.500 CLP por reel • Máxima frecuencia',
+      videos_plans_p3_reel_price: '$17.500 CLP por reel • Máxima frecuencia',
       videos_plans_p3_b1_n: '12 reels al mes',
       videos_plans_p3_b1_s: '(hasta 60s cada uno)',
       videos_plans_p3_b2: 'Edición personalizada según tus referencias',
@@ -571,10 +592,10 @@ const SECTIONS = [
     // Precios y monedas que van LITERALES en los 6 idiomas.
     literals: {
       videos_plans_p3_unit: 'CLP',
-      videos_plans_p3_reel_price: '$32.500',
+      videos_plans_p3_reel_price: '$17.500',
     },
     // Token puro: el precio grande de la tarjeta no se traduce ni lleva clave.
-    pureTokens: ['$390.000'],
+    pureTokens: ['$210.000'],
     // El nombre del plan SE TRADUCE, coherente con los otros dos (videos_plans_p1/p2_title).
     translatedKeys: ['videos_plans_p3_title'],
     distinctPairs: [
@@ -1003,9 +1024,9 @@ function secOf(d, html = V) {
 
 // La seccion de la base con el copy v2 aplicado: reemplazo LITERAL del texto viejo por el
 // nuevo, que es exactamente lo que hace el slice en el HTML (texto plano, sin entidades ni
-// saltos de linea adentro). Sin esta capa, P8b/P9 exigirian el copy de Stitch y las 9
-// claves aprobadas serian imposibles. Para las 192 claves restantes devuelve la base tal
-// cual, asi que no relaja nada.
+// saltos de linea adentro). Sin esta capa, P8b/P9 exigirian el copy de Stitch y las claves
+// aprobadas serian imposibles. Para el resto de las claves devuelve la base tal cual, asi
+// que no relaja nada.
 const secBaseCache = new Map();
 function secBaseV2(d) {
   if (!secBaseCache.has(d.name)) {
@@ -1022,6 +1043,17 @@ function secBaseV2(d) {
         `${d.name}: el texto viejo de "${k}" aparece ${count(s, o.old)} veces en la base (se esperaba 1)`,
       );
       s = s.replace(o.old, o.new);
+    }
+    // Los tokens puros (precio mensual, sin clave i18n) van por la misma logica, pero se
+    // buscan por su literal: se aplican solo a la seccion que los contiene.
+    for (const [oldT, newT] of Object.entries(COPY_V2_TOKENS)) {
+      if (!s.includes(oldT)) continue;
+      assert.equal(
+        count(s, oldT),
+        1,
+        `${d.name}: el token viejo ${oldT} aparece ${count(s, oldT)} veces en la base (se esperaba 1)`,
+      );
+      s = s.replace(oldT, newT);
     }
     secBaseCache.set(d.name, s);
   }
@@ -1374,7 +1406,7 @@ test('G-COPYV2 (copy v2) la tabla de divergencias es exactamente la declarada y 
     [...COPY_V2_KEYS].sort(),
     'COPY_V2 y COPY_V2_KEYS se separaron: agregar una divergencia exige tocar la lista explicita',
   );
-  assert.equal(COPY_V2_KEYS.length, 9, 'el contrato de copy v2 son 9 claves, ni una mas');
+  assert.equal(COPY_V2_KEYS.length, 11, 'el contrato declara 11 claves con clave i18n, ni una mas');
   const secciones = new Set();
   for (const [k, o] of Object.entries(COPY_V2)) {
     const d = SECTIONS.find((s) => s.keys.includes(k));
@@ -1392,9 +1424,24 @@ test('G-COPYV2 (copy v2) la tabla de divergencias es exactamente la declarada y 
     assert.ok(!base.includes(o.new), `"${k}": el texto nuevo YA estaba en la base: no es una divergencia`);
     secciones.add(d.name);
   }
+  // Los tokens puros declarados (slice 13): mismos requisitos, pero se validan contra el
+  // HTML crudo porque no tienen clave ni d.es contra el cual contrastar.
+  const tokens = Object.entries(COPY_V2_TOKENS);
+  assert.equal(tokens.length, 2, `el slice 13 declara 2 tokens puros, hay ${tokens.length}`);
+  for (const [oldT, newT] of tokens) {
+    assert.notEqual(oldT, newT, `"${oldT}": old y new son iguales, no hay divergencia que declarar`);
+    assert.equal(count(VBASE, oldT), 1, `"${oldT}": el token viejo no aparece 1 vez en la base 8a5fa69`);
+    assert.ok(!VBASE.includes(newT), `"${newT}": el token nuevo YA estaba en la base: no es una divergencia`);
+    assert.ok(PURE_TOKENS_FILEWIDE.has(newT), `"${newT}": el token nuevo no esta declarado como token puro (P-PURE/G-COVERAGE)`);
+  }
+  assert.equal(
+    Object.keys(COPY_V2).length + tokens.length,
+    13,
+    'el contrato de copy v2 son 13 divergencias (11 claves + 2 tokens), ni una mas',
+  );
   // Anti-vacuidad: el override tiene que cambiar de verdad la base de cada seccion tocada.
   // Si la tabla quedara vacia o el .replace() no mordiera, P9 pasaria sin vigilar nada.
-  assert.equal(secciones.size, 5, `el copy v2 deberia tocar 5 secciones, toca ${secciones.size}`);
+  assert.equal(secciones.size, 6, `el copy v2 deberia tocar 6 secciones, toca ${secciones.size}`);
   for (const name of secciones) {
     assert.notEqual(
       secBaseV2(D[name]),
@@ -1402,6 +1449,52 @@ test('G-COPYV2 (copy v2) la tabla de divergencias es exactamente la declarada y 
       `el override del copy v2 no cambio la base de "${name}"`,
     );
   }
+});
+
+// --- coherencia de precios (slice 13, 2026-10-13) -----------------------------
+// Decision de negocio de Pablo: el precio por reel BAJA al subir de plan. La tarifa mensual
+// tiene que ser exactamente reels x precio por reel, y el precio por reel estrictamente
+// decreciente. Lee las dos magnitudes del HTML (los 3 tokens puros del precio mensual y los
+// 3 spans con clave del precio por reel) y de es.json, y las cruza: si el HTML y el JSON se
+// separan, lo dice.
+const MONTHLY_HTML = /class="font-display-md[^"]*">\$([\d.]+)<\/span>/g;
+const REEL_HTML = /data-i18n="videos_plans_p([123])_reel_price">([^<]*)</g;
+// A CLP: "$210.000" -> 210000 y "12 reels al mes" -> 12. Ningun monto lleva decimales.
+const clp = (s) => Number(String(s).replace(/[^\d]/g, ''));
+
+test('G-PRICING los 3 planes cuadran (mensual = reels x reel) y el precio por reel decrece', () => {
+  const mensuales = [...V.matchAll(MONTHLY_HTML)].map((m) => clp(m[1]));
+  const reelHtml = [...V.matchAll(REEL_HTML)]
+    .sort((a, b) => a[1].localeCompare(b[1]))
+    .map((m) => clp(m[2]));
+  const reelJson = [1, 2, 3].map((i) => clp(J.es[`videos_plans_p${i}_reel_price`]));
+  const reels = [1, 2, 3].map((i) => clp(J.es[`videos_plans_p${i}_b1_n`]));
+  // Anti-vacuidad: sin los 3 valores parseados de cada lado, el cuadre seria trivial.
+  for (const [nombre, xs] of [
+    ['mensual (HTML)', mensuales],
+    ['por reel (HTML)', reelHtml],
+    ['por reel (es.json)', reelJson],
+    ['reels (es.json)', reels],
+  ]) {
+    assert.equal(xs.length, 3, `${nombre}: se esperaban 3 valores, hay ${xs.length}`);
+    assert.ok(xs.every((x) => Number.isFinite(x) && x > 0), `${nombre}: algun valor no parseo: ${xs.join(', ')}`);
+  }
+  for (let i = 0; i < 3; i++) {
+    assert.equal(
+      reelHtml[i],
+      reelJson[i],
+      `plan p${i + 1}: el precio por reel del HTML (${reelHtml[i]}) no coincide con es.json (${reelJson[i]})`,
+    );
+    assert.equal(
+      mensuales[i],
+      reels[i] * reelJson[i],
+      `plan p${i + 1}: el mensual ${mensuales[i]} no es ${reels[i]} reels x ${reelJson[i]}`,
+    );
+  }
+  assert.ok(
+    reelJson[0] > reelJson[1] && reelJson[1] > reelJson[2],
+    `el precio por reel debe decrecer p1 > p2 > p3: ${reelJson.join(' > ')}`,
+  );
 });
 
 // Copy v2 (2026-10-13): la landing ya no vende nicho ni localismo. Se escanean SOLO las
@@ -1439,8 +1532,8 @@ test('G-FILEWIDE videos.html conserva los conteos globales del slice 1 (iconos, 
 // puros (documentados en el PLAN y en los pureTokens de cada descriptor) y el separador "/".
 // Todo lo demas es deuda de i18n. Esta es la lista COMPLETA del archivo, no la de una seccion.
 const PURE_TOKENS_FILEWIDE = new Set([
-  // precios grandes de las tarjetas de plan, sin palabras alrededor (slices 5/6)
-  '$80.000', '$200.000', '$390.000',
+  // precios grandes de las tarjetas de plan, sin palabras alrededor (slices 5/6/13)
+  '$80.000', '$150.000', '$210.000',
   // precios de trabajos individuales (slice 7) + la moneda que los sigue
   '$22.000', '$30.000', '$40.000', '$45.000', '$65.000', '$90.000', 'CLP',
   // formatos y metricas de los mockups del hero (slice 2), con su separador
