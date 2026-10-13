@@ -198,6 +198,16 @@ export function extractMobile(html) {
   return html.slice(start, end + '</div>'.length);
 }
 
+// La seccion 7 "TRABAJO ADICIONAL COTIZADO POR SEPARADO" (slice 9). Marcador: comentario de
+// Stitch, unico. Su tag <section> (bg-surface-container ... py-section-gap-md) tambien es unico
+// hoy, pero se usa el comentario por consistencia con INCLUDES/SINGLE/HOW; P4 vigila su unicidad.
+export const EXTRAS_MARKER =
+  '<!-- ' + '='.repeat(73) + '\n       7. TRABAJO ADICIONAL COTIZADO POR SEPARADO';
+
+export function extractExtras(html) {
+  return extractSection(html, EXTRAS_MARKER, 'de trabajos adicionales');
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor a esta lista
 // (1 linea) y su descriptor en SECTIONS (tests/i18n-sections.test.mjs). El
@@ -212,6 +222,7 @@ export const SECTION_EXTRACTORS = [
   extractHow,
   extractCta,
   extractMobile,
+  extractExtras,
 ];
 
 export function extractSections(html) {

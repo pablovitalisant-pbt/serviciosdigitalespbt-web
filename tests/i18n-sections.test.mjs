@@ -29,6 +29,7 @@ import {
   extractHow,
   extractCta,
   extractMobile,
+  extractExtras,
   HERO_MARKER,
   PROBLEM_MARKER,
   INCLUDES_MARKER,
@@ -38,6 +39,7 @@ import {
   HOW_MARKER,
   CTA_MARKER,
   MOBILE_MARKER,
+  EXTRAS_MARKER,
   SECTION_EXTRACTORS,
 } from './helpers/page.mjs';
 import { startServer } from './helpers/server.mjs';
@@ -720,6 +722,94 @@ const SECTIONS = [
     pureTokens: ['https://wa.me/'],
     mustInclude: ['Cotizar por WhatsApp'],
     mustExclude: ['id="footer-placeholder"', '<section', '[LINK_WHATSAPP]'],
+  },
+
+  {
+    name: 'extras',
+    extract: extractExtras,
+    // Seccion 7, entre #como-funciona y #preguntas-frecuentes. Marcador: comentario de Stitch,
+    // unico (su tag <section> tambien lo es hoy, pero se usa el comentario por consistencia).
+    markers: [EXTRAS_MARKER],
+    prefix: 'videos_extras_',
+    keys: [
+      'videos_extras_kicker',
+      'videos_extras_title',
+      'videos_extras_subtitle',
+      'videos_extras_card1_badge',
+      'videos_extras_card1_title',
+      'videos_extras_card1_body',
+      'videos_extras_card1_footer',
+      'videos_extras_card2_badge',
+      'videos_extras_card2_title',
+      'videos_extras_card2_body',
+      'videos_extras_card2_footer',
+      'videos_extras_card3_badge',
+      'videos_extras_card3_title',
+      'videos_extras_card3_body',
+      'videos_extras_card3_footer',
+      'videos_extras_card4_badge',
+      'videos_extras_card4_title',
+      'videos_extras_card4_body',
+      'videos_extras_card4_footer',
+    ],
+    // Texto ES = el de Stitch, literal. OJO: la etiqueta de las 4 tarjetas es la MISMA frase
+    // ("Cotización a medida"), pero P3 exige 1 ocurrencia por clave en videos.html: por eso son
+    // 4 claves (precedente D1 del slice 7 con "Nivel X" x 6), coherentes por P-GUARD, no por
+    // una clave compartida.
+    es: {
+      videos_extras_kicker: 'Servicios Complementarios',
+      videos_extras_title: 'Trabajos adicionales cotizados por separado',
+      videos_extras_subtitle:
+        'Si requieres apoyo más allá de la edición de video, disponemos de soluciones a la medida con presupuesto individualizado según tus necesidades.',
+      videos_extras_card1_badge: 'Cotización a medida',
+      videos_extras_card1_title: 'Grabación en tu local',
+      videos_extras_card1_body:
+        'Contratación de personal para grabación presencial en Iquique y localidades de la Región de Tarapacá.',
+      videos_extras_card1_footer: 'Presencial Tarapacá',
+      videos_extras_card2_badge: 'Cotización a medida',
+      videos_extras_card2_title: 'Publicación y Programación',
+      videos_extras_card2_body:
+        'Subida calendarizada de reels con copy, hashtags optimizados y portada en tus canales sociales.',
+      videos_extras_card2_footer: 'Gestión de subida',
+      videos_extras_card3_badge: 'Cotización a medida',
+      videos_extras_card3_title: 'Manejo de Comunidad',
+      videos_extras_card3_body:
+        'Respuesta y filtro de comentarios y mensajes directos derivados de las publicaciones.',
+      videos_extras_card3_footer: 'Moderación activa',
+      videos_extras_card4_badge: 'Cotización a medida',
+      videos_extras_card4_title: 'Videos 100% con IA',
+      videos_extras_card4_body:
+        'Creación integral de avatar, voz sintetizada y escenas íntegramente generadas por Inteligencia Artificial.',
+      videos_extras_card4_footer: 'Producción sintética',
+    },
+    // Los 4 pies de tarjeta (videocam, calendar_month, forum, memory) son nodos de texto
+    // HERMANOS del icono: poner el data-i18n en el <div> borraria el icono (textContent =),
+    // asi que el texto va en un <span data-i18n> NUEVO (sin class).
+    wrapped: [
+      'videos_extras_card1_footer',
+      'videos_extras_card2_footer',
+      'videos_extras_card3_footer',
+      'videos_extras_card4_footer',
+    ],
+    // La seccion no tiene NI UN <strong> (verificado): nada que conservar. Por eso tampoco digitOf.
+    strongKeys: [],
+    fragments: [],
+    whitelist: new Set([]),
+    // El "%" de "Videos 100% con IA" queda literal en los 6 idiomas (mismo criterio que el "48").
+    literals: { videos_extras_card4_title: '100%' },
+    // La unica reutilizacion de este slice: las 4 etiquetas son la misma frase, asi que su
+    // traduccion debe ser EXACTAMENTE la misma en los 6 idiomas (no se retraduce 4 veces).
+    guardPairs: [
+      ['videos_extras_card2_badge', 'videos_extras_card1_badge'],
+      ['videos_extras_card3_badge', 'videos_extras_card1_badge'],
+      ['videos_extras_card4_badge', 'videos_extras_card1_badge'],
+    ],
+    mustInclude: [
+      'Servicios Complementarios',
+      'Trabajos adicionales cotizados por separado',
+      'Producción sintética',
+    ],
+    mustExclude: ['id="preguntas-frecuentes"', 'Claridad Absoluta', 'id="como-funciona"'],
   },
 ];
 
