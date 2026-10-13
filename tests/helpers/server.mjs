@@ -7,14 +7,10 @@ import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
+// Solo los dos tipos que el E2E realmente pide; el resto cae al fallback.
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.mjs': 'text/javascript; charset=utf-8',
-  '.png': 'image/png',
-  '.ico': 'image/x-icon',
-  '.css': 'text/css; charset=utf-8',
 };
 
 export async function startServer() {

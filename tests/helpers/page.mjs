@@ -12,14 +12,14 @@ export function read(relPath) {
   return readFileSync(ROOT + relPath, 'utf8');
 }
 
+// ponytail: el needle nunca es vacio en este repo (si lo fuera, devolveria len+1).
 export function count(haystack, needle) {
-  let n = 0;
-  let i = 0;
-  while ((i = haystack.indexOf(needle, i)) !== -1) {
-    n++;
-    i += needle.length;
-  }
-  return n;
+  return haystack.split(needle).length - 1;
+}
+
+// Claves que aparecen mas de una vez, sin repetir el nombre en la lista.
+export function dupesOf(keys) {
+  return [...new Set(keys.filter((k, i) => keys.indexOf(k) !== i))];
 }
 
 function indexOrThrow(haystack, needle) {
@@ -105,63 +105,60 @@ function extractSection(html, marker, nombre) {
   return html.slice(start, end + '</section>'.length);
 }
 
-// El hero: desde su <section> (marcador unico en el archivo: la seccion del CTA
-// final usa otra lista de clases) hasta su </section>.
-export function extractHero(html) {
-  return extractSection(
-    html,
-    '<section class="relative w-full bg-inverse-surface text-inverse-on-surface overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32">',
-    'del hero',
-  );
-}
+// Los marcadores de cada seccion, exportados como VALOR: el descriptor de la
+// suite de i18n los usa para su meta-test de unicidad (count === 1). Si el
+// marcador dejara de ser unico, el extractor devolveria otra region.
+
+// El hero: su <section> es unico en el archivo (la seccion del CTA final usa
+// otra lista de clases).
+export const HERO_MARKER =
+  '<section class="relative w-full bg-inverse-surface text-inverse-on-surface overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32">';
 
 // La seccion 2 "PROBLEMA Y SOLUCION" (slice 3). Marcador unico: usa
 // bg-surface-container-lowest, que ninguna otra <section> del archivo usa.
+export const PROBLEM_MARKER =
+  '<section class="w-full bg-surface-container-lowest text-on-surface py-section-gap-md">';
+
+export function extractHero(html) {
+  return extractSection(html, HERO_MARKER, 'del hero');
+}
+
 export function extractProblem(html) {
-  return extractSection(
-    html,
-    '<section class="w-full bg-surface-container-lowest text-on-surface py-section-gap-md">',
-    'del problema',
-  );
+  return extractSection(html, PROBLEM_MARKER, 'del problema');
 }
 
 // La seccion 3 "QUE RECIBES" (slice 4). El marcador NO puede ser el tag <section>:
 // en este archivo ese tag aparece DOS veces (secciones 3 y 5, ambas
 // bg-surface-container-low + py-section-gap-md) y indexOf devolveria la 3 por
 // casualidad, no por diseno. Se ancla al comentario de Stitch, que si es unico;
-// el test P4 lo verifica de hecho.
-export function extractIncludesMarker() {
-  return '<!-- ' + '='.repeat(73) + '\n       3. QUÉ RECIBES';
-}
+// el extra E_INCLUDES lo verifica de hecho.
+export const INCLUDES_MARKER = '<!-- ' + '='.repeat(73) + '\n       3. QUÉ RECIBES';
 
 export function extractIncludes(html) {
-  return extractSection(html, extractIncludesMarker(), 'de entregables');
+  return extractSection(html, INCLUDES_MARKER, 'de entregables');
 }
 
 // La seccion 4 "PLANES MENSUALES" (slice 5: encabezado + planes 1 y 2). El rango va
 // del comentario de Stitch de la seccion hasta el comentario de la tarjeta 3: es
 // frontera de tarjeta (la 2 cierra antes), no parte ninguna lista de bullets.
-// Los dos marcadores son unicos; el test P4 del slice 5 lo verifica de hecho.
-export function extractPlansMarker() {
-  return '<!-- ' + '='.repeat(73) + '\n       4. TABLA DE PLANES MENSUALES';
-}
+export const PLANS_MARKER = '<!-- ' + '='.repeat(73) + '\n       4. TABLA DE PLANES MENSUALES';
 
-export function extractPlansCutMarker() {
-  return '<!-- PLAN 3: PREMIUM -->';
-}
+export const PLANS_CUT_MARKER = '<!-- PLAN 3: PREMIUM -->';
 
 export function extractPlansA(html) {
-  const start = indexOrThrow(html, extractPlansMarker());
-  const end = indexOrThrow(html, extractPlansCutMarker());
+  const start = indexOrThrow(html, PLANS_MARKER);
+  const end = indexOrThrow(html, PLANS_CUT_MARKER);
   return html.slice(start, end);
 }
 
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
-// acoplamiento deliberado: cada slice de i18n agrega su extractor aca (1 linea),
-// y con eso el test C8 del slice 1 sigue vigilando que no se adelante trabajo
-// de los slices siguientes.
+// acoplamiento deliberado: cada slice de i18n agrega su extractor a esta lista
+// (1 linea) y su descriptor en SECTIONS (tests/i18n-sections.test.mjs). El
+// meta-test G7 vigila que las dos listas no se separen.
+export const SECTION_EXTRACTORS = [extractHero, extractProblem, extractIncludes, extractPlansA];
+
 export function extractSections(html) {
-  return extractHero(html) + extractProblem(html) + extractIncludes(html) + extractPlansA(html);
+  return SECTION_EXTRACTORS.map((f) => f(html)).join('');
 }
 
 // --- parser de tags (compartido por los tests de i18n de los slices 2 y 3) ---

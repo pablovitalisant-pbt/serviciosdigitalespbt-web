@@ -14,9 +14,14 @@ import {
   extractScrollEffect,
   scriptBlockWith,
   extractSections,
+  gitShowBaseline,
 } from './helpers/page.mjs';
 
 const VIDEOS = read('videos.html');
+// Base congelada del slice 1: los conteos globales se derivan de ahi, no de numeros
+// fijos (un slice de i18n no puede cambiarlos, pero un slice futuro si podria: que falle
+// entonces, y no en cada slice nuevo por un numero cableado).
+const VIDEOS_BASE = gitShowBaseline('8a5fa69', 'videos.html');
 const CASOS = read('casos.html');
 const NAVBAR = read('components/navbar.html');
 const FOOTER = read('components/footer.html');
@@ -82,41 +87,22 @@ test('C6 el CTA final de Stitch sigue intacto (se conserva: es especifico de la 
   assert.ok(VIDEOS.includes('id="planes"'), 'desaparecio el ancla #planes que usa el CTA');
 });
 
-test('C7 los placeholders de WhatsApp de Stitch no se tocaron (7 [LINK_WHATSAPP] y 1 wa.me vacio)', () => {
-  assert.equal(count(VIDEOS, '[LINK_WHATSAPP]'), 7, 'cambio la cantidad de [LINK_WHATSAPP]');
-  assert.equal(count(VIDEOS, 'href="https://wa.me/"'), 1, 'cambio el href="https://wa.me/" vacio');
+test('C7 los placeholders de WhatsApp de Stitch no se tocaron (conteos derivados de la base)', () => {
+  for (const tok of ['[LINK_WHATSAPP]', 'href="https://wa.me/"']) {
+    assert.equal(count(VIDEOS, tok), count(VIDEOS_BASE, tok), `cambio la cantidad de ${tok}`);
+  }
 });
 
 // C8 original: "0 data-i18n en videos.html". Su intencion real era "no se adelanto
 // trabajo de los slices siguientes", no "no hay i18n": cada slice traduce una seccion.
-// Se mide contra `extractSections` (hero + problema), que es el registro de secciones
-// ya traducidas. Agregar una seccion ahi es el unico cambio que este test pide.
-// Sigue siendo UN solo test() para no cambiar el conteo global de la suite.
-test('C8 solo las secciones ya traducidas llevan i18n (slices 4-10 intactos)', () => {
-  const traducidas = extractSections(VIDEOS);
+// Se mide contra `extractSections`, que es el registro de secciones ya traducidas. El
+// detalle de QUE claves y QUE spans lleva cada seccion vive en tests/i18n-sections.test.mjs
+// (P1/P3/P6/G3), que ademas cubre el archivo entero: aca queda solo el invariante.
+test('C8 solo las secciones ya traducidas llevan i18n (los slices siguientes intactos)', () => {
   assert.equal(
-    count(traducidas, 'data-i18n="'),
+    count(extractSections(VIDEOS), 'data-i18n="'),
     count(VIDEOS, 'data-i18n="'),
-    'hay data-i18n fuera de las secciones traducidas: se adelanto trabajo de los slices 4-10',
-  );
-  // El criterio "span SIN class" distingue los spans nuevos de los data-i18n que
-  // ya viven en un tag con class del diseno de Stitch. Los slices 3 y 4 no agregaron
-  // ninguno (sus contenedores tienen el icono HERMANO, no hijo); el slice 5 agrega 4
-  // porque fragmenta los bullets que llevan <strong> adentro (el motor hace
-  // textContent = y borraria la negrita).
-  const wrapped = [...traducidas.matchAll(/<span data-i18n="([^"]+)">/g)].map((m) => m[1]).sort();
-  assert.deepEqual(
-    wrapped,
-    [
-      'videos_hero_cta_planes',
-      'videos_hero_cta_whatsapp',
-      'videos_hero_viral',
-      'videos_plans_p1_b1_s',
-      'videos_plans_p2_b1_s',
-      'videos_plans_p2_b4_post',
-      'videos_plans_p2_b4_pre',
-    ],
-    'los spans envolventes no son exactamente los 3 del hero + los 4 del slice 5',
+    'hay data-i18n fuera de las secciones traducidas: se adelanto trabajo de un slice futuro',
   );
 });
 
