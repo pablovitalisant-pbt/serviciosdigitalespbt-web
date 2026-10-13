@@ -14,6 +14,9 @@ Los UNICOS cambios permitidos son:
 3. Multilingue: todo texto visible pasa a ser traducible en los 6 idiomas (es, en, hi, zh, ur, ko).
 4. Copy v2 (slices 12-13, 2026-10-13): excepcion ACOTADA Y CERRADA — solo los 9 textos
    y los 4 precios listados en la seccion "Copy v2" mas abajo. No habilita editar nada mas.
+5. Links de WhatsApp (slice 14, 2026-10-13): excepcion ACOTADA Y CERRADA — solo los 8
+   atributos `href` listados en la seccion "Slice 14" mas abajo. Ningun otro `href` de la
+   pagina, y ningun texto, clase ni estructura. No habilita editar nada mas.
 
 Cualquier otro cambio (estilos, textos, links, estructura, head, clases) esta PROHIBIDO.
 Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
@@ -31,7 +34,9 @@ Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
 - El motor hace `el.textContent = translations[key]`: BORRA los hijos del elemento.
   Nunca poner data-i18n en un elemento que tenga iconos u otros hijos; envolver solo el texto en `<span data-i18n="...">`.
 - Componentes se cargan por fetch: probar siempre por HTTP local (`python -m http.server`), nunca file://.
-- Hay placeholders de Stitch sin resolver (`[LINK_WHATSAPP]`, `https://wa.me/` vacio). NO se tocan en estos slices (Pablo pidio solo menu, footer e idioma). Se reportan.
+- Los 8 botones de WhatsApp de Stitch (`[LINK_WHATSAPP]` x7 y el `https://wa.me/` vacio del
+  boton fijo movil) quedaron RESUELTOS en el slice 14: abren el chat con +56920948874 con
+  mensaje prellenado (ver "Slice 14" mas abajo).
 
 ## Reglas i18n
 
@@ -75,6 +80,7 @@ No crear infraestructura de flags.
 | 11 | Navbar: item `nav_videos` -> videos.html (desktop + movil) + 6 JSON | components/navbar.html |
 | 12 | Copy v2: reposicionamiento a "negocios de todo rubro" + servicio 100% online (9 textos) | 17, 26, 144, 158, 191, 193, 249, 301, 810 |
 | 13 | Precios de planes p2/p3 (el precio por reel baja al subir de plan) + guardia G-PRICING | 362, 365, 407, 410 |
+| 14 | Links de WhatsApp: los 7 `[LINK_WHATSAPP]` + el `https://wa.me/` vacio pasan a abrir el chat con mensaje prellenado (8 `href`) + guardia G-WHATSAPP | 37, 346, 395, 440, 494, 523, 800, 815 |
 
 Numeros de linea referidos al archivo original de Stitch; tras el slice 1 cambian. Ubicar por titulo de seccion.
 
@@ -142,3 +148,53 @@ Los 2 precios mensuales son tokens puros (sin clave i18n): su cambio se declara 
 byte a byte todo lo demas contra la base `8a5fa69`.
 
 Lo mismo que el copy v2: excepcion acotada, no habilita tocar ningun otro precio ni texto.
+
+## Slice 14 — Links de WhatsApp (2026-10-13)
+
+Decision de negocio de Pablo: **todos** los botones de WhatsApp de la landing abren un chat
+con **+56920948874** con un mensaje prellenado propio de cada boton. Los 8 botones son TODOS
+los CTAs de WhatsApp visibles de la pagina: el unico boton de WhatsApp del footer compartido
+(`section#contacto`) esta oculto en `videos.html` (invariante C11 del slice 1), asi que el
+footer no necesita cambios. `casos.html` (2 links) e `index.html` (link armado por JS con
+`encodeURIComponent`) quedan FUERA de alcance y sin mensaje prellenado.
+
+Excepcion acotada: solo los 8 atributos `href`. No cambia ningun texto visible, clase,
+`data-i18n`, `target` ni `rel` (los 8 ya traian `target="_blank"` y `rel="noopener noreferrer"`).
+
+Base del link: `https://wa.me/56920948874?text=` + `encodeURIComponent(mensaje)`. Un solo
+parametro, por eso **no aparece `&`**. `encodeURIComponent` codifica la coma (`%2C`), las
+tildes (`%C3%B3`) y los espacios (`%20`), pero **NO** codifica `( ) ! ' * - . _ ~`: los
+parentesis de "(N reels al mes)" quedan LITERALES en el href.
+
+**Los hrefs NO se escriben a mano: se generan con `encodeURIComponent` desde el texto plano.**
+La tabla de abajo es la fuente de verdad del TEXTO; el href es su encode.
+
+| # | Boton (clave i18n) | Texto plano del mensaje |
+|---|--------------------|-------------------------|
+| 1 | Hero `videos_hero_cta_whatsapp` | `Hola, quiero cotizar la edición de reels para mi negocio.` |
+| 2 | `videos_plans_p1_cta` (Elegir Económica) | `Hola, quiero contratar el Plan Económica (4 reels al mes).` |
+| 3 | `videos_plans_p2_cta` (Elegir Equilibrada) | `Hola, quiero contratar el Plan Equilibrada (8 reels al mes).` |
+| 4 | `videos_plans_p3_cta` (Elegir Premium) | `Hola, quiero contratar el Plan Premium (12 reels al mes).` |
+| 5 | `videos_single_reel_cta` | `Hola, quiero cotizar un reel suelto.` |
+| 6 | `videos_single_long_cta` | `Hola, quiero cotizar un video largo.` |
+| 7 | CTA final `videos_cta_whatsapp` | `Hola, quiero cotizar la edición de reels para mi negocio.` |
+| 8 | Barra fija movil `videos_mobile_whatsapp` | `Hola, quiero cotizar la edición de reels para mi negocio.` |
+
+Decisiones de la Fase A (aprobadas por el Director Tecnico):
+
+- Los mensajes van en **espanol fijo**, sin traducir en los 6 idiomas: son `href`, no texto
+  visible, y `initI18n` solo escribe `textContent` (no atributos). Traducirlos exigiria tocar
+  el motor, fuera de alcance.
+- El mensaje por defecto se comparte a proposito en 3 botones (hero, CTA final, barra movil).
+- El numero va en claro en 4 archivos + tests: es un numero de negocio publico ya publicado.
+
+Mecanismo de blanqueo: la tabla `WA_CTA` de `tests/i18n-sections.test.mjs` (hermana de
+`COPY_V2` / `COPY_V2_TOKENS`). Es la **unica via** para que P9/P8b dejen de exigir los
+placeholders de la base `8a5fa69`, y `G-WHATSAPP` la vigila: destinatario unico y exactamente
+8 hrefs, codificacion canonica (`encodeURIComponent(decodeURIComponent(v)) === v`), mapeo por
+IDENTIDAD (clave i18n del `<a>` o de su `<span>` hijo, no por posicion: en `plansA` y `single`
+el placeholder viejo es el mismo string dos veces y un cruce de mensajes pasaria inadvertido),
+biyeccion mensajes HTML ↔ tabla, y coherencia plan/reels leyendo los reels de `es.json`
+(cambiar los reels de un plan sin su mensaje rompe la guardia).
+
+Como el copy v2 y los precios: excepcion acotada, no habilita tocar ningun otro link.

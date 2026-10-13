@@ -131,6 +131,35 @@ const COPY_V2_TOKENS = {
   '$390.000': '$210.000',
 };
 
+// --- WhatsApp (slice 14, 2026-10-13) -----------------------------------------
+// Decision de Pablo: los 8 botones de WhatsApp de la landing abren un chat con +56920948874
+// con un mensaje prellenado propio de cada boton. Es la primera excepcion a la "Regla
+// principal" del PLAN que toca `href`s (hasta ahora solo textos y precios), y por eso va por
+// el MISMO mecanismo de overrides declarados: `section` + `old` blanquean la diferencia
+// contra la base 8a5fa69 para P9 (byte a byte) y nada mas.
+//
+// Los hrefs NO se escriben a mano: la tabla guarda el TEXTO PLANO y el href se calcula con
+// encodeURIComponent. Hacerlo a mano es exactamente el error que este mecanismo evita —
+// encodeURIComponent NO codifica ( ) ! ' * - . _ ~ (por eso los parentesis de "(4 reels al
+// mes)" quedan LITERALES en el href), pero SI codifica la coma (%2C), las tildes (%C3%B3) y
+// los espacios (%20). El mensaje lleva un solo parametro, asi que no aparece `&`.
+// `key` es la identidad estable del boton (el `data-i18n` de su <a> o de su <span> hijo): el
+// mapeo de G-WHATSAPP va por ahi y NO por posicion, porque en plansA y single el placeholder
+// viejo es identico dos veces y un cruce de mensajes pasaria inadvertido.
+const WA_BASE = 'https://wa.me/56920948874?text=';
+const waHref = (msg) => WA_BASE + encodeURIComponent(msg);
+const WA_DEFAULT = 'Hola, quiero cotizar la edición de reels para mi negocio.';
+const WA_CTA = [
+  { key: 'videos_hero_cta_whatsapp', section: 'hero', old: 'href="[LINK_WHATSAPP]"', msg: WA_DEFAULT },
+  { key: 'videos_plans_p1_cta', section: 'plansA', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero contratar el Plan Económica (4 reels al mes).' },
+  { key: 'videos_plans_p2_cta', section: 'plansA', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero contratar el Plan Equilibrada (8 reels al mes).' },
+  { key: 'videos_plans_p3_cta', section: 'plansB', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero contratar el Plan Premium (12 reels al mes).' },
+  { key: 'videos_single_reel_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero cotizar un reel suelto.' },
+  { key: 'videos_single_long_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero cotizar un video largo.' },
+  { key: 'videos_cta_whatsapp', section: 'cta', old: 'href="[LINK_WHATSAPP]"', msg: WA_DEFAULT },
+  { key: 'videos_mobile_whatsapp', section: 'mobile', old: 'href="https://wa.me/"', msg: WA_DEFAULT },
+];
+
 // Lista explicita, en el orden del contrato. G-COPYV2 la compara con las claves reales de
 // COPY_V2: si alguien agrega o quita una divergencia, este array lo delata.
 const COPY_V2_KEYS = [
@@ -806,8 +835,10 @@ const SECTIONS = [
     strongKeys: [],
     fragments: [],
     whitelist: new Set([]),
-    // Icono, href y clases intactos (C5a/C5b los vigilan): el href es un placeholder de Stitch.
-    pureTokens: ['https://wa.me/'],
+    // El href dejo de ser el placeholder vacio de Stitch en el slice 14: ahora es el chat con
+    // mensaje prellenado, declarado en WA_CTA y vigilado por G-WHATSAPP. No se declara aca un
+    // pureToken: el campo quedo sin tokens y `[]` es truthy, asi que generaria un test vacuo
+    // ("los 0 tokens puros") en vez de no generar ninguno (mismo criterio que strongKeys).
     mustInclude: ['Cotizar por WhatsApp'],
     mustExclude: ['id="footer-placeholder"', '<section', '[LINK_WHATSAPP]'],
   },
@@ -1054,6 +1085,27 @@ function secBaseV2(d) {
         `${d.name}: el token viejo ${oldT} aparece ${count(s, oldT)} veces en la base (se esperaba 1)`,
       );
       s = s.replace(oldT, newT);
+    }
+    // Slice 14: los hrefs de WhatsApp. Se aplican EN EL ORDEN del array, que es el orden de
+    // aparicion dentro de la seccion (plansA y single tienen 2 entradas con el mismo `old`):
+    // .replace() cambia solo la primera ocurrencia que quede, y el assert de presencia
+    // delata una entrada de mas (una tercera en una seccion de 2).
+    const wa = WA_CTA.filter((e) => e.section === d.name);
+    for (const e of wa) {
+      assert.ok(
+        s.includes(e.old),
+        `${d.name}: el placeholder ${e.old} de "${e.key}" ya no esta en la base (hay una entrada de mas en WA_CTA)`,
+      );
+      s = s.replace(e.old, `href="${waHref(e.msg)}"`);
+    }
+    // Anti-vacuidad: si WA_CTA declarara menos botones que los que tiene la seccion, los
+    // sobrantes quedarian en la base y P9 los blanquearia sin que nadie los mire.
+    if (wa.length) {
+      assert.equal(
+        count(s, '[LINK_WHATSAPP]') + count(s, 'href="https://wa.me/"'),
+        0,
+        `${d.name}: quedaron placeholders de WhatsApp que WA_CTA no declara`,
+      );
     }
     secBaseCache.set(d.name, s);
   }
@@ -1521,10 +1573,91 @@ test('G-NICHO ninguna clave visible de videos.html vende "profesionales de servi
   }
 });
 
-test('G-FILEWIDE videos.html conserva los conteos globales del slice 1 (iconos, WhatsApp, class)', () => {
+test('G-FILEWIDE videos.html conserva los conteos globales del slice 1 (iconos y class)', () => {
   // Los conteos por seccion los implica P9 byte a byte; estos son de TODO el archivo.
-  for (const t of ['material-symbols-outlined', '[LINK_WHATSAPP]', 'href="https://wa.me/"', 'class="']) {
+  for (const t of ['material-symbols-outlined', 'class="']) {
     assert.equal(count(V, t), count(VBASE, t), `cambio la cantidad de ${JSON.stringify(t)} en videos.html`);
+  }
+  // Los placeholders de WhatsApp de Stitch los resolvio el slice 14: pasan de 7/1 en la base
+  // a 0/0. La base va cableada para que un cambio de la base congelada se delate; los 8 hrefs
+  // nuevos los vigila G-WHATSAPP.
+  assert.equal(count(VBASE, '[LINK_WHATSAPP]'), 7, 'la base 8a5fa69 ya no tiene 7 [LINK_WHATSAPP]');
+  assert.equal(count(VBASE, 'href="https://wa.me/"'), 1, 'la base 8a5fa69 ya no tiene 1 href="https://wa.me/" vacio');
+  for (const t of ['[LINK_WHATSAPP]', 'href="https://wa.me/"']) {
+    assert.equal(count(V, t), 0, `quedan placeholders de WhatsApp sin resolver en videos.html: ${t}`);
+  }
+});
+
+// --- WhatsApp (slice 14): guardia del archivo entero --------------------------
+// Devuelve el tag <a ...> que lleva la clave declarada: en el propio <a> (videos_plans_p1_cta)
+// o en un hijo (<span data-i18n="videos_hero_cta_whatsapp">). Asi el mapeo va por IDENTIDAD y
+// no por posicion.
+function waAnchorTag(html, key) {
+  assert.equal(count(html, `data-i18n="${key}"`), 1, `"${key}" no aparece exactamente 1 vez en videos.html`);
+  const at = html.indexOf(`data-i18n="${key}"`);
+  const open = html.lastIndexOf('<a ', at);
+  assert.notEqual(open, -1, `"${key}" no vive dentro de un <a>`);
+  assert.ok(html.lastIndexOf('</a>', at) < open, `"${key}" quedo fuera del ultimo <a> abierto`);
+  const tag = html.slice(open, html.indexOf('>', open) + 1);
+  // Los 8 botones ya traian target y rel de Stitch: el slice no los toca y no puede perderlos.
+  assert.match(tag, /\btarget="_blank"/, `el <a> de "${key}" perdio target="_blank"`);
+  assert.match(tag, /\brel="noopener noreferrer"/, `el <a> de "${key}" perdio rel="noopener noreferrer"`);
+  return tag;
+}
+
+test('G-WHATSAPP los 8 botones abren el chat 56920948874 con su mensaje prellenado correcto', () => {
+  // 1) La tabla es exactamente la del contrato y cada entrada es coherente.
+  assert.equal(WA_CTA.length, 8, `el contrato declara 8 botones de WhatsApp, hay ${WA_CTA.length}`);
+  assert.deepEqual(dupesOf(WA_CTA.map((e) => e.key)), [], 'claves repetidas en WA_CTA: el mapeo por identidad seria ambiguo');
+  for (const e of WA_CTA) {
+    assert.ok(D[e.section], `WA_CTA["${e.key}"] apunta a una seccion que no existe: ${e.section}`);
+    assert.ok(e.msg.trim().length > 0 && e.msg === e.msg.trim(), `WA_CTA["${e.key}"]: mensaje vacio o con espacios al borde`);
+    assert.doesNotMatch(e.msg, /[\r\n]/, `WA_CTA["${e.key}"]: el mensaje lleva un salto de linea`);
+  }
+
+  // 2) Destinatario unico en TODO el archivo: ningun wa.me a otro numero, ninguno sin ?text=.
+  const hrefs = [...V.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)].map((m) => m[1]);
+  assert.equal(hrefs.length, 8, `videos.html tiene ${hrefs.length} hrefs de wa.me (se esperaban 8)`);
+  for (const h of hrefs) {
+    assert.ok(h.startsWith(WA_BASE), `href de WhatsApp sin destinatario o sin mensaje prellenado: ${h}`);
+  }
+
+  // 3) Codificacion canonica: decodifica al texto plano y re-encodea al MISMO href. Esto es lo
+  // que prohibe espacios, tildes y parentesis crudos, y lo que delata el doble-encoding.
+  const mensajes = [];
+  for (const h of hrefs) {
+    let msg;
+    assert.doesNotThrow(() => {
+      msg = decodeURIComponent(h.slice(WA_BASE.length));
+    }, `el ?text= de ${h} no decodifica`);
+    assert.equal(waHref(msg), h, `el ?text= de ${h} no esta codificado con encodeURIComponent`);
+    assert.ok(msg.length > 0, `mensaje prellenado vacio en ${h}`);
+    mensajes.push(msg);
+  }
+
+  // 4) Mapeo por identidad: cada boton declarado lleva SU mensaje.
+  for (const e of WA_CTA) {
+    const href = waAnchorTag(V, e.key).match(/\bhref="([^"]*)"/)?.[1];
+    assert.ok(href, `el <a> de "${e.key}" se quedo sin href`);
+    assert.equal(href, waHref(e.msg), `el boton "${e.key}" no lleva su mensaje declarado`);
+  }
+
+  // 5) Biyeccion: los mensajes del archivo son exactamente los de WA_CTA. Multiset, no set: el
+  // mensaje por defecto se repite a proposito en hero, CTA final y barra movil.
+  assert.deepEqual(mensajes.slice().sort(), WA_CTA.map((e) => e.msg).sort(), 'los mensajes del HTML no son los de WA_CTA');
+
+  // 6) Coherencia plan/reels: el mensaje de cada plan nombra el plan de su tarjeta y la
+  // cantidad de reels que dice el HTML. Sale de es.json (que G-PRICING ya cruza contra el
+  // HTML), no de una constante: cambiar los reels del plan sin el mensaje rompe esto.
+  for (const i of [1, 2, 3]) {
+    const e = WA_CTA.find((x) => x.key === `videos_plans_p${i}_cta`);
+    assert.ok(e, `WA_CTA no declara el boton del plan p${i}`);
+    const nombre = J.es[`videos_plans_p${i}_title`].replace(PLAN_WORD.es, '').trim();
+    const reels = clp(J.es[`videos_plans_p${i}_b1_n`]);
+    assert.ok(nombre.length > 1, `es.json: "videos_plans_p${i}_title" no trae el nombre del plan`);
+    assert.ok(reels > 0, `es.json: "videos_plans_p${i}_b1_n" no trae la cantidad de reels`);
+    assert.ok(e.msg.includes(nombre), `el mensaje de "${e.key}" no nombra el plan (${nombre}): ${e.msg}`);
+    assert.ok(e.msg.includes(`(${reels} reels al mes)`), `el mensaje de "${e.key}" no dice (${reels} reels al mes): ${e.msg}`);
   }
 });
 

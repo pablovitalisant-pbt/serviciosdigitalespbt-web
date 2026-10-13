@@ -65,9 +65,20 @@ test('C4 el <footer> propio de Stitch fue eliminado (no comentado)', () => {
   assert.equal(count(VIDEOS, '<footer'), 0, 'queda el footer de Stitch en videos.html');
 });
 
-test('C5a el boton fijo movil de WhatsApp de Stitch sigue intacto', () => {
+// Slice 14: el boton fijo movil dejo de ser el placeholder vacio de Stitch. Ahora abre el
+// chat con mensaje prellenado. El MENSAJE exacto de cada boton lo vigila G-WHATSAPP
+// (tests/i18n-sections.test.mjs): aca solo se acredita que este boton sigue ahi y ya apunta
+// al chat, sin duplicar la tabla de mensajes en dos archivos.
+const WA_HREF = 'https://wa.me/56920948874?text=';
+
+test('C5a el boton fijo movil de WhatsApp sigue intacto y ya abre el chat con mensaje', () => {
   assert.equal(count(VIDEOS, WA_BAR), 1, 'desaparecio el boton fijo movil de WhatsApp');
-  assert.ok(VIDEOS.includes('href="https://wa.me/"'), 'cambio el href del boton fijo movil');
+  const i = VIDEOS.indexOf(WA_BAR);
+  const href = VIDEOS.slice(i, VIDEOS.indexOf('</a>', i)).match(/\bhref="([^"]*)"/)?.[1];
+  assert.ok(href, 'el boton fijo movil se quedo sin href');
+  assert.ok(href.startsWith(WA_HREF), `el boton movil no abre el chat con mensaje: ${href}`);
+  const msg = decodeURIComponent(href.slice(WA_HREF.length));
+  assert.ok(msg.trim().length > 0, 'el mensaje prellenado del boton movil quedo vacio');
 });
 
 test('C5b el boton movil sigue DESPUES del footer-placeholder (no se borro junto con el footer)', () => {
@@ -79,7 +90,7 @@ test('C5b el boton movil sigue DESPUES del footer-placeholder (no se borro junto
   );
 });
 
-// --- C6/C7/C8 — lo que NO debe cambiar -------------------------------------
+// --- C6/C8 — lo que NO debe cambiar (C7 cambio de sentido en el slice 14) ----
 
 test('C6 el CTA final de Stitch sigue intacto (se conserva: es especifico de la oferta)', () => {
   assert.ok(VIDEOS.includes('Empieza hoy a publicar reels profesionales'), 'desaparecio el CTA de Stitch');
@@ -87,10 +98,21 @@ test('C6 el CTA final de Stitch sigue intacto (se conserva: es especifico de la 
   assert.ok(VIDEOS.includes('id="planes"'), 'desaparecio el ancla #planes que usa el CTA');
 });
 
-test('C7 los placeholders de WhatsApp de Stitch no se tocaron (conteos derivados de la base)', () => {
+// Slice 14: los placeholders de Stitch YA no existen, y exactamente 8 botones (los 7
+// [LINK_WHATSAPP] + el href="https://wa.me/" vacio) apuntan al chat. Los conteos de la base
+// van cableados a proposito: si la base congelada cambiara, este test mediria otra cosa y
+// tiene que avisarlo.
+test('C7 los placeholders de WhatsApp de Stitch ya no existen (los resolvio el slice 14)', () => {
+  assert.equal(count(VIDEOS_BASE, '[LINK_WHATSAPP]'), 7, 'la base 8a5fa69 ya no tiene 7 [LINK_WHATSAPP]');
+  assert.equal(count(VIDEOS_BASE, 'href="https://wa.me/"'), 1, 'la base 8a5fa69 ya no tiene 1 href="https://wa.me/" vacio');
   for (const tok of ['[LINK_WHATSAPP]', 'href="https://wa.me/"']) {
-    assert.equal(count(VIDEOS, tok), count(VIDEOS_BASE, tok), `cambio la cantidad de ${tok}`);
+    assert.equal(count(VIDEOS, tok), 0, `quedan placeholders de WhatsApp sin resolver: ${tok}`);
   }
+  assert.equal(
+    count(VIDEOS, `href="${WA_HREF}`),
+    8,
+    'los botones de WhatsApp con chat no son 8 (7 placeholders + el boton fijo movil)',
+  );
 });
 
 // C8 original: "0 data-i18n en videos.html". Su intencion real era "no se adelanto
