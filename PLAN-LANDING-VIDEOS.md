@@ -12,6 +12,8 @@ Los UNICOS cambios permitidos son:
 1. Menu: el `<header>` propio de Stitch se reemplaza por el navbar compartido (`components/navbar.html`).
 2. Footer: el `<footer>` propio de Stitch se reemplaza por el footer compartido (`components/footer.html`).
 3. Multilingue: todo texto visible pasa a ser traducible en los 6 idiomas (es, en, hi, zh, ur, ko).
+4. Copy v2 (slice 12, 2026-10-13): excepcion ACOTADA Y CERRADA — solo los 9 textos
+   listados en la seccion "Copy v2" mas abajo. No habilita editar ningun otro texto.
 
 Cualquier otro cambio (estilos, textos, links, estructura, head, clases) esta PROHIBIDO.
 Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
@@ -71,6 +73,7 @@ No crear infraestructura de flags.
 | 9 | i18n Trabajos adicionales | 619-696 |
 | 10 | i18n Preguntas frecuentes | 697-785 |
 | 11 | Navbar: item `nav_videos` -> videos.html (desktop + movil) + 6 JSON | components/navbar.html |
+| 12 | Copy v2: reposicionamiento a "negocios de todo rubro" + servicio 100% online (9 textos) | 17, 26, 144, 158, 191, 193, 249, 301, 810 |
 
 Numeros de linea referidos al archivo original de Stitch; tras el slice 1 cambian. Ubicar por titulo de seccion.
 
@@ -79,3 +82,39 @@ Numeros de linea referidos al archivo original de Stitch; tras el slice 1 cambia
 - Ciclo PBT-IA completo (Fases A-D) por slice.
 - Sin commits. Pablo aprueba commits.
 - No tocar archivos fuera del alcance del slice. components/navbar.html y components/footer.html solo se tocan en el slice 11.
+
+## Copy v2 (slice 12, 2026-10-13)
+
+Decision de negocio de Pablo: la landing deja de apuntar a "profesionales de servicios"
+(medicos, abogados, esteticistas) **en Chile** y pasa a apuntar a **negocios de
+cualquier rubro**, con el servicio ofrecido **100% online a todo el mundo**.
+
+Esto es una excepcion deliberada a la "Regla principal": el copy ES deja de ser el de
+Stitch en estos 9 textos y solo en estos 9. Cerrada por ambos lados:
+
+- **Negativo**: `G-NICHO` falla si cualquier clave visible de videos.html vuelve a
+  mencionar "profesionales de servicios", "Chile", "chileno" o "pesos chilenos".
+- **Positivo**: `G-COPYV2` falla si la tabla de divergencias crece, si `new` deja de
+  coincidir con `d.es[k]`, si `old` no existe en la base `8a5fa69`, o si `new` ya
+  estuviera en ella. La unica via para blanquear una divergencia es escribirla a mano
+  en `COPY_V2` (tests/i18n-sections.test.mjs).
+
+| Clave | Texto v2 (ES) |
+|-------|---------------|
+| `videos_hero_badge` | Edición de reels para negocios que quieren vender en redes |
+| `videos_hero_subtitle` | Ya sea que vendas productos, servicios o experiencias, tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones. |
+| `videos_problem_subtitle` | Tiendas, mayoristas, gimnasios, centros de estética, inmobiliarias, agencias de turismo, salas de eventos, consultas y oficinas: todos saben que tienen que estar activos en redes. El obstáculo nunca es la cámara: es perder horas valiosas cortando silencios, afinando subtítulos y buscando música sin derechos. |
+| `videos_problem_block1_body` | Grabas un video en 5 minutos entre una venta y otra, pero terminas perdiendo todo el fin de semana probando filtros, sincronizando subtítulos y exportando videos que no quedan como imaginabas. |
+| `videos_problem_block3_title` | Enfócate en tu negocio |
+| `videos_problem_block3_body` | Tú te dedicas a vender, atender y hacer crecer tu negocio sin desviarte de lo que genera ingresos reales. Nosotros nos encargamos de que tu material crudo se convierta en reels impecables que atraigan nuevos clientes. |
+| `videos_includes_card2_body` | Cortes de silencios y tiempos muertos, eliminación de titubeos, estabilización y el mejor ritmo para mostrar lo que ofreces. |
+| `videos_plans_subtitle` | Precios transparentes. Sin contratos forzosos ni letras chicas. |
+| `videos_cta_footer` | Servicio 100% online: trabajamos con negocios de todo el mundo |
+
+Menciones locales que **sobreviven a proposito** (no las cubre `G-NICHO`): grabacion
+presencial en `videos_extras_card1_body` / `videos_extras_card1_footer` /
+`videos_faq_q1_body`, y la moneda CLP en los valores de precio. Lo presencial sigue
+siendo la excepcion cotizable (`videos_includes_note_body`), no la regla.
+
+Terminos en observacion, reportados y **no tocados**: `videos_faq_q4_body`
+("atención de consultas") y `videos_problem_block2_body` ("editor profesional").

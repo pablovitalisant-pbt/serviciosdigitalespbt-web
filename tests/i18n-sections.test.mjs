@@ -66,6 +66,66 @@ const JBASE = Object.fromEntries(
   LANGS.map((l) => [l, JSON.parse(stripBom(gitShowBaseline(BASE, `i18n/${l}.json`)))]),
 );
 
+// --- copy v2 (slice 12): divergencias DELIBERADAS del copy de Stitch -----------
+// Decision de negocio de Pablo (2026-10-13): la landing deja de vender "profesionales
+// de servicios en Chile" y pasa a "negocios de cualquier rubro, servicio 100% online".
+// Cada entrada declara el texto VIEJO (literal en la base 8a5fa69) y el NUEVO (= d.es[k]).
+// P8b y P9 aplican esta tabla a la base ANTES de comparar: es lo UNICO que puede blanquear
+// una divergencia, y solo estas 9 claves. G-COPYV2 vigila la tabla; agregar una entrada
+// exige tocar tambien su lista explicita (una decision visible, no un descuido).
+const COPY_V2 = {
+  videos_hero_badge: {
+    old: 'Edición de reels para profesionales locales',
+    new: 'Edición de reels para negocios que quieren vender en redes',
+  },
+  videos_hero_subtitle: {
+    old: 'Tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Entrega de tu primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.',
+    new: 'Ya sea que vendas productos, servicios o experiencias, tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.',
+  },
+  videos_problem_subtitle: {
+    old: 'La mayoría de médicos, abogados, esteticistas y prestadores de servicios quieren una presencia activa en redes sociales. El obstáculo nunca es la cámara: es perder horas valiosas cortando silencios, afinando subtítulos y buscando música sin derechos.',
+    new: 'Tiendas, mayoristas, gimnasios, centros de estética, inmobiliarias, agencias de turismo, salas de eventos, consultas y oficinas: todos saben que tienen que estar activos en redes. El obstáculo nunca es la cámara: es perder horas valiosas cortando silencios, afinando subtítulos y buscando música sin derechos.',
+  },
+  videos_problem_block1_body: {
+    old: 'Grabas una explicación en 5 minutos entre citas, pero terminas perdiendo todo el fin de semana probando filtros, sincronizando subtítulos y exportando videos que no quedan como imaginabas.',
+    new: 'Grabas un video en 5 minutos entre una venta y otra, pero terminas perdiendo todo el fin de semana probando filtros, sincronizando subtítulos y exportando videos que no quedan como imaginabas.',
+  },
+  videos_problem_block3_title: {
+    old: 'Enfócate en tu profesión',
+    new: 'Enfócate en tu negocio',
+  },
+  videos_problem_block3_body: {
+    old: 'Tú atiendes tu consulta, local o estudio jurídico sin desviarte de lo que genera ingresos reales. Nosotros nos encargamos de que tu material crudo se convierta en reels impecables que atraigan nuevos clientes.',
+    new: 'Tú te dedicas a vender, atender y hacer crecer tu negocio sin desviarte de lo que genera ingresos reales. Nosotros nos encargamos de que tu material crudo se convierta en reels impecables que atraigan nuevos clientes.',
+  },
+  videos_includes_card2_body: {
+    old: 'Cortes de silencios, eliminación de titubeos, estabilización y selección del mejor ritmo de oratoria.',
+    new: 'Cortes de silencios y tiempos muertos, eliminación de titubeos, estabilización y el mejor ritmo para mostrar lo que ofreces.',
+  },
+  videos_plans_subtitle: {
+    old: 'Precios transparentes en pesos chilenos. Sin contratos forzosos ni letras chicas.',
+    new: 'Precios transparentes. Sin contratos forzosos ni letras chicas.',
+  },
+  videos_cta_footer: {
+    old: 'Atención personalizada para profesionales de Iquique, Tarapacá y todo Chile',
+    new: 'Servicio 100% online: trabajamos con negocios de todo el mundo',
+  },
+};
+
+// Lista explicita, en el orden del contrato. G-COPYV2 la compara con las claves reales de
+// COPY_V2: si alguien agrega o quita una divergencia, este array lo delata.
+const COPY_V2_KEYS = [
+  'videos_hero_badge',
+  'videos_hero_subtitle',
+  'videos_problem_subtitle',
+  'videos_problem_block1_body',
+  'videos_problem_block3_title',
+  'videos_problem_block3_body',
+  'videos_includes_card2_body',
+  'videos_plans_subtitle',
+  'videos_cta_footer',
+];
+
 // --- tabla de descriptores ---------------------------------------------------
 
 const SECTIONS = [
@@ -97,10 +157,10 @@ const SECTIONS = [
     // Texto ES = el de Stitch. "Barbería & Estilo" va con & y no con &amp;: el motor
     // usa textContent, que NO decodifica entidades.
     es: {
-      videos_hero_badge: 'Edición de reels para profesionales locales',
+      videos_hero_badge: 'Edición de reels para negocios que quieren vender en redes',
       videos_hero_title: 'Publica videos profesionales sin quedarte editando',
       videos_hero_subtitle:
-        'Tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Entrega de tu primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.',
+        'Ya sea que vendas productos, servicios o experiencias, tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.',
       videos_hero_highlight: 'Primera versión en 48 horas hábiles',
       videos_hero_cta_whatsapp: 'Quiero cotizar por WhatsApp',
       videos_hero_cta_planes: 'Ver planes mensuales',
@@ -123,6 +183,8 @@ const SECTIONS = [
     strongKeys: [],
     // "IA + EDIT" se mantiene en los 6 idiomas (en: "AI + EDIT"): decision de Pablo.
     whitelist: new Set(['videos_hero_stat_ia']),
+    // Copy v2 (slice 12): el "48" del subtitulo queda literal en los 6 idiomas.
+    literals: { videos_hero_subtitle: '48' },
     mustInclude: [],
     mustExclude: [],
     extra: [
@@ -170,11 +232,11 @@ const SECTIONS = [
       videos_problem_kicker: 'Diagnóstico Claro',
       videos_problem_title: 'Tu tiempo vale más atendiendo clientes que peleando con software de edición',
       videos_problem_subtitle:
-        'La mayoría de médicos, abogados, esteticistas y prestadores de servicios quieren una presencia activa en redes sociales. El obstáculo nunca es la cámara: es perder horas valiosas cortando silencios, afinando subtítulos y buscando música sin derechos.',
+        'Tiendas, mayoristas, gimnasios, centros de estética, inmobiliarias, agencias de turismo, salas de eventos, consultas y oficinas: todos saben que tienen que estar activos en redes. El obstáculo nunca es la cámara: es perder horas valiosas cortando silencios, afinando subtítulos y buscando música sin derechos.',
       videos_problem_block1_step: '01 / El Problema',
       videos_problem_block1_title: 'El dilema del tiempo',
       videos_problem_block1_body:
-        'Grabas una explicación en 5 minutos entre citas, pero terminas perdiendo todo el fin de semana probando filtros, sincronizando subtítulos y exportando videos que no quedan como imaginabas.',
+        'Grabas un video en 5 minutos entre una venta y otra, pero terminas perdiendo todo el fin de semana probando filtros, sincronizando subtítulos y exportando videos que no quedan como imaginabas.',
       videos_problem_block1_result: 'Resultado: Cuentas inactivas por semanas',
       videos_problem_formula_badge: 'Fórmula PBT',
       videos_problem_block2_step: '02 / La Metodología',
@@ -183,9 +245,9 @@ const SECTIONS = [
         'Aprovechamos la aceleración computacional de agentes de IA para transcripción y b-roll selectivo, combinada con la revisión meticulosa y criterio estético de un editor profesional.',
       videos_problem_block2_result: 'Calidad editorial + entrega en 48 horas',
       videos_problem_block3_step: '03 / El Resultado',
-      videos_problem_block3_title: 'Enfócate en tu profesión',
+      videos_problem_block3_title: 'Enfócate en tu negocio',
       videos_problem_block3_body:
-        'Tú atiendes tu consulta, local o estudio jurídico sin desviarte de lo que genera ingresos reales. Nosotros nos encargamos de que tu material crudo se convierta en reels impecables que atraigan nuevos clientes.',
+        'Tú te dedicas a vender, atender y hacer crecer tu negocio sin desviarte de lo que genera ingresos reales. Nosotros nos encargamos de que tu material crudo se convierta en reels impecables que atraigan nuevos clientes.',
       videos_problem_block3_result: 'Presencia constante y profesional',
     },
     // Los 3 iconos (schedule, smart_toy, payments) son HERMANOS de los textos: viven en
@@ -193,6 +255,8 @@ const SECTIONS = [
     wrapped: [],
     strongKeys: [],
     whitelist: new Set([]),
+    // Copy v2 (slice 12): el "5" del bloque del problema queda literal en los 6 idiomas.
+    literals: { videos_problem_block1_body: '5' },
     mustInclude: [],
     mustExclude: [],
   },
@@ -234,7 +298,7 @@ const SECTIONS = [
         'Videos de hasta 60 segundos listos para Instagram Reels, TikTok y YouTube Shorts con encuadre dinámico.',
       videos_includes_card2_title: 'Edición desde tu bruto',
       videos_includes_card2_body:
-        'Cortes de silencios, eliminación de titubeos, estabilización y selección del mejor ritmo de oratoria.',
+        'Cortes de silencios y tiempos muertos, eliminación de titubeos, estabilización y el mejor ritmo para mostrar lo que ofreces.',
       videos_includes_card3_title: 'Subtítulos & Gráficos',
       videos_includes_card3_body:
         'Subtítulos dinámicos de alta legibilidad, tipografía y elementos visuales acordes al plan elegido.',
@@ -330,7 +394,7 @@ const SECTIONS = [
     es: {
       videos_plans_kicker: 'Suscripciones Mensuales',
       videos_plans_title: 'Planes Mensuales',
-      videos_plans_subtitle: 'Precios transparentes en pesos chilenos. Sin contratos forzosos ni letras chicas.',
+      videos_plans_subtitle: 'Precios transparentes. Sin contratos forzosos ni letras chicas.',
       videos_plans_p1_kicker: 'Para comenzar',
       videos_plans_p1_title: 'Plan Económica',
       videos_plans_p1_unit: 'CLP / mes',
@@ -686,7 +750,7 @@ const SECTIONS = [
         'Tú envías tu material y recibes la primera versión en un máximo de 48 horas desde que la entrega está completa. Deja la edición en nuestras manos.',
       videos_cta_whatsapp: 'Quiero cotizar por WhatsApp',
       videos_cta_compare: 'Comparar planes',
-      videos_cta_footer: 'Atención personalizada para profesionales de Iquique, Tarapacá y todo Chile',
+      videos_cta_footer: 'Servicio 100% online: trabajamos con negocios de todo el mundo',
     },
     // El <a> del boton WhatsApp tiene el icono (chat) como HIJO hermano del texto: el texto va
     // en un <span data-i18n> NUEVO. El <a> "#planes" ("Comparar planes") no tiene hijos: su
@@ -695,7 +759,7 @@ const SECTIONS = [
     strongKeys: [],
     fragments: [],
     whitelist: new Set([]),
-    literals: { videos_cta_subtitle: '48' },
+    literals: { videos_cta_subtitle: '48', videos_cta_footer: '100%' },
     // EL acoplamiento por valor de esta seccion: "Quiero cotizar por WhatsApp" ya existe en el
     // hero. Clave propia por ocurrencia, pero la traduccion debe ser EXACTAMENTE la misma en
     // los 6 idiomas (misma guardia que P-LEVELS, pero por igualdad estricta: es la misma frase).
@@ -937,6 +1001,33 @@ function secOf(d, html = V) {
   return secCache.get(key);
 }
 
+// La seccion de la base con el copy v2 aplicado: reemplazo LITERAL del texto viejo por el
+// nuevo, que es exactamente lo que hace el slice en el HTML (texto plano, sin entidades ni
+// saltos de linea adentro). Sin esta capa, P8b/P9 exigirian el copy de Stitch y las 9
+// claves aprobadas serian imposibles. Para las 192 claves restantes devuelve la base tal
+// cual, asi que no relaja nada.
+const secBaseCache = new Map();
+function secBaseV2(d) {
+  if (!secBaseCache.has(d.name)) {
+    let s = secOf(d, VBASE);
+    for (const k of d.keys) {
+      const o = COPY_V2[k];
+      if (!o) continue;
+      // .replace() cambia solo la PRIMERA ocurrencia: si el texto viejo estuviera repetido
+      // dentro de la seccion, el override quedaria a medias y P9 fallaria por una razon
+      // enganosa. Hoy cada uno aparece exactamente 1 vez (verificado).
+      assert.equal(
+        count(s, o.old),
+        1,
+        `${d.name}: el texto viejo de "${k}" aparece ${count(s, o.old)} veces en la base (se esperaba 1)`,
+      );
+      s = s.replace(o.old, o.new);
+    }
+    secBaseCache.set(d.name, s);
+  }
+  return secBaseCache.get(d.name);
+}
+
 const norm = (s) => s.replace(/\r\n/g, '\n');
 
 // --- tests genericos, uno por descriptor -------------------------------------
@@ -1019,7 +1110,7 @@ for (const d of SECTIONS) {
   });
 
   test(`${d.name} P8b ese texto existe de verdad en la seccion original (el contrato no invento nada)`, () => {
-    const original = visibleText(secOf(d, VBASE));
+    const original = visibleText(secBaseV2(d));
     for (const k of K) {
       assert.ok(original.includes(d.es[k]), `"${d.es[k]}" (${k}) no aparece en la seccion original`);
     }
@@ -1042,7 +1133,7 @@ for (const d of SECTIONS) {
       nuevo = nuevo.replace(re, '$1');
     }
     const a = norm(nuevo.replace(/ data-i18n="[^"]*"/g, ''));
-    const b = norm(secOf(d, VBASE));
+    const b = norm(secBaseV2(d));
     if (a !== b) {
       let i = 0;
       while (i < a.length && a[i] === b[i]) i++;
@@ -1275,6 +1366,66 @@ test('G7 (meta) la tabla de descriptores y SECTION_EXTRACTORS de helpers no se s
     SECTION_EXTRACTORS,
     'agregar una seccion exige tocar helpers/page.mjs (extractor + SECTION_EXTRACTORS) y esta tabla',
   );
+});
+
+test('G-COPYV2 (copy v2) la tabla de divergencias es exactamente la declarada y describe cambios reales', () => {
+  assert.deepEqual(
+    Object.keys(COPY_V2).sort(),
+    [...COPY_V2_KEYS].sort(),
+    'COPY_V2 y COPY_V2_KEYS se separaron: agregar una divergencia exige tocar la lista explicita',
+  );
+  assert.equal(COPY_V2_KEYS.length, 9, 'el contrato de copy v2 son 9 claves, ni una mas');
+  const secciones = new Set();
+  for (const [k, o] of Object.entries(COPY_V2)) {
+    const d = SECTIONS.find((s) => s.keys.includes(k));
+    assert.ok(d, `"${k}" no pertenece a ninguna seccion de videos.html`);
+    assert.ok(UNION.has(k), `"${k}" no esta en UNION: no es una clave visible de la pagina`);
+    // Una sola fuente de verdad del texto nuevo: el contrato ES del descriptor. Si los dos
+    // se separan, P8a ya falla; esto lo dice con un mensaje claro.
+    assert.equal(o.new, d.es[k], `el "new" de "${k}" y d.es["${k}"] se separaron`);
+    assert.notEqual(o.old, o.new, `"${k}": old y new son iguales, no hay divergencia que declarar`);
+    const base = visibleText(secOf(d, VBASE));
+    // El "viejo" tiene que existir de verdad: sin esto, la tabla podria blanquear un texto
+    // inventado declarando un "viejo" que nunca estuvo.
+    assert.ok(base.includes(o.old), `"${k}": el texto viejo no esta en la base 8a5fa69`);
+    // Y el "nuevo" NO puede estar ya en la base: si estuviera, no habria divergencia.
+    assert.ok(!base.includes(o.new), `"${k}": el texto nuevo YA estaba en la base: no es una divergencia`);
+    secciones.add(d.name);
+  }
+  // Anti-vacuidad: el override tiene que cambiar de verdad la base de cada seccion tocada.
+  // Si la tabla quedara vacia o el .replace() no mordiera, P9 pasaria sin vigilar nada.
+  assert.equal(secciones.size, 5, `el copy v2 deberia tocar 5 secciones, toca ${secciones.size}`);
+  for (const name of secciones) {
+    assert.notEqual(
+      secBaseV2(D[name]),
+      secOf(D[name], VBASE),
+      `el override del copy v2 no cambio la base de "${name}"`,
+    );
+  }
+});
+
+// Copy v2 (2026-10-13): la landing ya no vende nicho ni localismo. Se escanean SOLO las
+// claves visibles de videos.html (UNION + navbar), no es.json entero: index.html y casos.html
+// tienen claves legitimas con "Iquique" (diff_1, casos_case2_*).
+// No hay lista blanca a proposito: las excepciones aprobadas (grabacion presencial en
+// Iquique/Tarapaca de extras_card1_body, extras_card1_footer y faq_q1_body, y la moneda CLP
+// de los precios) simplemente NO son alcanzadas por estos patrones.
+const NICHO = [
+  /profesionales de servicios/i,
+  /\bchile\b/i,
+  /chileno/i,
+  /pesos chilenos/i,
+];
+
+test('G-NICHO ninguna clave visible de videos.html vende "profesionales de servicios", Chile ni pesos chilenos', () => {
+  const ks = [...UNION, ...NAV_KEYS];
+  assert.ok(ks.length > 100, `el escaneo solo vio ${ks.length} claves: el guard seria vacuo`);
+  for (const k of ks) {
+    assert.equal(typeof J.es[k], 'string', `es.json: "${k}" no es string (o falta)`);
+    for (const re of NICHO) {
+      assert.doesNotMatch(J.es[k], re, `es.json: "${k}" reintroduce copy local/nicho: ${J.es[k]}`);
+    }
+  }
 });
 
 test('G-FILEWIDE videos.html conserva los conteos globales del slice 1 (iconos, WhatsApp, class)', () => {
