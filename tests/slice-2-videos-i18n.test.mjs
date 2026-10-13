@@ -9,6 +9,9 @@ import {
   read,
   count,
   extractHero,
+  extractSections,
+  i18nElems,
+  hasChildTag,
   visibleText,
   stripBom,
   gitShowBaseline,
@@ -77,50 +80,8 @@ const WRAPPED = ['videos_hero_cta_planes', 'videos_hero_cta_whatsapp', 'videos_h
 // Decision de Pablo: "IA + EDIT" se mantiene en los 6 (en: "AI + EDIT").
 const WHITELIST_SIN_TRADUCIR = new Set(['videos_hero_stat_ia']);
 
-// --- parser de tags (local a este archivo; el repo ya tiene un parser a mano) ---
-
-const tagRe = () => /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*?)(\/?)>/g;
-const VOID = new Set(['br', 'img', 'input', 'hr', 'meta', 'link', 'source', 'area', 'base', 'col', 'embed', 'track', 'wbr']);
-
-// Interior de un elemento: avanza contando anidamiento del MISMO tag hasta su cierre
-// REAL. Esto es lo que hace que el detector de hijos no sea vacuo: mide hasta el cierre
-// propio, no hasta el primer "<" (que es justo donde el extractor se detendria).
-function innerOf(html, from, name) {
-  const R = tagRe();
-  R.lastIndex = from;
-  let depth = 1;
-  let m;
-  while ((m = R.exec(html))) {
-    const n = m[2].toLowerCase();
-    if (m[1] === '/') {
-      if (n === name && --depth === 0) return html.slice(from, m.index);
-    } else if (n === name && m[4] !== '/') {
-      depth++;
-    }
-  }
-  throw new Error(`<${name}> con data-i18n sin cierre`);
-}
-
-function i18nElems(html) {
-  const R = tagRe();
-  const out = [];
-  let m;
-  while ((m = R.exec(html))) {
-    if (m[1] === '/' || VOID.has(m[2].toLowerCase())) continue;
-    const key = m[3].match(/\bdata-i18n="([^"]*)"/);
-    if (!key) continue;
-    const name = m[2].toLowerCase();
-    out.push({
-      key: key[1],
-      tag: name,
-      attrs: m[3].trim(),
-      inner: innerOf(html, m.index + m[0].length, name),
-    });
-  }
-  return out;
-}
-
-const hasChildTag = (inner) => /<[a-zA-Z]/.test(inner);
+// El parser de tags (i18nElems, hasChildTag) vive en helpers/page.mjs: lo comparten
+// este test y el del slice 3.
 
 // --- JSON -------------------------------------------------------------------
 
@@ -130,10 +91,15 @@ const BASELINE = Object.fromEntries(
   LANGS.map((l) => [l, JSON.parse(stripBom(gitShowBaseline(BASE, `i18n/${l}.json`)))]),
 );
 
+// Las claves que el HTML declara en las secciones YA traducidas. Es la fuente de
+// verdad de los tests globales de JSON: asi no hay que re-fijar un numero en cada
+// slice de i18n (el slice 2 nacio con 142/18 cableados y el slice 3 los rompia).
+const HTML_KEYS = [...new Set(i18nElems(extractSections(VIDEOS)).map((e) => e.key))];
+
 // --- C1/C2 — inventario y unicidad en el HTML --------------------------------
 
 test('C1 el hero tiene exactamente las 18 claves, todas con prefijo videos_hero_', () => {
-  const found = i18nElems(VIDEOS).map((e) => e.key);
+  const found = i18nElems(extractHero(VIDEOS)).map((e) => e.key);
   assert.deepEqual(
     [...found].sort(),
     [...KEYS].sort(),
@@ -144,23 +110,33 @@ test('C1 el hero tiene exactamente las 18 claves, todas con prefijo videos_hero_
   }
 });
 
-test('C2 no hay claves repetidas en el HTML (el motor aplicaria la ultima y taparia un error)', () => {
-  const found = i18nElems(VIDEOS).map((e) => e.key);
+test('C2 no hay claves repetidas en el hero (el motor aplicaria la ultima y taparia un error)', () => {
+  const found = i18nElems(extractHero(VIDEOS)).map((e) => e.key);
   const dupes = found.filter((k, i) => found.indexOf(k) !== i);
   assert.deepEqual([...new Set(dupes)], [], `claves duplicadas en el hero: ${dupes.join(', ')}`);
 });
 
-test('C3 los 18 data-i18n viven DENTRO del hero (C8 del slice 1 lo re-verifica)', () => {
+test('C3 las 18 claves videos_hero_ viven solo dentro del hero (los slices 3-10 no pisan el hero)', () => {
   const hero = extractHero(VIDEOS);
-  assert.equal(count(hero, 'data-i18n="'), count(VIDEOS, 'data-i18n="'), 'hay data-i18n fuera del hero');
+  assert.equal(
+    count(VIDEOS, 'data-i18n="videos_hero_'),
+    18,
+    'hay claves videos_hero_ fuera del hero: otro slice piso el hero',
+  );
+  assert.equal(count(hero, 'data-i18n="videos_hero_'), 18, 'el hero perdio alguna clave');
 });
 
 // --- C4/C5/C6 — los 6 JSON --------------------------------------------------
 
-test('C4 los 6 JSON tienen 142 claves y exactamente el mismo conjunto de nombres', () => {
+test('C4 los 6 JSON tienen tantas claves como el HTML declara, y el mismo conjunto', () => {
+  const esperadas = 124 + HTML_KEYS.length; // 124 base + las secciones ya traducidas
   for (const l of LANGS) {
     const ks = Object.keys(JSONS[l]);
-    assert.equal(ks.length, 142, `${l}.json tiene ${ks.length} claves, se esperaban 142 (124 + 18)`);
+    assert.equal(
+      ks.length,
+      esperadas,
+      `${l}.json tiene ${ks.length} claves, se esperaban ${esperadas} (124 + las ${HTML_KEYS.length} que declara el HTML)`,
+    );
   }
   const ref = Object.keys(JSONS.es).sort();
   for (const l of LANGS.slice(1)) {
@@ -172,7 +148,7 @@ test('C4 los 6 JSON tienen 142 claves y exactamente el mismo conjunto de nombres
   }
 });
 
-test('C5 las 124 claves existentes quedaron intactas y solo se agregaron las 18 del hero', () => {
+test('C5 las 124 claves existentes quedaron intactas y las agregadas son las del HTML', () => {
   for (const l of LANGS) {
     const old = BASELINE[l];
     const cur = JSONS[l];
@@ -180,7 +156,11 @@ test('C5 las 124 claves existentes quedaron intactas y solo se agregaron las 18 
       assert.equal(cur[k], old[k], `${l}.json: la clave existente "${k}" cambio de valor`);
     }
     const added = Object.keys(cur).filter((k) => !Object.hasOwn(old, k)).sort();
-    assert.deepEqual(added, [...KEYS].sort(), `${l}.json: las claves agregadas no son las 18 del hero`);
+    assert.deepEqual(
+      added,
+      [...HTML_KEYS].sort(),
+      `${l}.json: las claves agregadas no son las que declara el HTML (hero + secciones traducidas)`,
+    );
   }
 });
 
@@ -213,8 +193,8 @@ test('C13 cada idioma traduce de verdad (no es el espanol copiado), con lista bl
 // --- C7 y su meta-test: el detector de hijos NO puede ser vacuo --------------
 
 test('C7 ningun data-i18n vive en un elemento con hijos (el motor borraria el icono)', () => {
-  const elems = i18nElems(VIDEOS);
-  assert.equal(elems.length, 18, `se esperaban 18 elementos con data-i18n, hay ${elems.length}`);
+  const elems = i18nElems(extractHero(VIDEOS));
+  assert.equal(elems.length, 18, `se esperaban 18 elementos con data-i18n en el hero, hay ${elems.length}`);
   const malos = elems.filter((e) => hasChildTag(e.inner));
   assert.deepEqual(
     malos.map((m) => `${m.key} (<${m.tag}>)`),
@@ -236,8 +216,8 @@ test('C7b (meta) el detector SI distingue un icono hijo de uno hermano: la versi
 
 // --- C8b — los spans envolventes --------------------------------------------
 
-test('C8b los spans envolventes son exactamente los 3 declarados (tag de apertura sin class)', () => {
-  const wrapped = i18nElems(VIDEOS)
+test('C8b los spans envolventes del hero son exactamente los 3 declarados (tag de apertura sin class)', () => {
+  const wrapped = i18nElems(extractHero(VIDEOS))
     .filter((e) => e.attrs === `data-i18n="${e.key}"`)
     .map((e) => e.key)
     .sort();

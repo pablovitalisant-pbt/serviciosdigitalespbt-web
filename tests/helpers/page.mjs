@@ -95,17 +95,91 @@ export function idsOf(html) {
 
 // --- helpers del slice 2 (i18n del hero de videos.html) ---------------------
 
+// Desde el <section> cuyo tag de apertura es `marker` hasta su </section>.
+// El marcador debe ser unico en el archivo (los tests lo verifican de hecho: si
+// dejara de serlo, la seccion extraida no seria la esperada y los conteos cambian).
+function extractSection(html, marker, nombre) {
+  const start = indexOrThrow(html, marker);
+  const end = html.indexOf('</section>', start);
+  if (end === -1) throw new Error(`la seccion ${nombre} no cierra`);
+  return html.slice(start, end + '</section>'.length);
+}
+
 // El hero: desde su <section> (marcador unico en el archivo: la seccion del CTA
 // final usa otra lista de clases) hasta su </section>.
 export function extractHero(html) {
-  const start = indexOrThrow(
+  return extractSection(
     html,
     '<section class="relative w-full bg-inverse-surface text-inverse-on-surface overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32">',
+    'del hero',
   );
-  const end = html.indexOf('</section>', start);
-  if (end === -1) throw new Error('el hero no cierra');
-  return html.slice(start, end + '</section>'.length);
 }
+
+// La seccion 2 "PROBLEMA Y SOLUCION" (slice 3). Marcador unico: usa
+// bg-surface-container-lowest, que ninguna otra <section> del archivo usa.
+export function extractProblem(html) {
+  return extractSection(
+    html,
+    '<section class="w-full bg-surface-container-lowest text-on-surface py-section-gap-md">',
+    'del problema',
+  );
+}
+
+// Las secciones de videos.html que YA estan traducidas. Es el punto de
+// acoplamiento deliberado: cada slice de i18n agrega su extractor aca (1 linea),
+// y con eso el test C8 del slice 1 sigue vigilando que no se adelante trabajo
+// de los slices siguientes.
+export function extractSections(html) {
+  return extractHero(html) + extractProblem(html);
+}
+
+// --- parser de tags (compartido por los tests de i18n de los slices 2 y 3) ---
+
+const tagRe = () => /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*?)(\/?)>/g;
+const VOID = new Set(['br', 'img', 'input', 'hr', 'meta', 'link', 'source', 'area', 'base', 'col', 'embed', 'track', 'wbr']);
+
+// Interior de un elemento: avanza contando anidamiento del MISMO tag hasta su cierre
+// REAL. Esto es lo que hace que el detector de hijos no sea vacuo: mide hasta el cierre
+// propio, no hasta el primer "<" (que es justo donde el extractor se detendria).
+function innerOf(html, from, name) {
+  const R = tagRe();
+  R.lastIndex = from;
+  let depth = 1;
+  let m;
+  while ((m = R.exec(html))) {
+    const n = m[2].toLowerCase();
+    if (m[1] === '/') {
+      if (n === name && --depth === 0) return html.slice(from, m.index);
+    } else if (n === name && m[4] !== '/') {
+      depth++;
+    }
+  }
+  throw new Error(`<${name}> con data-i18n sin cierre`);
+}
+
+// Todos los elementos con data-i18n de un fragmento: clave, tag, atributos e interior.
+export function i18nElems(html) {
+  const R = tagRe();
+  const out = [];
+  let m;
+  while ((m = R.exec(html))) {
+    if (m[1] === '/' || VOID.has(m[2].toLowerCase())) continue;
+    const key = m[3].match(/\bdata-i18n="([^"]*)"/);
+    if (!key) continue;
+    const name = m[2].toLowerCase();
+    out.push({
+      key: key[1],
+      tag: name,
+      attrs: m[3].trim(),
+      inner: innerOf(html, m.index + m[0].length, name),
+    });
+  }
+  return out;
+}
+
+// Un elemento con data-i18n que ADEMAS tiene hijos: el motor hace textContent = y
+// los borraria (perderia el icono).
+export const hasChildTag = (inner) => /<[a-zA-Z]/.test(inner);
 
 // El hero tiene UNA sola entidad: &amp; (linea 115). Se resuelve &amp; AL FINAL
 // para no decodificar de mas un eventual "&amp;lt;" literal.
