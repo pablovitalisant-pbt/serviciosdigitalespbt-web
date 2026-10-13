@@ -2,6 +2,7 @@
 // ponytail: parser a mano (indexOf + conteo de llaves + vm) en vez de un parser de HTML.
 // Alcanza porque los archivos son de este repo y conocemos su forma exacta.
 import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
@@ -90,4 +91,48 @@ export function configDependentClasses(html, oracleKeys) {
 
 export function idsOf(html) {
   return new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]));
+}
+
+// --- helpers del slice 2 (i18n del hero de videos.html) ---------------------
+
+// El hero: desde su <section> (marcador unico en el archivo: la seccion del CTA
+// final usa otra lista de clases) hasta su </section>.
+export function extractHero(html) {
+  const start = indexOrThrow(
+    html,
+    '<section class="relative w-full bg-inverse-surface text-inverse-on-surface overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32">',
+  );
+  const end = html.indexOf('</section>', start);
+  if (end === -1) throw new Error('el hero no cierra');
+  return html.slice(start, end + '</section>'.length);
+}
+
+// El hero tiene UNA sola entidad: &amp; (linea 115). Se resuelve &amp; AL FINAL
+// para no decodificar de mas un eventual "&amp;lt;" literal.
+export function decodeEntities(s) {
+  const MAP = { nbsp: ' ', quot: '"', lt: '<', gt: '>', '#39': "'" };
+  return s
+    .replace(/&(nbsp|quot|lt|gt|#39);/g, (_, e) => MAP[e])
+    .replace(/&amp;/g, '&');
+}
+
+// Texto visible de un fragmento de HTML: sin tags, sin entidades, espacios colapsados.
+export function visibleText(html) {
+  return decodeEntities(html.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
+
+export function stripBom(s) {
+  return s.charCodeAt(0) === 0xfeff ? s.slice(1) : s;
+}
+
+// Lee un archivo tal como esta en un commit congelado (`sha`). Anclar a un SHA
+// historico y NO a HEAD: tras commitear el slice, HEAD devolveria el archivo
+// nuevo y el test pasaria trivialmente (perderia todo su poder).
+// ponytail: depende de git en el PATH; si el repo se reescribe, falla ruidoso.
+export function gitShowBaseline(sha, path) {
+  return execFileSync('git', ['show', `${sha}:${path}`], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    maxBuffer: 32 * 1024 * 1024,
+  });
 }

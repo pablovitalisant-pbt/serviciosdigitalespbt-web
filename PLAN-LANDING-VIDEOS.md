@@ -34,6 +34,10 @@ Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
 ## Reglas i18n
 
 - Prefijo de claves: `videos_`.
+- No se traducen: atributos `data-alt` (no visibles), URLs/href, ni tokens numericos o de formato puros (48H, 9:16, 0:42 / 0:60, 1.8k, 94, 210). Frases que contienen numeros si se traducen, con el numero literal.
+- Los JSON de i18n/ tienen BOM, CRLF, 2 espacios y no llevan salto final tras `}`: preservar exactamente.
+- Comando de tests: `node --test "tests/*.test.mjs"` (`node --test tests/` falla en Node 22).
+- Al probar en navegador tras cambiar los JSON, forzar recarga: el navegador cachea i18n/*.json y muestra claves viejas.
 - Cada clave en los 6 JSON de `i18n/`. Solo se AGREGAN claves; nunca se modifican ni borran las existentes.
 - El texto en espanol del HTML y el valor en es.json deben ser identicos al texto de Stitch.
 - Probar en ES, EN, UR (RTL) y KO o ZH.

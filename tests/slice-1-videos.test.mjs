@@ -13,6 +13,7 @@ import {
   extractInitI18n,
   extractScrollEffect,
   scriptBlockWith,
+  extractHero,
 } from './helpers/page.mjs';
 
 const VIDEOS = read('videos.html');
@@ -86,8 +87,28 @@ test('C7 los placeholders de WhatsApp de Stitch no se tocaron (7 [LINK_WHATSAPP]
   assert.equal(count(VIDEOS, 'href="https://wa.me/"'), 1, 'cambio el href="https://wa.me/" vacio');
 });
 
-test('C8 el slice 1 no traduce nada: 0 atributos data-i18n=" en videos.html', () => {
-  assert.equal(count(VIDEOS, 'data-i18n="'), 0, 'se adelanto trabajo de i18n de los slices 2-10');
+// C8 original: "0 data-i18n en videos.html". Su intencion real era "no se adelanto
+// trabajo de los slices 3-10", no "no hay i18n": el slice 2 traduce el hero. Se
+// reemplaza por la misma intencion medida ahora contra el hero (C8a) y por el
+// conteo de spans envolventes (C8b). Sigue siendo UN solo test() para no cambiar
+// el conteo global de la suite.
+test('C8 solo el hero lleva i18n: ningun data-i18n fuera de el (slices 3-10 intactos)', () => {
+  const hero = extractHero(VIDEOS);
+  const total = count(VIDEOS, 'data-i18n="');
+  assert.equal(
+    count(hero, 'data-i18n="'),
+    total,
+    'hay data-i18n fuera del hero: se adelanto trabajo de los slices 3-10',
+  );
+  assert.equal(total, 18, `se esperaban las 18 claves del hero, hay ${total}`);
+  // El criterio "span SIN class" distingue los 3 spans nuevos de los 6 data-i18n que
+  // ya viven en un <span class="..."> del diseno de Stitch.
+  const wrapped = [...hero.matchAll(/<span data-i18n="([^"]+)">/g)].map((m) => m[1]).sort();
+  assert.deepEqual(
+    wrapped,
+    ['videos_hero_cta_planes', 'videos_hero_cta_whatsapp', 'videos_hero_viral'],
+    'los spans envolventes no son exactamente los 3 declarados',
+  );
 });
 
 // --- C9 — loader de componentes y bandera de carrera -----------------------
