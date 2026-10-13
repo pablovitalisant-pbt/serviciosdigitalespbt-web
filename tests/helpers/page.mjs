@@ -125,12 +125,25 @@ export function extractProblem(html) {
   );
 }
 
+// La seccion 3 "QUE RECIBES" (slice 4). El marcador NO puede ser el tag <section>:
+// en este archivo ese tag aparece DOS veces (secciones 3 y 5, ambas
+// bg-surface-container-low + py-section-gap-md) y indexOf devolveria la 3 por
+// casualidad, no por diseno. Se ancla al comentario de Stitch, que si es unico;
+// el test P4 lo verifica de hecho.
+export function extractIncludesMarker() {
+  return '<!-- ' + '='.repeat(73) + '\n       3. QUÉ RECIBES';
+}
+
+export function extractIncludes(html) {
+  return extractSection(html, extractIncludesMarker(), 'de entregables');
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor aca (1 linea),
 // y con eso el test C8 del slice 1 sigue vigilando que no se adelante trabajo
 // de los slices siguientes.
 export function extractSections(html) {
-  return extractHero(html) + extractProblem(html);
+  return extractHero(html) + extractProblem(html) + extractIncludes(html);
 }
 
 // --- parser de tags (compartido por los tests de i18n de los slices 2 y 3) ---
