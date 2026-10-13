@@ -194,6 +194,27 @@ test('C12 el head de Stitch sigue intacto (CDN sin plugins, tailwind-config, fue
   assert.ok(HEAD.includes('<script id="tailwind-config">'), 'falta el tailwind-config inline');
   assert.equal(count(HEAD, 'fonts.googleapis.com/css2'), 3, 'cambio la cantidad de links de fuentes');
   assert.equal(count(HEAD, 'fonts.gstatic.com'), 1, 'cambio el preconnect de fonts.gstatic.com');
+  // Slice 15: UNICA adicion aprobada al head de Stitch (el <title> SEO, ver C12b). Cualquier
+  // otro <meta>/<link>/<script> nuevo tiene que romper aca.
+  assert.equal(count(HEAD, '<meta'), 3, 'cambio la cantidad de <meta> del head (solo el charset/viewport/shell-type de Stitch)');
+  assert.equal(count(HEAD, '<link'), 5, 'cambio la cantidad de <link> del head (2 preconnect + 3 hojas de fuentes de Stitch)');
+});
+
+// Slice 15: SEO. videos.html no traia <title> (Stitch no lo genero); se agrega uno en espanol
+// fijo, igual que index.html y casos.html, que tampoco lo traducen (initI18n solo escribe
+// textContent de [data-i18n], no el titulo de la pestana).
+test('C12b el head lleva exactamente 1 <title> SEO con el texto aprobado (slice 15)', () => {
+  assert.equal(count(VIDEOS, '<title'), 1, `se esperaba 1 <title> en todo el archivo, hay ${count(VIDEOS, '<title')}`);
+  const m = HEAD.match(/<title>([^<]*)<\/title>/);
+  assert.ok(m, 'el <title> no esta en el <head> o no esta bien cerrado');
+  assert.equal(m[1], 'Edición de Reels para Negocios | Servicios Digitales PBT', 'el texto del <title> no es el aprobado');
+  assert.ok(m[1].length <= 60, `el <title> pasa los 60 caracteres de SERP: ${m[1].length}`);
+  assert.ok(m[1].includes('Reels'), 'el <title> perdio la palabra clave "Reels"');
+  assert.ok(m[1].includes('Servicios Digitales PBT'), 'el <title> perdio la marca');
+  assert.ok(
+    HEAD.includes('<meta charset="utf-8"><title>'),
+    'el <title> no quedo inmediatamente despues de <meta charset="utf-8">',
+  );
 });
 
 test('C13 las anclas de Stitch siguen presentes (las usan el CTA y el navbar compartido)', () => {

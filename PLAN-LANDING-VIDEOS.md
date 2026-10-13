@@ -81,6 +81,7 @@ No crear infraestructura de flags.
 | 12 | Copy v2: reposicionamiento a "negocios de todo rubro" + servicio 100% online (9 textos) | 17, 26, 144, 158, 191, 193, 249, 301, 810 |
 | 13 | Precios de planes p2/p3 (el precio por reel baja al subir de plan) + guardia G-PRICING | 362, 365, 407, 410 |
 | 14 | Links de WhatsApp: los 7 `[LINK_WHATSAPP]` + el `https://wa.me/` vacio pasan a abrir el chat con mensaje prellenado (8 `href`) + guardia G-WHATSAPP | 37, 346, 395, 440, 494, 523, 800, 815 |
+| 15 | SEO: `<title>` de videos.html (Stitch no lo genero) | head (linea 1) |
 
 Numeros de linea referidos al archivo original de Stitch; tras el slice 1 cambian. Ubicar por titulo de seccion.
 
@@ -198,3 +199,29 @@ biyeccion mensajes HTML ↔ tabla, y coherencia plan/reels leyendo los reels de 
 (cambiar los reels de un plan sin su mensaje rompe la guardia).
 
 Como el copy v2 y los precios: excepcion acotada, no habilita tocar ningun otro link.
+
+## Slice 15 — `<title>` SEO (2026-10-13)
+
+Stitch no genero `<title>` para videos.html: la pestana mostraba la URL. Decision de Pablo:
+agregar uno optimo para SEO.
+
+Texto aprobado por el Director (exacto, no traducible):
+
+```
+Edición de Reels para Negocios | Servicios Digitales PBT
+```
+
+Decisiones de la Fase A:
+
+- **Espanol fijo**, como `index.html` y `casos.html`, que tampoco traducen su `<title>`.
+  `initI18n` solo escribe `textContent` de `[data-i18n]`; traducir el titulo de la pestana
+  exigiria tocar el motor (fuera de alcance).
+- **Unica adicion al head de Stitch.** Nada mas cambia: ni `meta description`, ni `og:`,
+  ni el motor. Posicion aprobada: inmediatamente despues de `<meta charset="utf-8">`, para
+  que el charset gane antes de que el parser lea los bytes no-ASCII (`ó`).
+- 56 caracteres (<= 60, el corte de SERP).
+
+Vigilancia: `C12b` de `tests/slice-1-videos.test.mjs` (1 solo `<title>` en todo el archivo,
+texto exacto, <= 60 caracteres, contiene "Reels" y la marca, y va pegado al charset). `C12`
+suma los conteos de `<meta>` (3) y `<link>` (5) del head de Stitch para que cualquier otra
+adicion tenga que romper ahi.
