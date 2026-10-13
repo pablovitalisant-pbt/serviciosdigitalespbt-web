@@ -70,7 +70,62 @@ test('E2E: los componentes traen todo lo que initI18n toca (si falta, el motor r
   }
 });
 
-test('feature flag efectivo: navbar.html todavia no enlaza videos.html (hasta el slice 11)', async () => {
+// --- Slice 11 (final): el navbar publica videos.html ------------------------
+// El "feature flag efectivo" del PLAN (videos.html existia pero ninguna pagina la
+// enlazaba) se RETIRA en el slice 11. El test viejo afirmaba 0 enlaces; ahora afirma
+// el contrato opuesto, con conteo EXACTO: 1 item desktop + 1 item movil.
+
+test('feature flag retirado: navbar.html enlaza videos.html exactamente 2 veces (desktop + movil)', async () => {
   const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
-  assert.equal(count(nav, 'videos.html'), 0, 'se enlazo videos.html antes del slice final');
+  assert.equal(count(nav, 'videos.html'), 2, 'se esperaba 1 item desktop + 1 item movil, ni mas ni menos');
+});
+
+test('S11 los 2 items llevan la clave nav_videos y un href relativo videos.html', async () => {
+  const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
+  const items = [...nav.matchAll(/<a\b[^>]*href="videos\.html"[^>]*>/g)].map((m) => m[0]);
+  assert.equal(items.length, 2, `se esperaban 2 <a href="videos.html">, hay ${items.length}`);
+  for (const it of items) {
+    assert.match(it, /data-i18n="nav_videos"/, `item sin la clave nav_videos: ${it}`);
+  }
+  const moviles = items.filter((it) => it.includes('closeMobileMenu()'));
+  assert.equal(moviles.length, 1, 'el item del menu movil debe cerrar el menu, como sus hermanos');
+});
+
+test('S11 el item queda despues de Casos de Éxito y antes del CTA, en desktop y en movil (D2)', async () => {
+  const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
+  // La 1.a ocurrencia de cada clave esta en el nav desktop; la ultima, en el menu movil.
+  const casos = [nav.indexOf('data-i18n="nav_cases"'), nav.lastIndexOf('data-i18n="nav_cases"')];
+  const vids = [nav.indexOf('data-i18n="nav_videos"'), nav.lastIndexOf('data-i18n="nav_videos"')];
+  const cta = [nav.indexOf('data-i18n="nav_contact"'), nav.lastIndexOf('data-i18n="nav_contact"')];
+  for (const [i, etq] of [[0, 'desktop'], [1, 'movil']]) {
+    assert.ok(casos[i] !== -1 && vids[i] !== -1 && cta[i] !== -1, `en ${etq} falta alguno de los 3 items`);
+    assert.ok(casos[i] < vids[i] && vids[i] < cta[i], `en ${etq} el item no quedo entre Casos de Éxito y el CTA`);
+  }
+});
+
+test('S11 el nav desktop libera ancho en tablet: gap-4 lg:gap-8, sin gap-8 suelto (D1)', async () => {
+  const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
+  const m = nav.match(/<nav class="([^"]*)"/);
+  assert.ok(m, 'no se encontro el <nav> desktop');
+  const cls = m[1].split(/\s+/);
+  assert.ok(cls.includes('gap-4') && cls.includes('lg:gap-8'), `falta la mitigacion de ancho: ${m[1]}`);
+  assert.ok(!cls.includes('gap-8'), 'quedo gap-8 sin prefijo lg: (no libera ancho entre 768 y 1024px)');
+});
+
+test('S11 nav_videos existe, es string y no esta vacia en los 6 JSON servidos', async () => {
+  for (const l of ['es', 'en', 'hi', 'zh', 'ur', 'ko']) {
+    const res = await fetch(`${srv.base}/i18n/${l}.json`);
+    assert.equal(res.status, 200, `${l}.json no responde 200`);
+    const j = await res.json();
+    assert.equal(typeof j.nav_videos, 'string', `${l}.json: nav_videos no es string`);
+    assert.ok(j.nav_videos.trim().length > 0, `${l}.json: nav_videos vacia (el motor hace if (translations[key]) y no la aplicaria)`);
+  }
+});
+
+test('S11 el texto visible del item en el HTML es identico a es.json (D1)', async () => {
+  const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
+  const es = await (await fetch(`${srv.base}/i18n/es.json`)).json();
+  const textos = [...nav.matchAll(/<a\b[^>]*data-i18n="nav_videos"[^>]*>([^<]*)<\/a>/g)].map((m) => m[1].trim());
+  assert.equal(textos.length, 2, `no se pudieron leer los 2 textos del item (${textos.length})`);
+  for (const t of textos) assert.equal(t, es.nav_videos, 'el texto del HTML y es.json difieren');
 });

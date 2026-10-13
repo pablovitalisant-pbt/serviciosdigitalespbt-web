@@ -923,6 +923,10 @@ const SECTIONS = [
 
 const D = Object.fromEntries(SECTIONS.map((d) => [d.name, d]));
 const UNION = new Set(SECTIONS.flatMap((d) => d.keys));
+// Claves de i18n que NO pertenecen a una seccion de videos.html: el item del navbar
+// compartido (slice 11). Viven en los mismos 6 JSON, asi que G1/G2/G5 tienen que contarlas
+// o acusan "claves que no declara ninguna seccion" / "faltan claves".
+const NAV_KEYS = ['nav_videos'];
 
 // Extraccion perezosa: si un marcador se rompe, el throw falla solo los tests que tocan
 // esa seccion en vez de tumbar el archivo entero al importarlo.
@@ -1220,7 +1224,7 @@ for (const d of SECTIONS) {
 
 test('G1 los 6 JSON tienen las claves de la base + las de los descriptores, ni una mas', () => {
   const baseKeys = Object.keys(JBASE.es);
-  const esperadas = new Set([...baseKeys, ...UNION]);
+  const esperadas = new Set([...baseKeys, ...UNION, ...NAV_KEYS]);
   for (const l of LANGS) {
     const ks = Object.keys(J[l]);
     const faltan = [...esperadas].filter((k) => !Object.hasOwn(J[l], k));
@@ -1238,7 +1242,7 @@ test('G2 las claves de la base quedaron intactas y las agregadas son las de los 
       assert.equal(cur[k], old[k], `${l}.json: la clave existente "${k}" cambio de valor`);
     }
     const added = Object.keys(cur).filter((k) => !Object.hasOwn(old, k));
-    assert.deepEqual(added.sort(), [...UNION].sort(), `${l}.json: las claves agregadas no son las de los descriptores`);
+    assert.deepEqual(added.sort(), [...UNION, ...NAV_KEYS].sort(), `${l}.json: las claves agregadas no son las de los descriptores`);
   }
 });
 
@@ -1322,13 +1326,13 @@ after(async () => {
 });
 
 test('G5 (E2E) los 6 JSON se sirven, res.json() NO explota con el BOM y traen las claves', async () => {
-  const esperadas = new Set([...Object.keys(JBASE.es), ...UNION]);
+  const esperadas = new Set([...Object.keys(JBASE.es), ...UNION, ...NAV_KEYS]);
   for (const l of LANGS) {
     const res = await fetch(`${srv.base}/i18n/${l}.json`);
     assert.equal(res.status, 200, `${l}.json no responde 200`);
     const parsed = await res.json();
     assert.equal(Object.keys(parsed).length, esperadas.size, `${l}.json servido llego incompleto`);
-    for (const k of UNION) {
+    for (const k of [...UNION, ...NAV_KEYS]) {
       assert.equal(typeof parsed[k], 'string', `${l}.json servido no trae "${k}" como string`);
     }
   }
