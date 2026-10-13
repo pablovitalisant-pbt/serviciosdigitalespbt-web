@@ -201,5 +201,22 @@
   "videos_plans_p2_b4_post": "(릴당)",
   "videos_plans_p2_b5": "릴당 1회 소규모 수정",
   "videos_plans_p2_b6": "첫 버전 최대 48h 영업시간 내 전달",
-  "videos_plans_p2_cta": "밸런스 선택"
+  "videos_plans_p2_cta": "밸런스 선택",
+  "videos_plans_p3_kicker": "최대 임팩트",
+  "videos_plans_p3_title": "프리미엄 플랜",
+  "videos_plans_p3_unit": "CLP / 월",
+  "videos_plans_p3_reel_price": "릴당 $32.500 CLP • 최대 빈도",
+  "videos_plans_p3_b1_n": "월 12개 릴",
+  "videos_plans_p3_b1_s": "(각 최대 60s)",
+  "videos_plans_p3_b2": "참고 자료에 맞춘 맞춤 편집",
+  "videos_plans_p3_b3": "합의된 스타일의 맞춤 그래픽",
+  "videos_plans_p3_b4_pre": "최대",
+  "videos_plans_p3_b4_strong": "4개의 짧은 AI b-roll 클립",
+  "videos_plans_p3_b4_post": "(릴당)",
+  "videos_plans_p3_b5_strong": "소규모 수정 최대 2회",
+  "videos_plans_p3_b5_post": "(릴당)",
+  "videos_plans_p3_b6": "첫 버전 최대 48h 영업시간 내 전달",
+  "videos_plans_p3_cta": "프리미엄 선택",
+  "videos_plans_note_title": "월간 편집 서비스 약관:",
+  "videos_plans_note_body": "b-roll은 명시된 한도 내에서, 그리고 콘텐츠에 기술적·시각적으로 적합한 경우에만 포함됩니다. 전체 AI 영상 생성은 별도로 견적됩니다. 달력 월 내에 사용하지 않은 영상은 다음 달로 이월되지 않습니다. 월 요금은 편집 서비스에 해당하며, 촬영·이동·게시·커뮤니티 관리는 별도로 견적됩니다."
 }

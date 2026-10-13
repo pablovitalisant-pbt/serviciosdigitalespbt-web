@@ -151,11 +151,24 @@ export function extractPlansA(html) {
   return html.slice(start, end);
 }
 
+// La seccion 4 "PLANES MENSUALES", parte 2 (slice 6: tarjeta Premium + nota al pie). Arranca en el
+// mismo marcador donde corta la parte 1 (frontera de tarjeta) y cierra en el </section> de #planes.
+// Reutiliza PLANS_CUT_MARKER, cuya unicidad el descriptor de plansA ya verifica (count === 1).
+export function extractPlansB(html) {
+  return extractSection(html, PLANS_CUT_MARKER, 'de planes parte 2');
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor a esta lista
 // (1 linea) y su descriptor en SECTIONS (tests/i18n-sections.test.mjs). El
 // meta-test G7 vigila que las dos listas no se separen.
-export const SECTION_EXTRACTORS = [extractHero, extractProblem, extractIncludes, extractPlansA];
+export const SECTION_EXTRACTORS = [
+  extractHero,
+  extractProblem,
+  extractIncludes,
+  extractPlansA,
+  extractPlansB,
+];
 
 export function extractSections(html) {
   return SECTION_EXTRACTORS.map((f) => f(html)).join('');

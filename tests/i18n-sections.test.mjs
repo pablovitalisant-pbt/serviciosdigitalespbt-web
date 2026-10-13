@@ -24,6 +24,7 @@ import {
   extractProblem,
   extractIncludes,
   extractPlansA,
+  extractPlansB,
   HERO_MARKER,
   PROBLEM_MARKER,
   INCLUDES_MARKER,
@@ -401,6 +402,104 @@ const SECTIONS = [
         },
       },
     ],
+  },
+
+  {
+    name: 'plansB',
+    extract: extractPlansB,
+    // Reusa el marcador de corte del slice 5: es el arranque de la tarjeta Premium y el primer
+    // </section> tras el es el cierre de #planes. La unicidad la cubre P4 (count === 1).
+    markers: [PLANS_CUT_MARKER],
+    prefix: 'videos_plans_',
+    keys: [
+      'videos_plans_p3_kicker',
+      'videos_plans_p3_title',
+      'videos_plans_p3_unit',
+      'videos_plans_p3_reel_price',
+      'videos_plans_p3_b1_n',
+      'videos_plans_p3_b1_s',
+      'videos_plans_p3_b2',
+      'videos_plans_p3_b3',
+      'videos_plans_p3_b4_pre',
+      'videos_plans_p3_b4_strong',
+      'videos_plans_p3_b4_post',
+      'videos_plans_p3_b5_strong',
+      'videos_plans_p3_b5_post',
+      'videos_plans_p3_b6',
+      'videos_plans_p3_cta',
+      'videos_plans_note_title',
+      'videos_plans_note_body',
+    ],
+    // Los numeros y "CLP" van LITERALES dentro de la frase (decision aprobada).
+    // Ortografia exacta: "1ª" (U+00AA), "máx.", "•" (U+2022).
+    es: {
+      videos_plans_p3_kicker: 'Máximo impacto',
+      videos_plans_p3_title: 'Plan Premium',
+      videos_plans_p3_unit: 'CLP / mes',
+      videos_plans_p3_reel_price: '$32.500 CLP por reel • Máxima frecuencia',
+      videos_plans_p3_b1_n: '12 reels al mes',
+      videos_plans_p3_b1_s: '(hasta 60s cada uno)',
+      videos_plans_p3_b2: 'Edición personalizada según tus referencias',
+      videos_plans_p3_b3: 'Gráficos a medida en el estilo acordado',
+      videos_plans_p3_b4_pre: 'Hasta',
+      videos_plans_p3_b4_strong: '4 clips breves de b-roll IA',
+      videos_plans_p3_b4_post: 'por reel',
+      videos_plans_p3_b5_strong: 'Hasta 2 rondas',
+      videos_plans_p3_b5_post: 'de cambios menores por reel',
+      videos_plans_p3_b6: 'Entrega 1ª versión en máx. 48h hábiles',
+      videos_plans_p3_cta: 'Elegir Premium',
+      videos_plans_note_title: 'Términos de servicio de edición mensual:',
+      videos_plans_note_body:
+        'El b-roll se incluye dentro de los límites indicados y solo cuando sea técnicamente y visualmente adecuado para el contenido. La generación completa de videos con IA se cotiza aparte. Los videos no usados dentro del mes calendario no se acumulan para el mes siguiente. El precio mensual corresponde al servicio de edición; grabación, traslados, publicación y gestión de comunidad se cotizan por separado.',
+    },
+    // Los 5 textos dentro de un <span data-i18n> NUEVO (sin class): su contenedor tiene un
+    // <strong> adentro y el motor hace textContent =, que lo borraria. note_body es el cuerpo
+    // de la nota: el <p> tiene un <strong> hijo, asi que el texto va en su propio span.
+    wrapped: [
+      'videos_plans_p3_b1_s',
+      'videos_plans_p3_b4_pre',
+      'videos_plans_p3_b4_post',
+      'videos_plans_p3_b5_post',
+      'videos_plans_note_body',
+    ],
+    // D1 (aprobada): el <strong> de la nota lleva class, asi que su data-i18n va AL FINAL del tag
+    // y el regex de P-STRONG (<strong data-i18n="...">) no lo ve: por eso no entra en esta lista.
+    strongKeys: ['videos_plans_p3_b1_n', 'videos_plans_p3_b4_strong', 'videos_plans_p3_b5_strong'],
+    whitelist: new Set([]),
+    // Los 8 textos que NO son una frase completa (fragmentos de bullets + el label de la nota).
+    // Si uno quedara vacio, el motor hace `if (translations[key])` y el espanol sobreviviria.
+    fragments: [
+      'videos_plans_p3_b1_n',
+      'videos_plans_p3_b1_s',
+      'videos_plans_p3_b4_pre',
+      'videos_plans_p3_b4_strong',
+      'videos_plans_p3_b4_post',
+      'videos_plans_p3_b5_strong',
+      'videos_plans_p3_b5_post',
+      'videos_plans_note_title',
+    ],
+    // El numero que cada fragmento NO puede perder al traducirse (la negrita puede moverse de
+    // lugar dentro de la frase, pero el digito se queda en la negrita).
+    digitOf: {
+      videos_plans_p3_b1_n: '12',
+      videos_plans_p3_b4_strong: '4',
+      videos_plans_p3_b5_strong: '2',
+    },
+    // Precios y monedas que van LITERALES en los 6 idiomas.
+    literals: {
+      videos_plans_p3_unit: 'CLP',
+      videos_plans_p3_reel_price: '$32.500',
+    },
+    // Token puro: el precio grande de la tarjeta no se traduce ni lleva clave.
+    pureTokens: ['$390.000'],
+    // El nombre del plan SE TRADUCE, coherente con los otros dos (videos_plans_p1/p2_title).
+    translatedKeys: ['videos_plans_p3_title'],
+    distinctPairs: [
+      ['videos_plans_p3_title', 'videos_plans_p1_title'],
+      ['videos_plans_p3_title', 'videos_plans_p2_title'],
+    ],
+    mustInclude: ['Plan Premium', 'Máximo impacto', 'Términos de servicio'],
+    mustExclude: ['Plan Económica', 'Plan Equilibrada', 'id="como-funciona"'],
   },
 ];
 
