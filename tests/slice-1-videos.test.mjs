@@ -100,13 +100,23 @@ test('C8 solo las secciones ya traducidas llevan i18n (slices 4-10 intactos)', (
     'hay data-i18n fuera de las secciones traducidas: se adelanto trabajo de los slices 4-10',
   );
   // El criterio "span SIN class" distingue los spans nuevos de los data-i18n que
-  // ya viven en un tag con class del diseno de Stitch. El slice 3 no agrega ninguno
-  // (todos los contenedores de esa seccion tienen un icono HERMANO, no hijo).
+  // ya viven en un tag con class del diseno de Stitch. Los slices 3 y 4 no agregaron
+  // ninguno (sus contenedores tienen el icono HERMANO, no hijo); el slice 5 agrega 4
+  // porque fragmenta los bullets que llevan <strong> adentro (el motor hace
+  // textContent = y borraria la negrita).
   const wrapped = [...traducidas.matchAll(/<span data-i18n="([^"]+)">/g)].map((m) => m[1]).sort();
   assert.deepEqual(
     wrapped,
-    ['videos_hero_cta_planes', 'videos_hero_cta_whatsapp', 'videos_hero_viral'],
-    'los spans envolventes no son exactamente los 3 del hero',
+    [
+      'videos_hero_cta_planes',
+      'videos_hero_cta_whatsapp',
+      'videos_hero_viral',
+      'videos_plans_p1_b1_s',
+      'videos_plans_p2_b1_s',
+      'videos_plans_p2_b4_post',
+      'videos_plans_p2_b4_pre',
+    ],
+    'los spans envolventes no son exactamente los 3 del hero + los 4 del slice 5',
   );
 });
 

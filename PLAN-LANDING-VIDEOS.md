@@ -40,6 +40,15 @@ Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
 - Al probar en navegador tras cambiar los JSON, forzar recarga: el navegador cachea i18n/*.json y muestra claves viejas.
 - Cada clave en los 6 JSON de `i18n/`. Solo se AGREGAN claves; nunca se modifican ni borran las existentes.
 - El texto en espanol del HTML y el valor en es.json deben ser identicos al texto de Stitch.
+- Nombres de plan (Económica / Equilibrada / Premium) SE TRADUCEN (decision de Fase A del
+  slice 5, `videos_plans_p1_title` / `videos_plans_p2_title` / `videos_plans_p3_title`).
+  El slice 7 ("Nivel Económica/Equilibrada/Premium", seccion 5) DEBE reutilizar
+  EXACTAMENTE las mismas traducciones que fije el slice 5/6: no se retraduce el nivel.
+- Bullets con `<strong>` adentro: no se puede poner `data-i18n` en el contenedor (el motor
+  hace `textContent =` y borraria la negrita), asi que se fragmenta con `<span data-i18n>`
+  sin class y el `<strong>` conserva su elemento con su propio `data-i18n`. CRITICO: el
+  motor hace `if (translations[key])`, asi que un valor `""` NO se aplica y deja el espanol
+  a la vista; ningun fragmento puede quedar vacio ni con solo espacios en ningun idioma.
 - Probar en ES, EN, UR (RTL) y KO o ZH.
 
 ## Feature flag

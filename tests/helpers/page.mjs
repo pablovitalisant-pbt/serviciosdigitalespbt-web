@@ -138,12 +138,30 @@ export function extractIncludes(html) {
   return extractSection(html, extractIncludesMarker(), 'de entregables');
 }
 
+// La seccion 4 "PLANES MENSUALES" (slice 5: encabezado + planes 1 y 2). El rango va
+// del comentario de Stitch de la seccion hasta el comentario de la tarjeta 3: es
+// frontera de tarjeta (la 2 cierra antes), no parte ninguna lista de bullets.
+// Los dos marcadores son unicos; el test P4 del slice 5 lo verifica de hecho.
+export function extractPlansMarker() {
+  return '<!-- ' + '='.repeat(73) + '\n       4. TABLA DE PLANES MENSUALES';
+}
+
+export function extractPlansCutMarker() {
+  return '<!-- PLAN 3: PREMIUM -->';
+}
+
+export function extractPlansA(html) {
+  const start = indexOrThrow(html, extractPlansMarker());
+  const end = indexOrThrow(html, extractPlansCutMarker());
+  return html.slice(start, end);
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor aca (1 linea),
 // y con eso el test C8 del slice 1 sigue vigilando que no se adelante trabajo
 // de los slices siguientes.
 export function extractSections(html) {
-  return extractHero(html) + extractProblem(html) + extractIncludes(html);
+  return extractHero(html) + extractProblem(html) + extractIncludes(html) + extractPlansA(html);
 }
 
 // --- parser de tags (compartido por los tests de i18n de los slices 2 y 3) ---
