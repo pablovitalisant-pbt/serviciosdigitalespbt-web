@@ -208,6 +208,16 @@ export function extractExtras(html) {
   return extractSection(html, EXTRAS_MARKER, 'de trabajos adicionales');
 }
 
+// La seccion 8 "PREGUNTAS FRECUENTES" (slice 10), la ultima de contenido. Marcador: comentario
+// de Stitch, unico (el tag <section> tambien lo es hoy por su id, pero el comentario es el
+// patron establecido); P4 vigila su unicidad.
+export const FAQ_MARKER =
+  '<!-- ' + '='.repeat(73) + "\n       8. PREGUNTAS FRECUENTES (Fondo Gris Claro #F5F5F5, id='preguntas-frecuentes')";
+
+export function extractFaq(html) {
+  return extractSection(html, FAQ_MARKER, 'de preguntas frecuentes');
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor a esta lista
 // (1 linea) y su descriptor en SECTIONS (tests/i18n-sections.test.mjs). El
@@ -223,6 +233,7 @@ export const SECTION_EXTRACTORS = [
   extractCta,
   extractMobile,
   extractExtras,
+  extractFaq,
 ];
 
 export function extractSections(html) {
@@ -305,4 +316,40 @@ export function gitShowBaseline(sha, path) {
     encoding: 'utf8',
     maxBuffer: 32 * 1024 * 1024,
   });
+}
+
+// --- helpers del slice 10 (cobertura total del texto del body) ---------------
+
+// Elemento con data-i18n y contenido SOLO texto (lo que el motor reemplaza entero).
+// ponytail: vale porque P5 garantiza que ningun data-i18n tiene hijos; si alguno los
+// tuviera el regex no matchea y uncoveredBodyText lo delata (removed < covered) en vez
+// de colar texto sin traducir.
+const I18N_ELEM_RE =
+  /<([a-zA-Z][a-zA-Z0-9-]*)((?:[^>"']|"[^"]*"|'[^']*')*data-i18n(?:[^>"']|"[^"]*"|'[^']*')*)>[^<]*<\/\1>/g;
+
+// Los iconos de Material Symbols: la ligadura ("bolt", "check_circle") es texto del DOM
+// pero no es texto traducible (decision del PLAN).
+const ICON_SPAN_RE = /<span class="material-symbols-outlined[^"]*">[^<]*<\/span>/g;
+
+// Texto visible de <body> (sin navbar/footer inyectados ni <script>) que ningun data-i18n
+// cubre. Devuelve ademas los conteos que impiden que la verificacion sea vacuamente verde.
+export function uncoveredBodyText(html) {
+  const start = indexOrThrow(html, '<body');
+  const end = html.indexOf('</body>');
+  if (end === -1) throw new Error('el archivo no cierra con </body>');
+  const body = html
+    .slice(start, end)
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/<div id="navbar-placeholder"><\/div>/g, '')
+    .replace(/<div id="footer-placeholder"><\/div>/g, '');
+  const covered = count(body, 'data-i18n="');
+  const sinI18n = body.replace(I18N_ELEM_RE, '');
+  const icons = (sinI18n.match(ICON_SPAN_RE) || []).length;
+  return {
+    text: visibleText(sinI18n.replace(ICON_SPAN_RE, '')),
+    covered,
+    removed: covered - count(sinI18n, 'data-i18n="'),
+    icons,
+  };
 }

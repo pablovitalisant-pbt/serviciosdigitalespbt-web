@@ -30,6 +30,8 @@ import {
   extractCta,
   extractMobile,
   extractExtras,
+  extractFaq,
+  uncoveredBodyText,
   HERO_MARKER,
   PROBLEM_MARKER,
   INCLUDES_MARKER,
@@ -40,6 +42,7 @@ import {
   CTA_MARKER,
   MOBILE_MARKER,
   EXTRAS_MARKER,
+  FAQ_MARKER,
   SECTION_EXTRACTORS,
 } from './helpers/page.mjs';
 import { startServer } from './helpers/server.mjs';
@@ -811,6 +814,111 @@ const SECTIONS = [
     ],
     mustExclude: ['id="preguntas-frecuentes"', 'Claridad Absoluta', 'id="como-funciona"'],
   },
+
+  {
+    name: 'faq',
+    extract: extractFaq,
+    // Seccion 8, la ULTIMA de contenido. Marcador: comentario de Stitch, unico; P4 lo vigila.
+    markers: [FAQ_MARKER],
+    prefix: 'videos_faq_',
+    keys: [
+      'videos_faq_kicker',
+      'videos_faq_title',
+      'videos_faq_subtitle',
+      'videos_faq_q1_title',
+      'videos_faq_q1_strong',
+      'videos_faq_q1_body',
+      'videos_faq_q2_title',
+      'videos_faq_q2_body',
+      'videos_faq_q3_title',
+      'videos_faq_q3_body',
+      'videos_faq_q4_title',
+      'videos_faq_q4_body',
+      'videos_faq_q5_title',
+      'videos_faq_q5_body',
+      'videos_faq_q6_title',
+      'videos_faq_q6_pre',
+      'videos_faq_q6_strong',
+      'videos_faq_q6_post',
+      'videos_faq_q7_title',
+      'videos_faq_q7_body',
+    ],
+    // Texto ES = el de Stitch, literal (P9 lo verifica byte a byte). Los "01".."07" de las
+    // preguntas NO se traducen (tokens puros, criterio del PLAN y del slice 8).
+    es: {
+      videos_faq_kicker: 'Claridad Absoluta',
+      videos_faq_title: 'Preguntas Frecuentes',
+      videos_faq_subtitle:
+        'Respuestas directas a las dudas habituales antes de iniciar tu servicio de edición.',
+      videos_faq_q1_title: '¿Tengo que grabar los videos?',
+      videos_faq_q1_strong: 'Sí.',
+      videos_faq_q1_body:
+        'El cliente entrega el material en bruto grabado desde su celular o cámara. El servicio de grabación presencial en Iquique se cotiza de manera independiente si no cuentas con tiempo para hacerlo.',
+      videos_faq_q2_title: '¿Qué se considera una ronda de revisión?',
+      videos_faq_q2_body:
+        'Se consideran cambios menores sobre la primera versión entregada (ajuste de ortografía en subtítulos, volumen de música o corte de un segundo específico). Cambios de concepto completo, re-estructuración de guion o el envío de nuevo material grabado se cotizan aparte.',
+      videos_faq_q3_title: '¿Publican los videos por mí?',
+      videos_faq_q3_body:
+        'No está incluido en el precio base de edición. Te entregamos el archivo MP4 optimizado listo para subir. Si deseas que programemos y publiquemos por ti con portadas y copys, se puede cotizar como servicio adicional.',
+      videos_faq_q4_title: '¿Responden comentarios o mensajes de mis redes?',
+      videos_faq_q4_body:
+        'No está incluido en el plan de edición. El community management y atención de consultas puede cotizarse por separado con horarios y alcance predefinidos.',
+      videos_faq_q5_title: '¿Incluyen videos generados completamente con IA?',
+      videos_faq_q5_body:
+        'No. Nuestros planes utilizan IA como asistencia técnica de montaje y pequeños clips de b-roll ilustrativo. La creación de videos 100% generados con IA (voces clonadas y avatares) se presupuesta tras evaluar tu requerimiento específico.',
+      videos_faq_q6_title: '¿Cuándo comienza a correr el plazo de 48 horas?',
+      videos_faq_q6_pre:
+        'Comienza a contar desde el momento exacto en que recibimos todos los archivos brutos y las instrucciones completas acordadas. La entrega en 48 horas hábiles corresponde a la',
+      videos_faq_q6_strong: 'primera versión editable',
+      videos_faq_q6_post: 'para tu revisión.',
+      videos_faq_q7_title: '¿Incluye grabación, traslados o inversión publicitaria?',
+      videos_faq_q7_body:
+        'No. Estos ítems son ajenos a la edición de video digital y se gestionan como presupuestos independientes según cada cliente.',
+    },
+    // Las 7 preguntas van dentro de un <h4> que YA tiene un hijo (el <span> del numero), y
+    // q1_body/q6_pre/q6_post dentro de un <p> que tiene un <strong> hijo: el motor hace
+    // textContent = y los borraria, asi que el texto va en un <span data-i18n> NUEVO (sin class).
+    wrapped: [
+      'videos_faq_q1_title',
+      'videos_faq_q2_title',
+      'videos_faq_q3_title',
+      'videos_faq_q4_title',
+      'videos_faq_q5_title',
+      'videos_faq_q6_title',
+      'videos_faq_q7_title',
+      'videos_faq_q1_body',
+      'videos_faq_q6_pre',
+      'videos_faq_q6_post',
+    ],
+    // Los 2 <strong> de la seccion son DESNUDOS (sin class): su data-i18n matchea P-STRONG.
+    strongKeys: ['videos_faq_q1_strong', 'videos_faq_q6_strong'],
+    // Los 5 textos que NO son una frase completa. Si uno quedara vacio, el motor hace
+    // `if (translations[key])` y el espanol sobreviviria mezclado con el idioma elegido.
+    fragments: [
+      'videos_faq_q1_strong',
+      'videos_faq_q1_body',
+      'videos_faq_q6_pre',
+      'videos_faq_q6_strong',
+      'videos_faq_q6_post',
+    ],
+    digitOf: { videos_faq_q6_pre: '48' },
+    // El "48" y el "100%" quedan literales en los 6 idiomas (mismo criterio que how/extras).
+    literals: {
+      videos_faq_q6_title: '48',
+      videos_faq_q6_pre: '48',
+      videos_faq_q5_body: '100%',
+    },
+    // Los numeros de pregunta: no se traducen ni llevan clave.
+    pureTokens: ['01', '02', '03', '04', '05', '06', '07'],
+    // Decision de Fase A #1: "community management" se traduce reutilizando el termino ya
+    // fijado en la tarjeta "Manejo de Comunidad" (slice 9), no se retraduce. Va por `includes`
+    // y sin 'es' porque el texto ES lo fija Stitch (P8a/P8b): en espanol la frase conserva
+    // "community management" aunque la tarjeta diga "Manejo de Comunidad".
+    reusedTerms: [['videos_faq_q4_body', 'videos_extras_card3_title']],
+    whitelist: new Set([]),
+    mustInclude: ['Claridad Absoluta', 'Preguntas Frecuentes', 'Respuestas directas'],
+    mustExclude: ['id="como-funciona"', 'id="planes"', 'Producción sintética'],
+  },
 ];
 
 const D = Object.fromEntries(SECTIONS.map((d) => [d.name, d]));
@@ -1030,6 +1138,25 @@ for (const d of SECTIONS) {
     });
   }
 
+  if (d.reusedTerms?.length) {
+    test(`${d.name} P-REUSE los ${d.reusedTerms.length} terminos reutilizan la traduccion de su seccion de origen`, () => {
+      // Hermana de P-GUARD/P-LEVELS, pero por `includes` y SIN 'es': el texto espanol lo fija
+      // Stitch (P8a/P8b), asi que solo se vigila que las 5 traducciones no inventen un termino
+      // propio para un concepto ya traducido en otra seccion.
+      for (const l of LANGS.filter((x) => x !== 'es')) {
+        for (const [k, srcKey] of d.reusedTerms) {
+          const term = J[l][srcKey];
+          assert.equal(typeof term, 'string', `${l}.json: "${srcKey}" no es string (o falta)`);
+          assert.equal(typeof J[l][k], 'string', `${l}.json: "${k}" no es string (o falta)`);
+          assert.ok(
+            J[l][k].includes(term),
+            `${l}.json: "${k}" (${J[l][k]}) no reutiliza el termino de "${srcKey}" (${term}): se retradujo`,
+          );
+        }
+      }
+    });
+  }
+
   if (d.pureTokens) {
     test(`${d.name} P-PURE los ${d.pureTokens.length} tokens puros siguen en el HTML y sin clave`, () => {
       for (const p of d.pureTokens) {
@@ -1151,6 +1278,37 @@ test('G-FILEWIDE videos.html conserva los conteos globales del slice 1 (iconos, 
   for (const t of ['material-symbols-outlined', '[LINK_WHATSAPP]', 'href="https://wa.me/"', 'class="']) {
     assert.equal(count(V, t), count(VBASE, t), `cambio la cantidad de ${JSON.stringify(t)} en videos.html`);
   }
+});
+
+// Los UNICOS textos de <body> que pueden quedar sin data-i18n: tokens numericos o de formato
+// puros (documentados en el PLAN y en los pureTokens de cada descriptor) y el separador "/".
+// Todo lo demas es deuda de i18n. Esta es la lista COMPLETA del archivo, no la de una seccion.
+const PURE_TOKENS_FILEWIDE = new Set([
+  // precios grandes de las tarjetas de plan, sin palabras alrededor (slices 5/6)
+  '$80.000', '$200.000', '$390.000',
+  // precios de trabajos individuales (slice 7) + la moneda que los sigue
+  '$22.000', '$30.000', '$40.000', '$45.000', '$65.000', '$90.000', 'CLP',
+  // formatos y metricas de los mockups del hero (slice 2), con su separador
+  '48H', '9:16', '0:42', '0:60', '/', '1.8k', '94', '210',
+  // numeros de paso (slice 8) y de pregunta (slice 10)
+  '01', '02', '03', '04', '05', '06', '07',
+]);
+
+test('G-COVERAGE no queda texto visible en el body sin data-i18n (salvo los tokens puros documentados)', () => {
+  const { text, covered, removed, icons } = uncoveredBodyText(V);
+  // Si estos dos no coinciden, algun elemento con data-i18n tiene hijos y el regex no lo
+  // borro: sin este assert, su texto apareceria como "no cubierto" o (peor) no apareceria.
+  assert.equal(removed, covered, 'el borrado no cubrio todos los data-i18n del body: alguno tiene hijos');
+  assert.ok(covered > 100, `solo se encontraron ${covered} data-i18n en el body: el escaneo no leyo la pagina`);
+  assert.ok(icons > 0, 'no se encontro ningun icono: el regex de spans de icono dejo de matchear');
+  const fuera = [...new Set(text.split(' '))].filter((t) => t && !PURE_TOKENS_FILEWIDE.has(t));
+  assert.deepEqual(
+    fuera,
+    [],
+    `estos textos del body no tienen data-i18n y no son tokens puros (${fuera.length}):\n  ${fuera.join(' ')}`,
+  );
+  // Anti-vacuidad por el otro lado: el escaneo tiene que llegar a ver el body.
+  assert.ok(text.length > 0, 'no sobrevivio ni un token puro: el escaneo devolvio texto vacio');
 });
 
 // --- E2E por HTTP (los JSON se cargan por fetch) -----------------------------
