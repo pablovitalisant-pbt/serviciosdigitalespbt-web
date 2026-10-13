@@ -169,6 +169,35 @@ export function extractSingle(html) {
   return extractSection(html, SINGLE_MARKER, 'de trabajos individuales');
 }
 
+// La seccion 6 "COMO FUNCIONA" (slice 8). Marcador: comentario de Stitch, unico
+// (el tag <section> de esta seccion lleva id="como-funciona" y podria servir, pero el
+// comentario es el patron ya establecido y P4 verifica su unicidad de hecho).
+export const HOW_MARKER = '<!-- ' + '='.repeat(73) + '\n       6. CÓMO FUNCIONA';
+
+export function extractHow(html) {
+  return extractSection(html, HOW_MARKER, 'de como funciona');
+}
+
+// La seccion 9, CTA final de Stitch (slice 8). Marcador: comentario de Stitch, unico.
+export const CTA_MARKER = '<!-- ' + '='.repeat(73) + '\n       9. CIERRE FINAL DE ALTO IMPACTO';
+
+export function extractCta(html) {
+  return extractSection(html, CTA_MARKER, 'del CTA final');
+}
+
+// El boton fijo movil de WhatsApp (slice 8) NO es una <section>: vive fuera de <main>,
+// despues del footer-placeholder, y es un unico <div> autocontenido. extractSection no
+// sirve (no hay ningun </section> despues). El marcador es el MISMO string que vigila C5a
+// en slice-1-videos.test.mjs: si cambia, los dos tests fallan a la vez.
+export const MOBILE_MARKER = '<div class="fixed bottom-4 left-4 right-4 z-50 md:hidden">';
+
+export function extractMobile(html) {
+  const start = indexOrThrow(html, MOBILE_MARKER);
+  const end = html.indexOf('</div>', start);
+  if (end === -1) throw new Error('el boton movil no cierra con </div>');
+  return html.slice(start, end + '</div>'.length);
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor a esta lista
 // (1 linea) y su descriptor en SECTIONS (tests/i18n-sections.test.mjs). El
@@ -180,6 +209,9 @@ export const SECTION_EXTRACTORS = [
   extractPlansA,
   extractPlansB,
   extractSingle,
+  extractHow,
+  extractCta,
+  extractMobile,
 ];
 
 export function extractSections(html) {

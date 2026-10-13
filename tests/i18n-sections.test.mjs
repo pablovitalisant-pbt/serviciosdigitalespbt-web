@@ -26,12 +26,18 @@ import {
   extractPlansA,
   extractPlansB,
   extractSingle,
+  extractHow,
+  extractCta,
+  extractMobile,
   HERO_MARKER,
   PROBLEM_MARKER,
   INCLUDES_MARKER,
   PLANS_MARKER,
   PLANS_CUT_MARKER,
   SINGLE_MARKER,
+  HOW_MARKER,
+  CTA_MARKER,
+  MOBILE_MARKER,
   SECTION_EXTRACTORS,
 } from './helpers/page.mjs';
 import { startServer } from './helpers/server.mjs';
@@ -583,6 +589,138 @@ const SECTIONS = [
     mustInclude: ['Flexibilidad Total', 'Cotizar Reel Suelto', 'Nivel Premium'],
     mustExclude: ['id="planes"', 'Términos de servicio', 'id="como-funciona"'],
   },
+
+  {
+    name: 'how',
+    extract: extractHow,
+    // El <section> lleva id="como-funciona"; el marcador es el comentario de Stitch, unico,
+    // por consistencia con INCLUDES/SINGLE/PLANS (P4 vigila su unicidad).
+    markers: [HOW_MARKER],
+    prefix: 'videos_how_',
+    keys: [
+      'videos_how_kicker',
+      'videos_how_title',
+      'videos_how_subtitle',
+      'videos_how_step1_title',
+      'videos_how_step1_body',
+      'videos_how_step1_note',
+      'videos_how_step2_title',
+      'videos_how_step2_body',
+      'videos_how_step2_note',
+      'videos_how_step3_title',
+      'videos_how_step3_body',
+      'videos_how_step3_note',
+      'videos_how_note_title',
+      'videos_how_note_body',
+    ],
+    // Texto ES = el de Stitch, literal. Los "01/02/03" de los pasos NO se traducen
+    // (tokens puros, mismo criterio que 48H / 9:16): ver pureTokens.
+    es: {
+      videos_how_kicker: 'Proceso Ágil',
+      videos_how_title: 'Cómo Funciona',
+      videos_how_subtitle:
+        'Un flujo de trabajo diseñado para que no pierdas ni un minuto de tu jornada laboral.',
+      videos_how_step1_title: 'Envías tu material',
+      videos_how_step1_body:
+        'Eliges tu plan y nos envías tus grabaciones en bruto por Drive, WhatsApp o enlace, junto a tus instrucciones breves y referencias deseadas.',
+      videos_how_step1_note: 'Sin complicaciones técnicas',
+      videos_how_step2_title: 'Editamos con precisión',
+      videos_how_step2_body:
+        'Editamos tu contenido aplicando las especificaciones de tu plan: corte de pausas, subtítulos dinámicos legibles, audio optimizado y b-roll asistido.',
+      videos_how_step2_note: 'Filtro de calidad humano',
+      videos_how_step3_title: 'Recibes en 48 horas',
+      videos_how_step3_body:
+        'Recibes la primera versión en un máximo de 48 horas hábiles desde la recepción completa del material y las instrucciones para tu revisión.',
+      videos_how_step3_note: 'Listo para publicar',
+      videos_how_note_title: 'Aclaración:',
+      videos_how_note_body:
+        'Los cambios solicitados se aplican posterior a esta primera entrega, conforme a las rondas de revisión incluidas en tu plan.',
+    },
+    // Los 3 textos que son nodo suelto hermano del icono del paso (cloud_upload, tune, timer)
+    // y el cuerpo de la nota final (texto suelto dentro del <p>, hermano del <span> "Aclaración:"):
+    // el motor hace textContent =, asi que van en un <span data-i18n> NUEVO (sin class).
+    wrapped: [
+      'videos_how_step1_note',
+      'videos_how_step2_note',
+      'videos_how_step3_note',
+      'videos_how_note_body',
+    ],
+    // La seccion no tiene NI UN <strong>: nada que conservar. Por eso tampoco digitOf.
+    strongKeys: [],
+    fragments: [],
+    whitelist: new Set([]),
+    // El "48" de los pasos es literal en los 6 idiomas (no se convierte a 48h/48 horas).
+    literals: {
+      videos_how_step3_title: '48',
+      videos_how_step3_body: '48',
+    },
+    // Los numeros de paso: no se traducen ni llevan clave.
+    pureTokens: ['01', '02', '03'],
+    mustInclude: ['Proceso Ágil', 'Cómo Funciona', 'Sin complicaciones técnicas', 'Aclaración:'],
+    mustExclude: ['id="planes"', 'Trabajos adicionales', 'Preguntas Frecuentes'],
+  },
+
+  {
+    name: 'cta',
+    extract: extractCta,
+    // La ultima <section> de <main>: el CTA propio de Stitch que se conserva (C6 lo vigila).
+    markers: [CTA_MARKER],
+    prefix: 'videos_cta_',
+    keys: [
+      'videos_cta_kicker',
+      'videos_cta_title',
+      'videos_cta_subtitle',
+      'videos_cta_whatsapp',
+      'videos_cta_compare',
+      'videos_cta_footer',
+    ],
+    es: {
+      videos_cta_kicker: 'Empecemos esta semana',
+      videos_cta_title: 'Empieza hoy a publicar reels profesionales',
+      videos_cta_subtitle:
+        'Tú envías tu material y recibes la primera versión en un máximo de 48 horas desde que la entrega está completa. Deja la edición en nuestras manos.',
+      videos_cta_whatsapp: 'Quiero cotizar por WhatsApp',
+      videos_cta_compare: 'Comparar planes',
+      videos_cta_footer: 'Atención personalizada para profesionales de Iquique, Tarapacá y todo Chile',
+    },
+    // El <a> del boton WhatsApp tiene el icono (chat) como HIJO hermano del texto: el texto va
+    // en un <span data-i18n> NUEVO. El <a> "#planes" ("Comparar planes") no tiene hijos: su
+    // data-i18n va en el propio <a> (precedente: el CTA de los planes).
+    wrapped: ['videos_cta_whatsapp'],
+    strongKeys: [],
+    fragments: [],
+    whitelist: new Set([]),
+    literals: { videos_cta_subtitle: '48' },
+    // EL acoplamiento por valor de esta seccion: "Quiero cotizar por WhatsApp" ya existe en el
+    // hero. Clave propia por ocurrencia, pero la traduccion debe ser EXACTAMENTE la misma en
+    // los 6 idiomas (misma guardia que P-LEVELS, pero por igualdad estricta: es la misma frase).
+    guardPairs: [['videos_cta_whatsapp', 'videos_hero_cta_whatsapp']],
+    mustInclude: ['Empecemos esta semana', 'Empieza hoy a publicar reels profesionales', 'Comparar planes'],
+    mustExclude: ['id="como-funciona"', 'Preguntas Frecuentes', 'Proceso Ágil'],
+  },
+
+  {
+    name: 'mobile',
+    extract: extractMobile,
+    // Fuera de <main>: el boton fijo movil, tras el footer-placeholder y antes del loader.
+    markers: [MOBILE_MARKER],
+    prefix: 'videos_mobile_',
+    keys: ['videos_mobile_whatsapp'],
+    // Texto ES = el de Stitch. OJO: es "Cotizar por WhatsApp", DISTINTO del "Quiero cotizar por
+    // WhatsApp" del hero y del CTA: no hay reutilizacion de traduccion (frase distinta).
+    es: {
+      videos_mobile_whatsapp: 'Cotizar por WhatsApp',
+    },
+    // El <a> tiene el icono (chat) como hijo: el texto va en un <span data-i18n> NUEVO.
+    wrapped: ['videos_mobile_whatsapp'],
+    strongKeys: [],
+    fragments: [],
+    whitelist: new Set([]),
+    // Icono, href y clases intactos (C5a/C5b los vigilan): el href es un placeholder de Stitch.
+    pureTokens: ['https://wa.me/'],
+    mustInclude: ['Cotizar por WhatsApp'],
+    mustExclude: ['id="footer-placeholder"', '<section', '[LINK_WHATSAPP]'],
+  },
 ];
 
 const D = Object.fromEntries(SECTIONS.map((d) => [d.name, d]));
@@ -779,6 +917,23 @@ for (const d of SECTIONS) {
           assert.ok(
             v.includes(nombre),
             `${l}.json: "${k}" (${v}) no reutiliza el nombre de "${titleKey}" (${nombre}): el nivel se retradujo`,
+          );
+        }
+      }
+    });
+  }
+
+  if (d.guardPairs?.length) {
+    test(`${d.name} P-GUARD los ${d.guardPairs.length} pares reutilizan la traduccion EXACTA (no se retraducen)`, () => {
+      // Guardia de coherencia entre secciones (hermana de P-LEVELS): la misma frase con clave
+      // propia por ocurrencia debe tener el MISMO valor en los 6 idiomas. Aqui va por igualdad
+      // estricta (no `includes`): es literalmente la misma frase, no un rotulo compuesto.
+      for (const l of LANGS) {
+        for (const [a, b] of d.guardPairs) {
+          assert.equal(
+            J[l][a],
+            J[l][b],
+            `${l}.json: "${a}" (${J[l][a]}) y "${b}" (${J[l][b]}) deben ser identicos: es la misma frase, no se retraduce`,
           );
         }
       }
