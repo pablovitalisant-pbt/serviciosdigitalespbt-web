@@ -218,5 +218,21 @@
   "videos_plans_p3_b6": "첫 버전 최대 48h 영업시간 내 전달",
   "videos_plans_p3_cta": "프리미엄 선택",
   "videos_plans_note_title": "월간 편집 서비스 약관:",
-  "videos_plans_note_body": "b-roll은 명시된 한도 내에서, 그리고 콘텐츠에 기술적·시각적으로 적합한 경우에만 포함됩니다. 전체 AI 영상 생성은 별도로 견적됩니다. 달력 월 내에 사용하지 않은 영상은 다음 달로 이월되지 않습니다. 월 요금은 편집 서비스에 해당하며, 촬영·이동·게시·커뮤니티 관리는 별도로 견적됩니다."
+  "videos_plans_note_body": "b-roll은 명시된 한도 내에서, 그리고 콘텐츠에 기술적·시각적으로 적합한 경우에만 포함됩니다. 전체 AI 영상 생성은 별도로 견적됩니다. 달력 월 내에 사용하지 않은 영상은 다음 달로 이월되지 않습니다. 월 요금은 편집 서비스에 해당하며, 촬영·이동·게시·커뮤니티 관리는 별도로 견적됩니다.",
+  "videos_single_kicker": "완전한 유연성",
+  "videos_single_title": "구독 전에 먼저 시험해 보시겠어요?",
+  "videos_single_subtitle": "월간 약정 없이 영상별 편집 옵션. 저희 작업 방식을 먼저 확인하거나 특정 프로젝트에 적합합니다.",
+  "videos_single_reel_title": "개별 릴 1개",
+  "videos_single_reel_format": "세로 형식, 최대 60초",
+  "videos_single_reel_p1": "이코노미 등급",
+  "videos_single_reel_p2": "밸런스 등급",
+  "videos_single_reel_p3": "프리미엄 등급",
+  "videos_single_reel_cta": "단일 릴 견적 받기",
+  "videos_single_long_title": "개별 롱폼 영상 1개",
+  "videos_single_long_format": "5~6분 길이 (YouTube / Web)",
+  "videos_single_long_p1": "이코노미 등급",
+  "videos_single_long_p2": "밸런스 등급",
+  "videos_single_long_p3": "프리미엄 등급",
+  "videos_single_long_cta": "롱폼 영상 견적 받기",
+  "videos_single_note": "* 롱폼 영상은 개별 작업으로만 견적되며 월간 플랜에 포함되지 않습니다."
 }

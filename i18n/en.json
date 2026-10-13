@@ -218,5 +218,21 @@
   "videos_plans_p3_b6": "First version delivered in max. 48h business time",
   "videos_plans_p3_cta": "Choose Premium",
   "videos_plans_note_title": "Monthly editing service terms:",
-  "videos_plans_note_body": "B-roll is included within the stated limits and only when it is technically and visually suitable for the content. Full AI video generation is quoted separately. Videos not used within the calendar month do not carry over to the following month. The monthly price covers the editing service; filming, travel, publishing and community management are quoted separately."
+  "videos_plans_note_body": "B-roll is included within the stated limits and only when it is technically and visually suitable for the content. Full AI video generation is quoted separately. Videos not used within the calendar month do not carry over to the following month. The monthly price covers the editing service; filming, travel, publishing and community management are quoted separately.",
+  "videos_single_kicker": "Total Flexibility",
+  "videos_single_title": "Prefer to try before subscribing?",
+  "videos_single_subtitle": "Per-video editing options with no monthly commitment. Ideal for testing our workflow or for specific projects.",
+  "videos_single_reel_title": "1 Individual Reel",
+  "videos_single_reel_format": "Vertical format up to 60 seconds",
+  "videos_single_reel_p1": "Economy Level",
+  "videos_single_reel_p2": "Balanced Level",
+  "videos_single_reel_p3": "Premium Level",
+  "videos_single_reel_cta": "Quote a Single Reel",
+  "videos_single_long_title": "1 Individual Long Video",
+  "videos_single_long_format": "Duration of 5 to 6 minutes (YouTube / Web)",
+  "videos_single_long_p1": "Economy Level",
+  "videos_single_long_p2": "Balanced Level",
+  "videos_single_long_p3": "Premium Level",
+  "videos_single_long_cta": "Quote Long Video",
+  "videos_single_note": "* Long videos are quoted exclusively as individual jobs and are not part of the monthly plans."
 }

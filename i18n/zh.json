@@ -218,5 +218,21 @@
   "videos_plans_p3_b6": "首版最长 48h 工作时间内交付",
   "videos_plans_p3_cta": "选择尊享方案",
   "videos_plans_note_title": "月度剪辑服务条款:",
-  "videos_plans_note_body": "b-roll 仅在所述限额内、且对内容在技术和视觉上均合适时才会包含。完整的 AI 视频生成另行报价。日历月内未使用的视频不结转到下个月。月度价格对应剪辑服务;拍摄、交通、发布和社群管理另行报价。"
+  "videos_plans_note_body": "b-roll 仅在所述限额内、且对内容在技术和视觉上均合适时才会包含。完整的 AI 视频生成另行报价。日历月内未使用的视频不结转到下个月。月度价格对应剪辑服务;拍摄、交通、发布和社群管理另行报价。",
+  "videos_single_kicker": "完全灵活",
+  "videos_single_title": "想先试再订阅？",
+  "videos_single_subtitle": "按单个视频计费的剪辑方案，无需按月承诺。适合先验证我们的工作流程，或用于特定项目。",
+  "videos_single_reel_title": "1 条独立 Reel",
+  "videos_single_reel_format": "竖屏格式，最长 60 秒",
+  "videos_single_reel_p1": "经济级别",
+  "videos_single_reel_p2": "均衡级别",
+  "videos_single_reel_p3": "尊享级别",
+  "videos_single_reel_cta": "单条 Reel 询价",
+  "videos_single_long_title": "1 条独立长视频",
+  "videos_single_long_format": "时长 5 至 6 分钟（YouTube / Web）",
+  "videos_single_long_p1": "经济级别",
+  "videos_single_long_p2": "均衡级别",
+  "videos_single_long_p3": "尊享级别",
+  "videos_single_long_cta": "长视频询价",
+  "videos_single_note": "* 长视频仅按单个项目报价，不包含在月度方案内。"
 }

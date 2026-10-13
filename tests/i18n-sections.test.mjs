@@ -25,11 +25,13 @@ import {
   extractIncludes,
   extractPlansA,
   extractPlansB,
+  extractSingle,
   HERO_MARKER,
   PROBLEM_MARKER,
   INCLUDES_MARKER,
   PLANS_MARKER,
   PLANS_CUT_MARKER,
+  SINGLE_MARKER,
   SECTION_EXTRACTORS,
 } from './helpers/page.mjs';
 import { startServer } from './helpers/server.mjs';
@@ -38,6 +40,12 @@ import { startServer } from './helpers/server.mjs';
 // Una sola base sirve para los 4 descriptores. NO usar HEAD (ver gitShowBaseline).
 const BASE = '8a5fa69';
 const LANGS = ['es', 'en', 'hi', 'zh', 'ur', 'ko'];
+
+// La palabra "plan" en cada idioma. Se le quita al titulo del plan (slice 5/6) para obtener
+// el nombre del nivel, que la seccion 5 DEBE reutilizar tal cual (decision D3 de Fase A):
+// si aca dice "尊享方案" y alla "高级", P-LEVELS falla. Es el unico acoplamiento entre
+// secciones por VALOR, y es deliberado.
+const PLAN_WORD = { es: 'Plan', en: 'Plan', hi: 'प्लान', zh: '方案', ur: 'پلان', ko: '플랜' };
 
 const V = read('videos.html');
 const VBASE = gitShowBaseline(BASE, 'videos.html');
@@ -501,6 +509,80 @@ const SECTIONS = [
     mustInclude: ['Plan Premium', 'Máximo impacto', 'Términos de servicio'],
     mustExclude: ['Plan Económica', 'Plan Equilibrada', 'id="como-funciona"'],
   },
+
+  {
+    name: 'single',
+    extract: extractSingle,
+    // El <section> de esta seccion comparte tag con el de la 3 (count === 2, lo prueba
+    // E_INCLUDES): el marcador es el comentario de Stitch, que si es unico, y P4 lo vigila.
+    markers: [SINGLE_MARKER],
+    prefix: 'videos_single_',
+    keys: [
+      'videos_single_kicker',
+      'videos_single_title',
+      'videos_single_subtitle',
+      'videos_single_reel_title',
+      'videos_single_reel_format',
+      'videos_single_reel_p1',
+      'videos_single_reel_p2',
+      'videos_single_reel_p3',
+      'videos_single_reel_cta',
+      'videos_single_long_title',
+      'videos_single_long_format',
+      'videos_single_long_p1',
+      'videos_single_long_p2',
+      'videos_single_long_p3',
+      'videos_single_long_cta',
+      'videos_single_note',
+    ],
+    // Texto ES = el de Stitch, literal. El rotulo "Nivel X" aparece DOS veces en la seccion
+    // (bloque Reel y bloque Video Largo): P3 exige 1 ocurrencia por clave, asi que son 6
+    // claves de nivel, no 3 (decision D1 de Fase A).
+    es: {
+      videos_single_kicker: 'Flexibilidad Total',
+      videos_single_title: '¿Prefieres probar antes de suscribirte?',
+      videos_single_subtitle:
+        'Opciones de edición por video individual sin compromiso mensual. Ideal para validar nuestro flujo de trabajo o proyectos específicos.',
+      videos_single_reel_title: '1 Reel Individual',
+      videos_single_reel_format: 'Formato vertical de hasta 60 segundos',
+      videos_single_reel_p1: 'Nivel Económica',
+      videos_single_reel_p2: 'Nivel Equilibrada',
+      videos_single_reel_p3: 'Nivel Premium',
+      videos_single_reel_cta: 'Cotizar Reel Suelto',
+      videos_single_long_title: '1 Video Largo Individual',
+      videos_single_long_format: 'Duración de 5 a 6 minutos (YouTube / Web)',
+      videos_single_long_p1: 'Nivel Económica',
+      videos_single_long_p2: 'Nivel Equilibrada',
+      videos_single_long_p3: 'Nivel Premium',
+      videos_single_long_cta: 'Cotizar Video Largo',
+      videos_single_note:
+        '* Los videos largos se cotizan exclusivamente como trabajos individuales y no forman parte de los planes mensuales.',
+    },
+    // Ningun <span data-i18n="k"> pelado: los 6 spans de nivel llevan su class del diseno
+    // (P6 filtra por attrs === data-i18n solo), y los 2 CTA viven en el <a> con su texto.
+    wrapped: [],
+    // La seccion no tiene NI UN <strong> (verificado): no hay fragmentos de bullet partido
+    // ni negrita que conservar. Por eso tampoco hay digitOf (decision D4 de Fase A).
+    strongKeys: [],
+    fragments: [],
+    whitelist: new Set([]),
+    // Numeros + moneda sin ninguna palabra alrededor: no se traducen ni llevan clave.
+    pureTokens: ['$22.000 CLP', '$30.000 CLP', '$40.000 CLP', '$45.000 CLP', '$65.000 CLP', '$90.000 CLP'],
+    // D2: el unico literal dentro de un valor traducido es el asterisco del pie de pagina.
+    literals: { videos_single_note: '*' },
+    // D3: los 6 rotulos "Nivel X" deben reutilizar el nombre de plan ya traducido en las
+    // tarjetas del slice 5/6, no retraducirlo.
+    levelOfPlan: [
+      ['videos_single_reel_p1', 'videos_plans_p1_title'],
+      ['videos_single_reel_p2', 'videos_plans_p2_title'],
+      ['videos_single_reel_p3', 'videos_plans_p3_title'],
+      ['videos_single_long_p1', 'videos_plans_p1_title'],
+      ['videos_single_long_p2', 'videos_plans_p2_title'],
+      ['videos_single_long_p3', 'videos_plans_p3_title'],
+    ],
+    mustInclude: ['Flexibilidad Total', 'Cotizar Reel Suelto', 'Nivel Premium'],
+    mustExclude: ['id="planes"', 'Términos de servicio', 'id="como-funciona"'],
+  },
 ];
 
 const D = Object.fromEntries(SECTIONS.map((d) => [d.name, d]));
@@ -671,10 +753,33 @@ for (const d of SECTIONS) {
   }
 
   if (d.literals) {
-    test(`${d.name} P-LITERALS los precios y monedas quedan literales en los 6 idiomas`, () => {
+    test(`${d.name} P-LITERALS los literales (precios, monedas y marcas) quedan literales en los 6 idiomas`, () => {
       for (const l of LANGS) {
         for (const [k, lit] of Object.entries(d.literals)) {
           assert.ok(String(J[l][k]).includes(lit), `${l}.json: "${k}" perdio el literal ${lit} al traducirse`);
+        }
+      }
+    });
+  }
+
+  if (d.levelOfPlan) {
+    test(`${d.name} P-LEVELS los ${d.levelOfPlan.length} niveles reutilizan el nombre de plan de su tarjeta`, () => {
+      // El unico assert de este archivo que compara el valor de una seccion con el de OTRA:
+      // es la guardia que impide retraducir el nivel (D3 de Fase A). Tolerante al orden y a la
+      // puntuacion del rotulo (includes), estricta con el nombre del plan.
+      for (const l of LANGS) {
+        for (const [k, titleKey] of d.levelOfPlan) {
+          const v = J[l][k];
+          assert.equal(typeof v, 'string', `${l}.json: "${k}" no es string (o falta)`);
+          const nombre = J[l][titleKey].replace(PLAN_WORD[l], '').trim();
+          assert.ok(
+            nombre.length > 1,
+            `${l}.json: "${titleKey}" no trae la palabra de plan esperada (${PLAN_WORD[l]}): ${J[l][titleKey]}`,
+          );
+          assert.ok(
+            v.includes(nombre),
+            `${l}.json: "${k}" (${v}) no reutiliza el nombre de "${titleKey}" (${nombre}): el nivel se retradujo`,
+          );
         }
       }
     });
@@ -689,7 +794,9 @@ for (const d of SECTIONS) {
     });
   }
 
-  if (d.fragments) {
+  // Gated por .length, igual que strongKeys: un `fragments: []` declarado a proposito ("esta
+  // seccion no tiene fragmentos") generaba un test vacuo que ademas crasheaba en digitOf.
+  if (d.fragments?.length) {
     test(`${d.name} P-FRAGMENTS los ${d.fragments.length} fragmentos no quedan vacios ni pierden su numero`, () => {
       for (const l of LANGS) {
         for (const k of d.fragments) {

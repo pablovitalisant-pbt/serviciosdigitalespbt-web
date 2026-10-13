@@ -218,5 +218,21 @@
   "videos_plans_p3_b6": "Entrega 1ª versión en máx. 48h hábiles",
   "videos_plans_p3_cta": "Elegir Premium",
   "videos_plans_note_title": "Términos de servicio de edición mensual:",
-  "videos_plans_note_body": "El b-roll se incluye dentro de los límites indicados y solo cuando sea técnicamente y visualmente adecuado para el contenido. La generación completa de videos con IA se cotiza aparte. Los videos no usados dentro del mes calendario no se acumulan para el mes siguiente. El precio mensual corresponde al servicio de edición; grabación, traslados, publicación y gestión de comunidad se cotizan por separado."
+  "videos_plans_note_body": "El b-roll se incluye dentro de los límites indicados y solo cuando sea técnicamente y visualmente adecuado para el contenido. La generación completa de videos con IA se cotiza aparte. Los videos no usados dentro del mes calendario no se acumulan para el mes siguiente. El precio mensual corresponde al servicio de edición; grabación, traslados, publicación y gestión de comunidad se cotizan por separado.",
+  "videos_single_kicker": "Flexibilidad Total",
+  "videos_single_title": "¿Prefieres probar antes de suscribirte?",
+  "videos_single_subtitle": "Opciones de edición por video individual sin compromiso mensual. Ideal para validar nuestro flujo de trabajo o proyectos específicos.",
+  "videos_single_reel_title": "1 Reel Individual",
+  "videos_single_reel_format": "Formato vertical de hasta 60 segundos",
+  "videos_single_reel_p1": "Nivel Económica",
+  "videos_single_reel_p2": "Nivel Equilibrada",
+  "videos_single_reel_p3": "Nivel Premium",
+  "videos_single_reel_cta": "Cotizar Reel Suelto",
+  "videos_single_long_title": "1 Video Largo Individual",
+  "videos_single_long_format": "Duración de 5 a 6 minutos (YouTube / Web)",
+  "videos_single_long_p1": "Nivel Económica",
+  "videos_single_long_p2": "Nivel Equilibrada",
+  "videos_single_long_p3": "Nivel Premium",
+  "videos_single_long_cta": "Cotizar Video Largo",
+  "videos_single_note": "* Los videos largos se cotizan exclusivamente como trabajos individuales y no forman parte de los planes mensuales."
 }

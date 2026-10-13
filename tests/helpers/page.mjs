@@ -158,6 +158,17 @@ export function extractPlansB(html) {
   return extractSection(html, PLANS_CUT_MARKER, 'de planes parte 2');
 }
 
+// La seccion 5 "PRECIO POR TRABAJOS INDIVIDUALES" (slice 7). El marcador NO puede ser el
+// tag <section>: es IDENTICO al de la seccion 3 (mismas clases), asi que indexOf devolveria
+// la 3 por casualidad. Se ancla al comentario de Stitch, igual que INCLUDES_MARKER; el
+// extra E_INCLUDES ya documenta por que el tag de esta seccion no sirve como marcador.
+export const SINGLE_MARKER =
+  '<!-- ' + '='.repeat(73) + '\n       5. PRECIO POR TRABAJOS INDIVIDUALES';
+
+export function extractSingle(html) {
+  return extractSection(html, SINGLE_MARKER, 'de trabajos individuales');
+}
+
 // Las secciones de videos.html que YA estan traducidas. Es el punto de
 // acoplamiento deliberado: cada slice de i18n agrega su extractor a esta lista
 // (1 linea) y su descriptor en SECTIONS (tests/i18n-sections.test.mjs). El
@@ -168,6 +179,7 @@ export const SECTION_EXTRACTORS = [
   extractIncludes,
   extractPlansA,
   extractPlansB,
+  extractSingle,
 ];
 
 export function extractSections(html) {
