@@ -75,10 +75,23 @@ test('S21-3 planes: Economica blanco, Equilibrada verde, Premium naranja #c2410c
   assert.ok(ratio(orange, '#ffffff') >= 4.5, 'el texto del boton naranja no se lee');
 });
 
-test('S21-4 los 3 CTA "Quiero mi Pack de Reels" usan un icono de video, no el de chat', () => {
+// Slice 22: el icono de video pasa a ser la claqueta ABIERTA propia (SVG). Material Symbols
+// no trae una claqueta abierta (verificado contra su lista de codepoints).
+test('S21-4 / S22-1 los 3 CTA "Quiero mi Pack de Reels" usan la claqueta abierta, no chat ni movie', () => {
   for (const k of ['videos_hero_cta_whatsapp', 'videos_cta_whatsapp', 'videos_mobile_whatsapp']) {
     const { body } = anchorOf(k);
-    assert.match(body, /<span class="material-symbols-outlined[^"]*">movie<\/span>/, `el CTA ${k} no tiene el icono movie`);
-    assert.doesNotMatch(body, />chat</, `el CTA ${k} conserva el icono de chat`);
+    assert.match(body, /<svg class="[^"]*" aria-hidden="true"><use href="#icon-claqueta"\/><\/svg>/, `el CTA ${k} no usa la claqueta abierta`);
+    assert.doesNotMatch(body, />(chat|movie)</, `el CTA ${k} conserva un icono de Material Symbols`);
   }
+});
+
+test('S22-2 la claqueta abierta se define una sola vez, oculta y con trazo del color del texto', () => {
+  const sprite = V.match(/<svg [^>]*><symbol id="icon-claqueta" viewBox="0 0 24 24"[^>]*>[\s\S]*?<\/symbol><\/svg>/)?.[0];
+  assert.ok(sprite, 'falta el <symbol id="icon-claqueta"> con viewBox 24x24');
+  assert.equal(count(V, 'id="icon-claqueta"'), 1, 'la claqueta esta definida mas de una vez');
+  assert.match(sprite, /^<svg [^>]*aria-hidden="true"/, 'el sprite no esta oculto a lectores de pantalla');
+  assert.match(sprite, /^<svg [^>]*width="0" height="0"/, 'el sprite ocupa espacio en la pagina');
+  assert.match(sprite, /stroke="currentColor"/, 'la claqueta no toma el color del boton');
+  assert.match(sprite, /<polygon /, 'falta la tapa (la parte abierta de la claqueta)');
+  assert.equal(count(V, '<use href="#icon-claqueta"/>'), 3, 'la claqueta no esta en exactamente los 3 CTA');
 });
