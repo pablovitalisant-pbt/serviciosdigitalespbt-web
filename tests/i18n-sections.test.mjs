@@ -227,14 +227,7 @@ const SECTIONS = [
       'videos_hero_stat_format',
       'videos_hero_stat_ia',
       'videos_hero_stat_human',
-      'videos_hero_reel1_handle',
-      'videos_hero_reel1_caption',
-      'videos_hero_reel1_sub',
-      'videos_hero_reel1_audio',
-      'videos_hero_reel2_handle',
-      'videos_hero_reel2_caption',
-      'videos_hero_reel2_format',
-      'videos_hero_viral',
+      'videos_hero_sound',
     ],
     // Texto ES = el de Stitch. "Barbería & Estilo" va con & y no con &amp;: el motor
     // usa textContent, que NO decodifica entidades.
@@ -249,18 +242,12 @@ const SECTIONS = [
       videos_hero_stat_format: 'Formato vertical',
       videos_hero_stat_ia: 'IA + EDIT',
       videos_hero_stat_human: 'Criterio humano',
-      videos_hero_reel1_handle: 'Dr. Clínica Dental',
-      videos_hero_reel1_caption: '¿BLANQUEAMIENTO LÁSER?',
-      videos_hero_reel1_sub: '3 mitos frecuentes explicados en 45s',
-      videos_hero_reel1_audio: 'Audio original optimizado',
-      videos_hero_reel2_handle: 'Barbería & Estilo',
-      videos_hero_reel2_caption: 'Fade Perfecto Paso a Paso',
-      videos_hero_reel2_format: 'Reel Formato 9:16',
-      videos_hero_viral: 'Viral',
+      // Slice 19: texto accesible (sr-only) del boton de sonido del carrusel.
+      videos_hero_sound: 'Sonido',
     },
-    // Los 2 unicos textos dentro de un <span> NUEVO (sin class): su contenedor tiene un
-    // icono adentro. Un tag span con class del diseno original no cuenta.
-    wrapped: ['videos_hero_cta_whatsapp', 'videos_hero_viral'],
+    // El unico texto dentro de un <span> NUEVO (sin class): su contenedor tiene un icono
+    // adentro. Los mockups (y su "Viral") los reemplazo el carrusel del slice 19.
+    wrapped: ['videos_hero_cta_whatsapp'],
     redesigned: 'slice 16',
     strongKeys: [],
     // "IA + EDIT" se mantiene en los 6 idiomas (en: "AI + EDIT"): decision de Pablo.
