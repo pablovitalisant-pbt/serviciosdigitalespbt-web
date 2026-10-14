@@ -180,19 +180,6 @@ export function extractCta(html) {
   return extractSection(html, CTA_MARKER, 'del CTA final');
 }
 
-// El boton fijo movil de WhatsApp (slice 8) NO es una <section>: vive fuera de <main>,
-// despues del footer-placeholder, y es un unico <div> autocontenido. extractSection no
-// sirve (no hay ningun </section> despues). El marcador es el MISMO string que vigila C5a
-// en slice-1-videos.test.mjs: si cambia, los dos tests fallan a la vez.
-export const MOBILE_MARKER = '<div class="fixed bottom-4 left-4 right-4 z-50 md:hidden">';
-
-export function extractMobile(html) {
-  const start = indexOrThrow(html, MOBILE_MARKER);
-  const end = html.indexOf('</div>', start);
-  if (end === -1) throw new Error('el boton movil no cierra con </div>');
-  return html.slice(start, end + '</div>'.length);
-}
-
 // La seccion 7 "TRABAJO ADICIONAL COTIZADO POR SEPARADO" (slice 9). Marcador: comentario de
 // Stitch, unico. Su tag <section> (bg-surface-container ... py-section-gap-md) tambien es unico
 // hoy, pero se usa el comentario por consistencia con INCLUDES/SINGLE/HOW; P4 vigila su unicidad.
@@ -226,7 +213,6 @@ export const SECTION_EXTRACTORS = [
   extractSingle,
   extractHow,
   extractCta,
-  extractMobile,
   extractExtras,
   extractFaq,
 ];

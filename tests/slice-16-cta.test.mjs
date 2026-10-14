@@ -3,7 +3,7 @@
 // Ejecutar: node --test "tests/*.test.mjs"
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { read, count, stripBom, extractHero, extractCta, extractMobile } from './helpers/page.mjs';
+import { read, count, stripBom, extractHero, extractCta } from './helpers/page.mjs';
 
 const V = read('index.html');
 const HEAD = V.slice(0, V.indexOf('</head>'));
@@ -11,7 +11,8 @@ const LANGS = ['es', 'en', 'hi', 'zh', 'ur', 'ko'];
 const J = Object.fromEntries(LANGS.map((l) => [l, JSON.parse(stripBom(read(`i18n/${l}.json`)))]));
 
 const CTA_TEXT = 'Quiero mi Pack de Reels';
-const CTA_KEYS = ['videos_hero_cta_whatsapp', 'videos_cta_whatsapp', 'videos_mobile_whatsapp'];
+// Slice 23: la barra fija movil se elimino; el CTA vive en el hero y en el cierre.
+const CTA_KEYS = ['videos_hero_cta_whatsapp', 'videos_cta_whatsapp'];
 const REMOVED_KEYS = ['videos_hero_cta_planes', 'videos_cta_compare'];
 const GREEN = '#15803d';
 
@@ -30,14 +31,13 @@ test('S16-2 el cierre final tiene UN solo boton (se elimino "Comparar planes")',
   assert.equal(count(extractCta(V), 'href="#planes"'), 0, 'sigue el boton "Comparar planes"');
 });
 
-test('S16-3 hero, cierre y barra movil dicen "Quiero mi Pack de Reels" (y es la misma frase en los 6 idiomas)', () => {
+test('S16-3 hero y cierre dicen "Quiero mi Pack de Reels" (y es la misma frase en los 6 idiomas)', () => {
   for (const k of CTA_KEYS) assert.equal(J.es[k], CTA_TEXT, `es.json["${k}"] no es el CTA aprobado`);
   for (const l of LANGS) {
     const vals = new Set(CTA_KEYS.map((k) => J[l][k]));
-    assert.equal(vals.size, 1, `${l}.json: el CTA no es identico en hero/cierre/movil: ${[...vals].join(' | ')}`);
+    assert.equal(vals.size, 1, `${l}.json: el CTA no es identico en hero/cierre: ${[...vals].join(' | ')}`);
     if (l !== 'es') assert.notEqual(J[l][CTA_KEYS[0]], CTA_TEXT, `${l}.json: el CTA quedo sin traducir`);
   }
-  assert.ok(extractMobile(V).includes(CTA_TEXT), 'el HTML de la barra movil no trae el texto del CTA');
 });
 
 test('S16-4 las claves de los botones eliminados no quedan en el HTML ni en los 6 JSON', () => {
@@ -47,9 +47,9 @@ test('S16-4 las claves de los botones eliminados no quedan en el HTML ni en los 
   }
 });
 
-test('S16-5 los 8 botones de compra (WhatsApp) son btn-cta con texto blanco, y btn-cta no se usa en otro lado', () => {
+test('S16-5 los 7 botones de compra (WhatsApp) son btn-cta con texto blanco, y btn-cta no se usa en otro lado', () => {
   const wa = anchors(V).filter((a) => a.includes('href="https://wa.me/'));
-  assert.equal(wa.length, 8, `se esperaban 8 botones de WhatsApp, hay ${wa.length}`);
+  assert.equal(wa.length, 7, `se esperaban 7 botones de WhatsApp, hay ${wa.length}`);
   for (const a of wa) {
     const cls = a.match(/class="([^"]*)"/)?.[1] ?? '';
     assert.ok(cls.split(' ').includes('btn-cta'), `boton sin btn-cta: ${a.slice(0, 90)}`);
@@ -58,7 +58,7 @@ test('S16-5 los 8 botones de compra (WhatsApp) son btn-cta con texto blanco, y b
       assert.ok(!cls.split(' ').includes(viejo), `el boton conserva el color viejo ${viejo}`);
     }
   }
-  assert.equal(count(V, 'btn-cta '), 8, 'btn-cta aparece en algo que no es un boton de compra');
+  assert.equal(count(V, 'btn-cta '), 7, 'btn-cta aparece en algo que no es un boton de compra');
 });
 
 test('S16-6 el CSS del boton: verde aprobado, brillo animado y respeta prefers-reduced-motion', () => {

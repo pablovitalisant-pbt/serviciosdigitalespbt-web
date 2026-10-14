@@ -39,39 +39,24 @@ test('C2 el <header> propio de Stitch fue eliminado (no comentado)', () => {
 
 // --- C3/C4/C5 — footer y boton fijo movil ----------------------------------
 
-test('C3 el footer-placeholder existe una sola vez, tras </main> y antes del boton movil', () => {
+test('C3 el footer-placeholder existe una sola vez, tras </main>', () => {
   assert.equal(count(VIDEOS, FOOT), 1, `se esperaba 1 footer-placeholder, hay ${count(VIDEOS, FOOT)}`);
   assert.ok(VIDEOS.indexOf(FOOT) > VIDEOS.indexOf('</main>'), 'el footer-placeholder quedo antes de </main>');
-  assert.ok(VIDEOS.indexOf(FOOT) < VIDEOS.indexOf(WA_BAR), 'el footer-placeholder quedo despues del boton movil');
 });
 
 test('C4 el <footer> propio de Stitch fue eliminado (no comentado)', () => {
   assert.equal(count(VIDEOS, '<footer'), 0, 'queda el footer de Stitch en videos.html');
 });
 
-// Slice 14: el boton fijo movil dejo de ser el placeholder vacio de Stitch. Ahora abre el
-// chat con mensaje prellenado. El MENSAJE exacto de cada boton lo vigila G-WHATSAPP
-// (tests/i18n-sections.test.mjs): aca solo se acredita que este boton sigue ahi y ya apunta
-// al chat, sin duplicar la tabla de mensajes en dos archivos.
 const WA_HREF = 'https://wa.me/56920948874?text=';
 
-test('C5a el boton fijo movil de WhatsApp sigue intacto y ya abre el chat con mensaje', () => {
-  assert.equal(count(VIDEOS, WA_BAR), 1, 'desaparecio el boton fijo movil de WhatsApp');
-  const i = VIDEOS.indexOf(WA_BAR);
-  const href = VIDEOS.slice(i, VIDEOS.indexOf('</a>', i)).match(/\bhref="([^"]*)"/)?.[1];
-  assert.ok(href, 'el boton fijo movil se quedo sin href');
-  assert.ok(href.startsWith(WA_HREF), `el boton movil no abre el chat con mensaje: ${href}`);
-  const msg = decodeURIComponent(href.slice(WA_HREF.length));
-  assert.ok(msg.trim().length > 0, 'el mensaje prellenado del boton movil quedo vacio');
-});
-
-test('C5b el boton movil sigue DESPUES del footer-placeholder (no se borro junto con el footer)', () => {
-  assert.equal(count(VIDEOS, WA_BAR), 1, 'desaparecio el boton fijo movil de WhatsApp');
-  assert.equal(count(VIDEOS, FOOT), 1, 'sin footer-placeholder no se puede ubicar el boton movil');
-  assert.ok(
-    VIDEOS.indexOf(WA_BAR) > VIDEOS.indexOf(FOOT),
-    'el boton movil quedo antes del footer: el reemplazo se llevo puesto el final de la linea del footer',
-  );
+// Slice 23: decision de Pablo, la barra fija movil con el CTA se elimino (C5a/C5b la vigilaban).
+test('C5 no hay ningun boton flotante fijo en la landing (slice 23)', () => {
+  assert.equal(count(VIDEOS, WA_BAR), 0, 'sigue la barra fija movil del CTA');
+  const body = VIDEOS.slice(VIDEOS.indexOf('<body'));
+  // La clase `fixed` suelta (no `text-primary-fixed`): separada por espacio o comillas.
+  assert.doesNotMatch(body, /class="(?:[^"]*\s)?fixed[\s"]/, 'hay un elemento position:fixed en el body');
+  assert.equal(count(VIDEOS, 'videos_mobile_whatsapp'), 0, 'queda la clave de la barra movil');
 });
 
 // --- C6/C8 — lo que NO debe cambiar (C7 cambio de sentido en el slice 14) ----
@@ -94,8 +79,8 @@ test('C7 los placeholders de WhatsApp de Stitch ya no existen (los resolvio el s
   }
   assert.equal(
     count(VIDEOS, `href="${WA_HREF}`),
-    8,
-    'los botones de WhatsApp con chat no son 8 (7 placeholders + el boton fijo movil)',
+    7,
+    'los botones de WhatsApp con chat no son 7 (la barra fija movil se elimino en el slice 23)',
   );
 });
 
@@ -116,7 +101,7 @@ test('C8 solo las secciones ya traducidas llevan i18n (los slices siguientes int
 
 // Slice 18: sin navbar, el loader carga solo el footer (y S18-3 vigila que llame a initI18n).
 test('C9 el loader vive al final del <body> y carga el footer en su placeholder', () => {
-  assert.ok(BODY.indexOf('function loadComponent(') > BODY.indexOf(WA_BAR), 'el loader no esta al final del <body>');
+  assert.ok(BODY.indexOf('function loadComponent(') > BODY.indexOf(FOOT), 'el loader no esta al final del <body>');
   assert.ok(BODY.includes("loadComponent('footer-placeholder', 'components/footer.html'"), 'no carga el footer en su placeholder');
 });
 

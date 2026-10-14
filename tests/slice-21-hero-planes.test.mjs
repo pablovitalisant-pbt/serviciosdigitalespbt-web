@@ -77,8 +77,8 @@ test('S21-3 planes: Economica blanco, Equilibrada verde, Premium naranja #c2410c
 
 // Slice 22: el icono de video pasa a ser la claqueta ABIERTA propia (SVG). Material Symbols
 // no trae una claqueta abierta (verificado contra su lista de codepoints).
-test('S21-4 / S22-1 los 3 CTA "Quiero mi Pack de Reels" usan la claqueta abierta, no chat ni movie', () => {
-  for (const k of ['videos_hero_cta_whatsapp', 'videos_cta_whatsapp', 'videos_mobile_whatsapp']) {
+test('S21-4 / S22-1 los 2 CTA "Quiero mi Pack de Reels" usan la claqueta abierta, no chat ni movie', () => {
+  for (const k of ['videos_hero_cta_whatsapp', 'videos_cta_whatsapp']) {
     const { body } = anchorOf(k);
     assert.match(body, /<svg class="[^"]*" aria-hidden="true"><use href="#icon-claqueta"\/><\/svg>/, `el CTA ${k} no usa la claqueta abierta`);
     assert.doesNotMatch(body, />(chat|movie)</, `el CTA ${k} conserva un icono de Material Symbols`);
@@ -93,5 +93,5 @@ test('S22-2 la claqueta abierta se define una sola vez, oculta y con trazo del c
   assert.match(sprite, /^<svg [^>]*width="0" height="0"/, 'el sprite ocupa espacio en la pagina');
   assert.match(sprite, /stroke="currentColor"/, 'la claqueta no toma el color del boton');
   assert.match(sprite, /<polygon /, 'falta la tapa (la parte abierta de la claqueta)');
-  assert.equal(count(V, '<use href="#icon-claqueta"/>'), 3, 'la claqueta no esta en exactamente los 3 CTA');
+  assert.equal(count(V, '<use href="#icon-claqueta"/>'), 2, 'la claqueta no esta en exactamente los 2 CTA (hero y cierre)');
 });

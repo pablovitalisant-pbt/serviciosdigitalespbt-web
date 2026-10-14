@@ -51,7 +51,7 @@ test('E2E: el HTML servido por HTTP cumple el contrato de placeholders del slice
   assert.equal(count(html, '<div id="footer-placeholder"></div>'), 1, 'falta el footer-placeholder servido');
   assert.equal(count(html, '<header'), 0, 'el header de Stitch sigue en el HTML servido');
   assert.equal(count(html, '<footer'), 0, 'el footer de Stitch sigue en el HTML servido');
-  assert.equal(count(html, 'fixed bottom-4 left-4 right-4 z-50 md:hidden'), 1, 'falta el boton fijo movil');
+  assert.equal(count(html, 'fixed bottom-4 left-4 right-4 z-50 md:hidden'), 0, 'sigue la barra fija movil (slice 23 la elimino)');
 });
 
 test('E2E: los componentes traen todo lo que initI18n toca (si falta, el motor revienta)', async () => {

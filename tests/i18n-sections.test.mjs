@@ -28,7 +28,6 @@ import {
   extractSingle,
   extractHow,
   extractCta,
-  extractMobile,
   extractExtras,
   extractFaq,
   uncoveredBodyText,
@@ -40,7 +39,6 @@ import {
   SINGLE_MARKER,
   HOW_MARKER,
   CTA_MARKER,
-  MOBILE_MARKER,
   EXTRAS_MARKER,
   FAQ_MARKER,
   SECTION_EXTRACTORS,
@@ -132,7 +130,8 @@ const COPY_V2_TOKENS = {
 };
 
 // --- WhatsApp (slice 14, 2026-10-13) -----------------------------------------
-// Decision de Pablo: los 8 botones de WhatsApp de la landing abren un chat con +56920948874
+// Decision de Pablo: los botones de WhatsApp de la landing (8; 7 desde el slice 23, que quito la
+// barra fija movil) abren un chat con +56920948874
 // con un mensaje prellenado propio de cada boton. Es la primera excepcion a la "Regla
 // principal" del PLAN que toca `href`s (hasta ahora solo textos y precios), y por eso va por
 // el MISMO mecanismo de overrides declarados: `section` + `old` blanquean la diferencia
@@ -157,7 +156,6 @@ const WA_CTA = [
   { key: 'videos_single_reel_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero comprar un reel suelto.' },
   { key: 'videos_single_long_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero comprar un video largo.' },
   { key: 'videos_cta_whatsapp', section: 'cta', old: 'href="[LINK_WHATSAPP]"', msg: WA_DEFAULT },
-  { key: 'videos_mobile_whatsapp', section: 'mobile', old: 'href="https://wa.me/"', msg: WA_DEFAULT },
 ];
 
 // --- botones de compra verdes (slice 16, 2026-10-13) ---------------------------
@@ -842,32 +840,6 @@ const SECTIONS = [
     guardPairs: [['videos_cta_whatsapp', 'videos_hero_cta_whatsapp']],
     mustInclude: ['Empecemos esta semana', 'Empieza hoy a publicar reels profesionales', 'Quiero mi Pack de Reels'],
     mustExclude: ['id="como-funciona"', 'Preguntas Frecuentes', 'Proceso Ágil'],
-  },
-
-  {
-    name: 'mobile',
-    extract: extractMobile,
-    // Fuera de <main>: el boton fijo movil, tras el footer-placeholder y antes del loader.
-    markers: [MOBILE_MARKER],
-    prefix: 'videos_mobile_',
-    keys: ['videos_mobile_whatsapp'],
-    // Slice 16: CTA unico. Es la MISMA frase del hero y del cierre (P-GUARD la ata).
-    es: {
-      videos_mobile_whatsapp: 'Quiero mi Pack de Reels',
-    },
-    guardPairs: [['videos_mobile_whatsapp', 'videos_hero_cta_whatsapp']],
-    redesigned: 'slice 16',
-    // El <a> tiene el icono (chat) como hijo: el texto va en un <span data-i18n> NUEVO.
-    wrapped: ['videos_mobile_whatsapp'],
-    strongKeys: [],
-    fragments: [],
-    whitelist: new Set([]),
-    // El href dejo de ser el placeholder vacio de Stitch en el slice 14: ahora es el chat con
-    // mensaje prellenado, declarado en WA_CTA y vigilado por G-WHATSAPP. No se declara aca un
-    // pureToken: el campo quedo sin tokens y `[]` es truthy, asi que generaria un test vacuo
-    // ("los 0 tokens puros") en vez de no generar ninguno (mismo criterio que strongKeys).
-    mustInclude: ['Quiero mi Pack de Reels'],
-    mustExclude: ['id="footer-placeholder"', '<section', '[LINK_WHATSAPP]'],
   },
 
   {
@@ -1655,15 +1627,15 @@ function waAnchorTag(html, key) {
   assert.notEqual(open, -1, `"${key}" no vive dentro de un <a>`);
   assert.ok(html.lastIndexOf('</a>', at) < open, `"${key}" quedo fuera del ultimo <a> abierto`);
   const tag = html.slice(open, html.indexOf('>', open) + 1);
-  // Los 8 botones ya traian target y rel de Stitch: el slice no los toca y no puede perderlos.
+  // Los botones ya traian target y rel de Stitch: el slice no los toca y no puede perderlos.
   assert.match(tag, /\btarget="_blank"/, `el <a> de "${key}" perdio target="_blank"`);
   assert.match(tag, /\brel="noopener noreferrer"/, `el <a> de "${key}" perdio rel="noopener noreferrer"`);
   return tag;
 }
 
-test('G-WHATSAPP los 8 botones abren el chat 56920948874 con su mensaje prellenado correcto', () => {
+test('G-WHATSAPP los 7 botones abren el chat 56920948874 con su mensaje prellenado correcto', () => {
   // 1) La tabla es exactamente la del contrato y cada entrada es coherente.
-  assert.equal(WA_CTA.length, 8, `el contrato declara 8 botones de WhatsApp, hay ${WA_CTA.length}`);
+  assert.equal(WA_CTA.length, 7, `el contrato declara 7 botones de WhatsApp, hay ${WA_CTA.length}`);
   assert.deepEqual(dupesOf(WA_CTA.map((e) => e.key)), [], 'claves repetidas en WA_CTA: el mapeo por identidad seria ambiguo');
   for (const e of WA_CTA) {
     assert.ok(D[e.section], `WA_CTA["${e.key}"] apunta a una seccion que no existe: ${e.section}`);
@@ -1673,7 +1645,7 @@ test('G-WHATSAPP los 8 botones abren el chat 56920948874 con su mensaje prellena
 
   // 2) Destinatario unico en TODO el archivo: ningun wa.me a otro numero, ninguno sin ?text=.
   const hrefs = [...V.matchAll(/href="(https:\/\/wa\.me\/[^"]*)"/g)].map((m) => m[1]);
-  assert.equal(hrefs.length, 8, `videos.html tiene ${hrefs.length} hrefs de wa.me (se esperaban 8)`);
+  assert.equal(hrefs.length, 7, `index.html tiene ${hrefs.length} hrefs de wa.me (se esperaban 7)`);
   for (const h of hrefs) {
     assert.ok(h.startsWith(WA_BASE), `href de WhatsApp sin destinatario o sin mensaje prellenado: ${h}`);
   }
