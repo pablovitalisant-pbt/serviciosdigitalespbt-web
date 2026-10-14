@@ -164,14 +164,25 @@ const WA_CTA = [
 // Decision de Pablo: los botones de planes y trabajos sueltos pasan a verde con brillo
 // (.btn-cta). Mismo mecanismo de overrides: secBaseV2 aplica el swap a la base y P9 sigue
 // vigilando el resto de la seccion byte a byte. G-CTACLASS vigila que cada swap muerda.
-const CTA_CLASS_SWAPS = {
-  'w-full inline-flex items-center justify-center gap-2 bg-on-background hover:bg-inverse-surface text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT transition-colors':
-    'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT',
-  'w-full inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT transition-all shadow-md':
+// Slice 21: Economica (plansA) pasa a blanco y Premium (plansB) a naranja. Tenian la MISMA
+// clase vieja, asi que el swap va por seccion: [seccion | null = todas, vieja, nueva].
+const OLD_DARK =
+  'w-full inline-flex items-center justify-center gap-2 bg-on-background hover:bg-inverse-surface text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT transition-colors';
+const NEW_DARK = 'w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT';
+const CTA_CLASS_SWAPS = [
+  ['plansA', OLD_DARK, `btn-cta btn-white ${NEW_DARK}`],
+  ['plansB', OLD_DARK, `btn-cta btn-orange ${NEW_DARK}`],
+  [
+    null,
+    'w-full inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT transition-all shadow-md',
     'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT shadow-md',
-  'w-full inline-flex items-center justify-center gap-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT transition-colors':
+  ],
+  [
+    null,
+    'w-full inline-flex items-center justify-center gap-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT transition-colors',
     'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT',
-};
+  ],
+];
 
 // --- "cotiza" -> "compra" (slice 17, 2026-10-13) ------------------------------
 // Decision de Pablo: los precios estan publicados; la pagina invita a COMPRAR, no a cotizar.
@@ -221,7 +232,6 @@ const SECTIONS = [
       'videos_hero_badge',
       'videos_hero_title',
       'videos_hero_subtitle',
-      'videos_hero_highlight',
       'videos_hero_cta_whatsapp',
       'videos_hero_stat_delivery',
       'videos_hero_stat_format',
@@ -236,7 +246,6 @@ const SECTIONS = [
       videos_hero_title: 'Publica videos profesionales sin quedarte editando',
       videos_hero_subtitle:
         'Ya sea que vendas productos, servicios o experiencias, tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.',
-      videos_hero_highlight: 'Primera versión en 48 horas hábiles',
       videos_hero_cta_whatsapp: 'Quiero mi Pack de Reels',
       videos_hero_stat_delivery: 'Primera entrega',
       videos_hero_stat_format: 'Formato vertical',
@@ -1126,7 +1135,9 @@ function secBaseV2(d) {
       );
     }
     for (const [oldP, newP] of COMPRA_SWAPS) s = s.replaceAll(oldP, newP);
-    for (const [oldC, newC] of Object.entries(CTA_CLASS_SWAPS)) s = s.replaceAll(`class="${oldC}"`, `class="${newC}"`);
+    for (const [sec, oldC, newC] of CTA_CLASS_SWAPS) {
+      if (!sec || sec === d.name) s = s.replaceAll(`class="${oldC}"`, `class="${newC}"`);
+    }
     secBaseCache.set(d.name, s);
   }
   return secBaseCache.get(d.name);
@@ -1527,9 +1538,9 @@ test('G-COPYV2 (copy v2) la tabla de divergencias es exactamente la declarada y 
 
 test('G-CTACLASS cada swap de clase existe en la base y muerde 5 botones en total (3 planes + 2 sueltos)', () => {
   let n = 0;
-  for (const oldC of Object.keys(CTA_CLASS_SWAPS)) {
-    const c = count(VBASE, `class="${oldC}"`);
-    assert.ok(c > 0, `el swap no existe en la base: ${oldC.slice(0, 60)}`);
+  for (const [sec, oldC] of CTA_CLASS_SWAPS) {
+    const c = count(sec ? secOf(D[sec], VBASE) : VBASE, `class="${oldC}"`);
+    assert.ok(c > 0, `el swap no existe en la base${sec ? ` (${sec})` : ''}: ${oldC.slice(0, 60)}`);
     n += c;
   }
   assert.equal(n, 5, `los swaps cubren ${n} botones de la base (se esperaban 5)`);
