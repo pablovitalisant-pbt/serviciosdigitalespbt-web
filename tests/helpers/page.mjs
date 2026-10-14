@@ -50,11 +50,6 @@ export function scriptBlockWith(html, marker) {
   return html.slice(open, close);
 }
 
-// El `window.addEventListener('scroll', ...)` completo, hasta el </script>.
-export function extractScrollEffect(html) {
-  const i = indexOrThrow(html, "window.addEventListener('scroll'");
-  return html.slice(i, html.indexOf('</script>', i)).trimEnd();
-}
 
 // Lee el `tailwind.config = {...}` inline del <script id="tailwind-config">.
 export function tailwindConfig(html) {

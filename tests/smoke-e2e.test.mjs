@@ -45,7 +45,7 @@ test('E2E: los 10 recursos que el loader necesita responden 200', async () => {
 
 test('E2E: el HTML servido por HTTP cumple el contrato de placeholders del slice', async () => {
   const html = await (await fetch(`${srv.base}/videos.html`)).text();
-  assert.equal(count(html, '<div id="navbar-placeholder"></div>'), 1, 'falta el navbar-placeholder servido');
+  assert.equal(count(html, 'navbar-placeholder'), 0, 'la landing sirve un navbar-placeholder (slice 18: sin navbar)');
   assert.equal(count(html, '<div id="footer-placeholder"></div>'), 1, 'falta el footer-placeholder servido');
   assert.equal(count(html, '<header'), 0, 'el header de Stitch sigue en el HTML servido');
   assert.equal(count(html, '<footer'), 0, 'el footer de Stitch sigue en el HTML servido');

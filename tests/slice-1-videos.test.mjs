@@ -10,8 +10,6 @@ import {
   tailwindConfig,
   configTokens,
   configDependentClasses,
-  extractInitI18n,
-  extractScrollEffect,
   scriptBlockWith,
   extractSections,
   gitShowBaseline,
@@ -23,31 +21,17 @@ const VIDEOS = read('videos.html');
 // entonces, y no en cada slice nuevo por un numero cableado).
 const VIDEOS_BASE = gitShowBaseline('8a5fa69', 'videos.html');
 const CASOS = read('casos.html');
-const NAVBAR = read('components/navbar.html');
 const FOOTER = read('components/footer.html');
 
-const NAV = '<div id="navbar-placeholder"></div>';
 const FOOT = '<div id="footer-placeholder"></div>';
 const WA_BAR = '<div class="fixed bottom-4 left-4 right-4 z-50 md:hidden">';
 
 const HEAD = VIDEOS.slice(0, VIDEOS.indexOf('</head>'));
 const BODY = VIDEOS.slice(VIDEOS.indexOf('<body'), VIDEOS.indexOf('</body>'));
 
-// Los finales de linea son un detalle de ARCHIVO, no de codigo: casos.html es CRLF
-// (unico del repo) y videos.html es LF, como Stitch y el resto. C10/C10b comparan
-// codigo, asi que normalizan; y el test de LF aparte vigila el archivo.
-const norm = (s) => s.replace(/\r\n/g, '\n');
-
 // --- C1/C2 — navbar ---------------------------------------------------------
 
-test('C1 el navbar-placeholder existe una sola vez y es el primer hijo de <body>', () => {
-  assert.equal(count(VIDEOS, NAV), 1, `se esperaba 1 navbar-placeholder, hay ${count(VIDEOS, NAV)}`);
-  const afterBodyTag = VIDEOS.indexOf('>', VIDEOS.indexOf('<body')) + 1;
-  assert.ok(
-    VIDEOS.slice(afterBodyTag).startsWith(NAV),
-    'el navbar-placeholder no es el primer hijo de <body>; ahi sigue el header de Stitch',
-  );
-});
+// C1 (navbar-placeholder) se retiro en el slice 18: la landing no tiene navbar (S18-1).
 
 test('C2 el <header> propio de Stitch fue eliminado (no comentado)', () => {
   assert.equal(count(VIDEOS, '<header'), 0, 'queda el header de Stitch en videos.html');
@@ -130,18 +114,10 @@ test('C8 solo las secciones ya traducidas llevan i18n (los slices siguientes int
 
 // --- C9 — loader de componentes y bandera de carrera -----------------------
 
-test('C9 el loader vive al final del <body>, con las dos banderas y las dos llamadas', () => {
+// Slice 18: sin navbar, el loader carga solo el footer (y S18-3 vigila que llame a initI18n).
+test('C9 el loader vive al final del <body> y carga el footer en su placeholder', () => {
   assert.ok(BODY.indexOf('function loadComponent(') > BODY.indexOf(WA_BAR), 'el loader no esta al final del <body>');
-  assert.ok(BODY.includes("loadComponent('navbar-placeholder', 'components/navbar.html'"), 'no carga el navbar en su placeholder');
   assert.ok(BODY.includes("loadComponent('footer-placeholder', 'components/footer.html'"), 'no carga el footer en su placeholder');
-  assert.ok(BODY.includes('var navbarDone = false;'), 'falta la bandera navbarDone');
-  assert.ok(BODY.includes('var footerDone = false;'), 'falta la bandera footerDone');
-  assert.match(
-    BODY,
-    /if \(navbarDone && footerDone && typeof initI18n === 'function'\)/,
-    'tryInitI18n no exige AMBAS banderas: initI18n podria correr con un solo componente cargado',
-  );
-  assert.equal(count(BODY, 'tryInitI18n();'), 2, 'los dos callbacks deben llamar a tryInitI18n');
 });
 
 test('el head de Stitch queda sin los scripts del slice (decision aprobada: van al final del body)', () => {
@@ -149,19 +125,8 @@ test('el head de Stitch queda sin los scripts del slice (decision aprobada: van 
   assert.ok(!HEAD.includes('function initI18n'), 'initI18n se colo en el <head>');
 });
 
-// --- C10 — motor i18n identico a casos.html -------------------------------
-
-test('C10 initI18n de videos.html es el mismo codigo que el de casos.html (ignorando finales de linea)', () => {
-  assert.equal(norm(extractInitI18n(VIDEOS)), norm(extractInitI18n(CASOS)), 'el motor initI18n diverge de casos.html');
-});
-
-test('C10b el efecto de scroll del navbar es el mismo codigo que el de casos.html (ignorando finales de linea)', () => {
-  assert.equal(
-    norm(extractScrollEffect(VIDEOS)),
-    norm(extractScrollEffect(CASOS)),
-    'el efecto de scroll diverge de casos.html',
-  );
-});
+// C10/C10b (motor i18n y scroll copiados de casos.html) se retiraron en el slice 18: sin
+// navbar el motor de casos revienta (no hay #lang-trigger). Lo reemplazan S18-4..7.
 
 // --- finales de linea del archivo -----------------------------------------
 // Este test faltaba y por eso el defecto de la Fase C (104 CRLF importados de
@@ -227,22 +192,22 @@ test('C13 las anclas de Stitch siguen presentes (las usan el CTA y el navbar com
 
 test('R4 sin colision de ids entre videos.html y los componentes inyectados', () => {
   const v = idsOf(VIDEOS);
-  const comp = new Set([...idsOf(NAVBAR), ...idsOf(FOOTER)]);
+  const comp = idsOf(FOOTER);
   const clash = [...v].filter((id) => comp.has(id));
   assert.deepEqual(clash, [], `ids duplicados entre videos.html y los componentes: ${clash.join(', ')}`);
   assert.equal([...v].filter((id) => id === 'contacto').length, 0, 'videos.html ya tiene un #contacto propio');
 });
 
-test('R4 todas las clases de diseno que usan navbar/footer existen en el tailwind-config de videos.html', () => {
+test('R4 todas las clases de diseno que usa el footer existen en el tailwind-config de videos.html', () => {
   // Oracle: los tokens que casos.html define (ahi el navbar/footer ya renderizan bien).
   const oracle = configTokens(tailwindConfig(CASOS));
   const videosKeys = configTokens(tailwindConfig(VIDEOS));
-  const used = [...configDependentClasses(NAVBAR, oracle), ...configDependentClasses(FOOTER, oracle)];
-  assert.ok(used.length >= 20, `el escaneo de clases fue vacuo (${used.length} tokens): revisar el helper`);
+  const used = configDependentClasses(FOOTER, oracle);
+  assert.ok(used.length >= 10, `el escaneo de clases fue vacuo (${used.length} tokens): revisar el helper`);
   const missing = used.filter((u) => !videosKeys.has(u.suffix));
   assert.deepEqual(
     missing.map((m) => m.raw),
     [],
-    'clases sin token en el config de videos.html: el navbar o el footer quedarian sin estilo',
+    'clases sin token en el config de videos.html: el footer quedaria sin estilo',
   );
 });
