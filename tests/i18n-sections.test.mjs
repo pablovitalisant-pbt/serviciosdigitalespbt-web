@@ -160,6 +160,19 @@ const WA_CTA = [
   { key: 'videos_mobile_whatsapp', section: 'mobile', old: 'href="https://wa.me/"', msg: WA_DEFAULT },
 ];
 
+// --- botones de compra verdes (slice 16, 2026-10-13) ---------------------------
+// Decision de Pablo: los botones de planes y trabajos sueltos pasan a verde con brillo
+// (.btn-cta). Mismo mecanismo de overrides: secBaseV2 aplica el swap a la base y P9 sigue
+// vigilando el resto de la seccion byte a byte. G-CTACLASS vigila que cada swap muerda.
+const CTA_CLASS_SWAPS = {
+  'w-full inline-flex items-center justify-center gap-2 bg-on-background hover:bg-inverse-surface text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT transition-colors':
+    'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT',
+  'w-full inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT transition-all shadow-md':
+    'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT shadow-md',
+  'w-full inline-flex items-center justify-center gap-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT transition-colors':
+    'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT',
+};
+
 // Lista explicita, en el orden del contrato. G-COPYV2 la compara con las claves reales de
 // COPY_V2: si alguien agrega o quita una divergencia, este array lo delata.
 const COPY_V2_KEYS = [
@@ -190,7 +203,6 @@ const SECTIONS = [
       'videos_hero_subtitle',
       'videos_hero_highlight',
       'videos_hero_cta_whatsapp',
-      'videos_hero_cta_planes',
       'videos_hero_stat_delivery',
       'videos_hero_stat_format',
       'videos_hero_stat_ia',
@@ -212,8 +224,7 @@ const SECTIONS = [
       videos_hero_subtitle:
         'Ya sea que vendas productos, servicios o experiencias, tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.',
       videos_hero_highlight: 'Primera versión en 48 horas hábiles',
-      videos_hero_cta_whatsapp: 'Quiero cotizar por WhatsApp',
-      videos_hero_cta_planes: 'Ver planes mensuales',
+      videos_hero_cta_whatsapp: 'Quiero mi Pack de Reels',
       videos_hero_stat_delivery: 'Primera entrega',
       videos_hero_stat_format: 'Formato vertical',
       videos_hero_stat_ia: 'IA + EDIT',
@@ -227,9 +238,10 @@ const SECTIONS = [
       videos_hero_reel2_format: 'Reel Formato 9:16',
       videos_hero_viral: 'Viral',
     },
-    // Los 3 unicos textos dentro de un <span> NUEVO (sin class): su contenedor tiene un
+    // Los 2 unicos textos dentro de un <span> NUEVO (sin class): su contenedor tiene un
     // icono adentro. Un tag span con class del diseno original no cuenta.
-    wrapped: ['videos_hero_cta_planes', 'videos_hero_cta_whatsapp', 'videos_hero_viral'],
+    wrapped: ['videos_hero_cta_whatsapp', 'videos_hero_viral'],
+    redesigned: 'slice 16',
     strongKeys: [],
     // "IA + EDIT" se mantiene en los 6 idiomas (en: "AI + EDIT"): decision de Pablo.
     whitelist: new Set(['videos_hero_stat_ia']),
@@ -790,7 +802,6 @@ const SECTIONS = [
       'videos_cta_title',
       'videos_cta_subtitle',
       'videos_cta_whatsapp',
-      'videos_cta_compare',
       'videos_cta_footer',
     ],
     es: {
@@ -798,23 +809,22 @@ const SECTIONS = [
       videos_cta_title: 'Empieza hoy a publicar reels profesionales',
       videos_cta_subtitle:
         'Tú envías tu material y recibes la primera versión en un máximo de 48 horas desde que la entrega está completa. Deja la edición en nuestras manos.',
-      videos_cta_whatsapp: 'Quiero cotizar por WhatsApp',
-      videos_cta_compare: 'Comparar planes',
+      videos_cta_whatsapp: 'Quiero mi Pack de Reels',
       videos_cta_footer: 'Servicio 100% online: trabajamos con negocios de todo el mundo',
     },
     // El <a> del boton WhatsApp tiene el icono (chat) como HIJO hermano del texto: el texto va
-    // en un <span data-i18n> NUEVO. El <a> "#planes" ("Comparar planes") no tiene hijos: su
-    // data-i18n va en el propio <a> (precedente: el CTA de los planes).
+    // en un <span data-i18n> NUEVO. "Comparar planes" se elimino en el slice 16 (CTA unico).
     wrapped: ['videos_cta_whatsapp'],
+    redesigned: 'slice 16',
     strongKeys: [],
     fragments: [],
     whitelist: new Set([]),
     literals: { videos_cta_subtitle: '48', videos_cta_footer: '100%' },
-    // EL acoplamiento por valor de esta seccion: "Quiero cotizar por WhatsApp" ya existe en el
+    // EL acoplamiento por valor de esta seccion: el CTA "Quiero mi Pack de Reels" ya existe en el
     // hero. Clave propia por ocurrencia, pero la traduccion debe ser EXACTAMENTE la misma en
     // los 6 idiomas (misma guardia que P-LEVELS, pero por igualdad estricta: es la misma frase).
     guardPairs: [['videos_cta_whatsapp', 'videos_hero_cta_whatsapp']],
-    mustInclude: ['Empecemos esta semana', 'Empieza hoy a publicar reels profesionales', 'Comparar planes'],
+    mustInclude: ['Empecemos esta semana', 'Empieza hoy a publicar reels profesionales', 'Quiero mi Pack de Reels'],
     mustExclude: ['id="como-funciona"', 'Preguntas Frecuentes', 'Proceso Ágil'],
   },
 
@@ -825,11 +835,12 @@ const SECTIONS = [
     markers: [MOBILE_MARKER],
     prefix: 'videos_mobile_',
     keys: ['videos_mobile_whatsapp'],
-    // Texto ES = el de Stitch. OJO: es "Cotizar por WhatsApp", DISTINTO del "Quiero cotizar por
-    // WhatsApp" del hero y del CTA: no hay reutilizacion de traduccion (frase distinta).
+    // Slice 16: CTA unico. Es la MISMA frase del hero y del cierre (P-GUARD la ata).
     es: {
-      videos_mobile_whatsapp: 'Cotizar por WhatsApp',
+      videos_mobile_whatsapp: 'Quiero mi Pack de Reels',
     },
+    guardPairs: [['videos_mobile_whatsapp', 'videos_hero_cta_whatsapp']],
+    redesigned: 'slice 16',
     // El <a> tiene el icono (chat) como hijo: el texto va en un <span data-i18n> NUEVO.
     wrapped: ['videos_mobile_whatsapp'],
     strongKeys: [],
@@ -839,7 +850,7 @@ const SECTIONS = [
     // mensaje prellenado, declarado en WA_CTA y vigilado por G-WHATSAPP. No se declara aca un
     // pureToken: el campo quedo sin tokens y `[]` es truthy, asi que generaria un test vacuo
     // ("los 0 tokens puros") en vez de no generar ninguno (mismo criterio que strongKeys).
-    mustInclude: ['Cotizar por WhatsApp'],
+    mustInclude: ['Quiero mi Pack de Reels'],
     mustExclude: ['id="footer-placeholder"', '<section', '[LINK_WHATSAPP]'],
   },
 
@@ -1107,6 +1118,7 @@ function secBaseV2(d) {
         `${d.name}: quedaron placeholders de WhatsApp que WA_CTA no declara`,
       );
     }
+    for (const [oldC, newC] of Object.entries(CTA_CLASS_SWAPS)) s = s.replaceAll(`class="${oldC}"`, `class="${newC}"`);
     secBaseCache.set(d.name, s);
   }
   return secBaseCache.get(d.name);
@@ -1193,14 +1205,16 @@ for (const d of SECTIONS) {
     for (const k of K) assert.equal(J.es[k], d.es[k], `es.json["${k}"] no coincide con el texto de Stitch`);
   });
 
-  test(`${d.name} P8b ese texto existe de verdad en la seccion original (el contrato no invento nada)`, () => {
+  // Rediseno de conversion (slice 16+): decision de Pablo que reemplaza la "Regla principal"
+  // en estas secciones. Ya no son Stitch byte a byte; las vigilan los tests de su slice.
+  if (!d.redesigned) test(`${d.name} P8b ese texto existe de verdad en la seccion original (el contrato no invento nada)`, () => {
     const original = visibleText(secBaseV2(d));
     for (const k of K) {
       assert.ok(original.includes(d.es[k]), `"${d.es[k]}" (${k}) no aparece en la seccion original`);
     }
   });
 
-  test(`${d.name} P9 la seccion es byte a byte el original + los data-i18n (nada mas)`, () => {
+  if (!d.redesigned) test(`${d.name} P9 la seccion es byte a byte el original + los data-i18n (nada mas)`, () => {
     let nuevo = S();
     // El conteo va ANTES de desenvolver: desenvolver borra el data-i18n de los spans.
     const attrs = [...nuevo.matchAll(/ data-i18n="[^"]*"/g)];
@@ -1503,6 +1517,16 @@ test('G-COPYV2 (copy v2) la tabla de divergencias es exactamente la declarada y 
   }
 });
 
+test('G-CTACLASS cada swap de clase existe en la base y muerde 5 botones en total (3 planes + 2 sueltos)', () => {
+  let n = 0;
+  for (const oldC of Object.keys(CTA_CLASS_SWAPS)) {
+    const c = count(VBASE, `class="${oldC}"`);
+    assert.ok(c > 0, `el swap no existe en la base: ${oldC.slice(0, 60)}`);
+    n += c;
+  }
+  assert.equal(n, 5, `los swaps cubren ${n} botones de la base (se esperaban 5)`);
+});
+
 // --- coherencia de precios (slice 13, 2026-10-13) -----------------------------
 // Decision de negocio de Pablo: el precio por reel BAJA al subir de plan. La tarifa mensual
 // tiene que ser exactamente reels x precio por reel, y el precio por reel estrictamente
@@ -1573,11 +1597,9 @@ test('G-NICHO ninguna clave visible de videos.html vende "profesionales de servi
   }
 });
 
-test('G-FILEWIDE videos.html conserva los conteos globales del slice 1 (iconos y class)', () => {
-  // Los conteos por seccion los implica P9 byte a byte; estos son de TODO el archivo.
-  for (const t of ['material-symbols-outlined', 'class="']) {
-    assert.equal(count(V, t), count(VBASE, t), `cambio la cantidad de ${JSON.stringify(t)} en videos.html`);
-  }
+test('G-FILEWIDE videos.html no deja placeholders de WhatsApp de Stitch', () => {
+  // Los conteos globales de iconos y class se retiraron en el slice 16: el rediseno de
+  // conversion quita botones a proposito. Por seccion los sigue vigilando P9 (no rediseñadas).
   // Los placeholders de WhatsApp de Stitch los resolvio el slice 14: pasan de 7/1 en la base
   // a 0/0. La base va cableada para que un cambio de la base congelada se delate; los 8 hrefs
   // nuevos los vigila G-WHATSAPP.

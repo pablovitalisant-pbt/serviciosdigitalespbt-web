@@ -94,7 +94,7 @@ test('C5b el boton movil sigue DESPUES del footer-placeholder (no se borro junto
 
 test('C6 el CTA final de Stitch sigue intacto (se conserva: es especifico de la oferta)', () => {
   assert.ok(VIDEOS.includes('Empieza hoy a publicar reels profesionales'), 'desaparecio el CTA de Stitch');
-  assert.ok(VIDEOS.includes('Quiero cotizar por WhatsApp'), 'desaparecio el boton del CTA de Stitch');
+  assert.ok(VIDEOS.includes('Quiero mi Pack de Reels'), 'desaparecio el boton del CTA (slice 16)');
   assert.ok(VIDEOS.includes('id="planes"'), 'desaparecio el ancla #planes que usa el CTA');
 });
 

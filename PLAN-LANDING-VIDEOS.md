@@ -17,6 +17,11 @@ Los UNICOS cambios permitidos son:
 5. Links de WhatsApp (slice 14, 2026-10-13): excepcion ACOTADA Y CERRADA — solo los 8
    atributos `href` listados en la seccion "Slice 14" mas abajo. Ningun otro `href` de la
    pagina, y ningun texto, clase ni estructura. No habilita editar nada mas.
+6. Rediseno de conversion (slices 16-20, 2026-10-13): decision de Pablo. La landing pasa a
+   ser el index y se orienta a compra: CTA unico "Quiero mi Pack de Reels", botones de compra
+   verdes (#15803d) con brillo, sin navbar, "cotiza" -> "compra", carrusel de reels en el hero.
+   Las secciones rediseñadas (hero, cierre, barra movil) llevan `redesigned` en su descriptor
+   y dejan de compararse byte a byte con Stitch (P8b/P9); las vigilan los tests de su slice.
 
 Cualquier otro cambio (estilos, textos, links, estructura, head, clases) esta PROHIBIDO.
 Si algo parece roto en el diseno de Stitch, se reporta, no se corrige.
