@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { read, count, extractInitI18n } from './helpers/page.mjs';
 
-const V = read('videos.html');
+const V = read('index.html');
 const BODY = V.slice(V.indexOf('<body'), V.indexOf('</body>'));
 
 test('S18-1 sin navbar: ni placeholder, ni carga del componente, ni <header>', () => {

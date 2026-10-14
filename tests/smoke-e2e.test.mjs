@@ -17,6 +17,8 @@ after(async () => {
 });
 
 const RESOURCES = [
+  'index.html',
+  'servicios.html',
   'videos.html',
   'casos.html',
   'components/navbar.html',
@@ -29,7 +31,7 @@ const RESOURCES = [
   'i18n/ko.json',
 ];
 
-test('E2E: los 10 recursos que el loader necesita responden 200', async () => {
+test('E2E: los 12 recursos que el loader necesita responden 200', async () => {
   const results = await Promise.all(
     RESOURCES.map(async (r) => {
       const res = await fetch(`${srv.base}/${r}`);
@@ -44,7 +46,7 @@ test('E2E: los 10 recursos que el loader necesita responden 200', async () => {
 });
 
 test('E2E: el HTML servido por HTTP cumple el contrato de placeholders del slice', async () => {
-  const html = await (await fetch(`${srv.base}/videos.html`)).text();
+  const html = await (await fetch(`${srv.base}/index.html`)).text();
   assert.equal(count(html, 'navbar-placeholder'), 0, 'la landing sirve un navbar-placeholder (slice 18: sin navbar)');
   assert.equal(count(html, '<div id="footer-placeholder"></div>'), 1, 'falta el footer-placeholder servido');
   assert.equal(count(html, '<header'), 0, 'el header de Stitch sigue en el HTML servido');
@@ -70,20 +72,21 @@ test('E2E: los componentes traen todo lo que initI18n toca (si falta, el motor r
   }
 });
 
-// --- Slice 11 (final): el navbar publica videos.html ------------------------
+// --- Slice 11 (final): el navbar publica la landing ---------------------------
 // El "feature flag efectivo" del PLAN (videos.html existia pero ninguna pagina la
 // enlazaba) se RETIRA en el slice 11. El test viejo afirmaba 0 enlaces; ahora afirma
 // el contrato opuesto, con conteo EXACTO: 1 item desktop + 1 item movil.
+// Slice 20: la landing paso a ser index.html; el item apunta ahi directo.
 
-test('feature flag retirado: navbar.html enlaza videos.html exactamente 2 veces (desktop + movil)', async () => {
+test('feature flag retirado: navbar.html enlaza la landing exactamente 2 veces (desktop + movil)', async () => {
   const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
-  assert.equal(count(nav, 'videos.html'), 2, 'se esperaba 1 item desktop + 1 item movil, ni mas ni menos');
+  assert.equal(count(nav, 'href="index.html"'), 2, 'se esperaba 1 item desktop + 1 item movil, ni mas ni menos');
 });
 
-test('S11 los 2 items llevan la clave nav_videos y un href relativo videos.html', async () => {
+test('S11 los 2 items llevan la clave nav_videos y un href relativo index.html', async () => {
   const nav = await (await fetch(`${srv.base}/components/navbar.html`)).text();
-  const items = [...nav.matchAll(/<a\b[^>]*href="videos\.html"[^>]*>/g)].map((m) => m[0]);
-  assert.equal(items.length, 2, `se esperaban 2 <a href="videos.html">, hay ${items.length}`);
+  const items = [...nav.matchAll(/<a\b[^>]*href="index\.html"[^>]*>/g)].map((m) => m[0]);
+  assert.equal(items.length, 2, `se esperaban 2 <a href="index.html">, hay ${items.length}`);
   for (const it of items) {
     assert.match(it, /data-i18n="nav_videos"/, `item sin la clave nav_videos: ${it}`);
   }

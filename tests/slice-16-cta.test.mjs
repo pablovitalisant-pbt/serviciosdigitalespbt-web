@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { read, count, stripBom, extractHero, extractCta, extractMobile } from './helpers/page.mjs';
 
-const V = read('videos.html');
+const V = read('index.html');
 const HEAD = V.slice(0, V.indexOf('</head>'));
 const LANGS = ['es', 'en', 'hi', 'zh', 'ur', 'ko'];
 const J = Object.fromEntries(LANGS.map((l) => [l, JSON.parse(stripBom(read(`i18n/${l}.json`)))]));

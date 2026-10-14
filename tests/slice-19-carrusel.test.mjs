@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { read, count, stripBom, extractHero, scriptBlockWith } from './helpers/page.mjs';
 
-const V = read('videos.html');
+const V = read('index.html');
 const HERO = extractHero(V);
 const LANGS = ['es', 'en', 'hi', 'zh', 'ur', 'ko'];
 const J = Object.fromEntries(LANGS.map((l) => [l, JSON.parse(stripBom(read(`i18n/${l}.json`)))]));

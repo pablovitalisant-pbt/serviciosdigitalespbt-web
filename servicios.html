@@ -1,0 +1,486 @@
+﻿<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Servicios Digitales PBT | Hago Realidad Tus Ideas</title>
+<link rel="icon" type="image/x-icon" href="favico.ico"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-primary-container": "#4f1800",
+                    "secondary-container": "#e2dfde",
+                    "tertiary": "#5d5f5f",
+                    "tertiary-container": "#909191",
+                    "surface-container-low": "#f3f3f3",
+                    "on-primary-fixed": "#370e00",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-tertiary-container": "#282a2b",
+                    "secondary-fixed": "#e5e2e1",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#ffb599",
+                    "inverse-surface": "#2f3131",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#dadada",
+                    "outline-variant": "#e1bfb3",
+                    "primary": "#a63b00",
+                    "on-secondary": "#ffffff",
+                    "surface-container-high": "#e8e8e8",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "on-surface": "#1a1c1c",
+                    "tertiary-fixed": "#e2e2e2",
+                    "surface": "#f9f9f9",
+                    "surface-container": "#eeeeee",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#f26522",
+                    "on-surface-variant": "#594138",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f9f9f9",
+                    "primary-fixed": "#ffdbce",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-background": "#1a1c1c",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f9f9f9",
+                    "secondary": "#5f5e5e",
+                    "on-primary-fixed-variant": "#7f2b00",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "surface-variant": "#e2e2e2",
+                    "on-secondary-container": "#636262",
+                    "primary-fixed-dim": "#ffb599",
+                    "on-secondary-fixed-variant": "#474746",
+                    "surface-tint": "#a63b00",
+                    "on-primary": "#ffffff",
+                    "outline": "#8d7166",
+                    "tertiary-fixed-dim": "#c6c6c7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "section-gap-lg": "120px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "section-gap-md": "80px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Archivo Narrow"],
+                    "display-md": ["Archivo Narrow"],
+                    "display-lg": ["Archivo Narrow"],
+                    "headline-md": ["Archivo Narrow"],
+                    "label-bold": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Archivo Narrow"],
+                    "body-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display-md": ["56px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-bold": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .hero-diagonal {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E5E5E5;
+        }
+        #lang-trigger { cursor: pointer; background: none; border: none; }
+    </style>
+<script src="components/shared.js"></script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<div id="navbar-placeholder"></div>
+<!-- Hero Section -->
+<section class="pt-32 pb-section-gap-md md:pt-48 md:pb-section-gap-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto overflow-hidden">
+<div class="grid md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-7">
+<h1 class="font-display-md text-headline-lg-mobile md:text-display-md text-on-surface leading-tight mb-6">
+                    <span data-i18n="hero_headline_1">Tu empresa tiene ideas digitales esperando.</span> <br/>
+<span class="text-primary-container" data-i18n="hero_headline_2">Necesita a alguien que las haga realidad.</span>
+</h1>
+<div class="flex flex-col sm:flex-row gap-4 mt-12 max-w-2xl">
+<input id="hero-input" class="flex-grow p-4 border border-outline focus:ring-2 focus:ring-primary-container outline-none text-body-md rounded-lg" data-i18n-placeholder="hero_input_placeholder" placeholder="¿Qué necesitas hacer realidad?" type="text"/>
+<button onclick="enviarAWhatsApp()" class="bg-primary-container text-white font-label-bold text-label-bold px-8 py-4 rounded-lg hover:brightness-90 transition-all uppercase tracking-widest whitespace-nowrap" data-i18n="hero_cta">
+                        Cuéntame tu idea
+                    </button>
+</div>
+<p class="text-on-surface-variant text-sm mt-4 opacity-70" data-i18n="hero_note">Sin compromiso. Respondo hoy.</p>
+</div>
+<div class="md:col-span-5 relative group">
+<div class="aspect-square bg-surface-container rounded-2xl overflow-hidden border border-outline-variant flex items-center justify-center relative">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a tech entrepreneur in a modern light-filled office. The individual is wearing a clean white shirt and has a confident, welcoming expression. The lighting is bright and high-contrast, matching a professional minimalism aesthetic with soft shadows and a pristine white background. The overall mood is authoritative yet accessible." src="yo.png"/>
+<div class="absolute inset-0 border-8 border-primary-container/20 pointer-events-none rounded-2xl"></div>
+
+</div>
+</div>
+</div>
+</section>
+<!-- Pain Points -->
+<section class="bg-surface-container py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter">
+<div class="max-w-container-max mx-auto text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-4" data-i18n="pain_title">¿Te suena alguna de estas situaciones?</h2>
+<div class="w-24 h-1 bg-primary-container mx-auto mb-6"></div>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto" data-i18n="pain_body">La mayoría de los dueños de empresa que me contactan no tienen un problema técnico. Tienen un problema de tiempo y de confianza.</p>
+</div>
+<div class="max-w-container-max mx-auto grid md:grid-cols-2 gap-8">
+<div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_1">"Quiero tener un sitio web o una tienda online, pero no sé por dónde empezar ni en quién confiar."</p>
+</div>
+<div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_2">"Tengo una idea para automatizar algo en mi negocio, pero no tengo el personal ni el tiempo para hacerlo."</p>
+</div>
+<div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_3">"Pedí cotización a una agencia y el precio me pareció excesivo para lo que realmente necesito."</p>
+</div>
+<div class="bg-white p-8 rounded-lg border border-outline-variant hover:-translate-y-1 transition-all hover:shadow-[0px_10px_30px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-4">format_quote</span>
+<p class="font-body-lg text-on-surface italic" data-i18n="pain_4">"Ya contraté a alguien y desapareció con el adelanto, o entregó algo que no sirve."</p>
+</div>
+</div>
+</section>
+<!-- Services Bento Grid -->
+<section class="py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto" id="servicios">
+<div class="text-center mb-20">
+<h2 class="font-display-md text-headline-lg-mobile md:text-headline-lg leading-tight mb-4">
+                <span data-i18n="services_title_1">Convierto tus ideas digitales</span> <br/>
+<span class="text-primary-container" data-i18n="services_title_2">en resultados concretos.</span>
+</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mt-6" data-i18n="services_body">No soy una agencia. Soy una persona real, local, que puedes llamar, ver en persona, y que responde cuando me necesitas. Uso inteligencia artificial para entregar en días lo que antes tardaba semanas.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 group relative overflow-hidden bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
+<div class="flex justify-between items-start">
+<div>
+<span class="material-symbols-outlined text-primary-container text-5xl mb-6">smartphone</span>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_3_title">Sitios web y landing pages</h3>
+<p class="text-on-surface-variant max-w-md" data-i18n="service_3_desc">Para que tus clientes te encuentren, confíen en ti, y te contacten.</p>
+</div>
+<div class="opacity-10 group-hover:opacity-20 transition-opacity absolute -right-4 -bottom-4">
+<span class="material-symbols-outlined text-[120px]">responsive_layout</span>
+</div>
+</div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">settings_suggest</span>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_6_title">Tiendas electrónicas</h3>
+<p class="text-on-surface-variant" data-i18n="service_6_desc">Vende online sin complicaciones. Pagos, catálogo, pedidos.</p>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">shopping_cart</span>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_2_title">Apps y software a medida</h3>
+<p class="text-on-surface-variant" data-i18n="service_2_desc">Si tienes un proceso que debería automatizarse, lo automatizamos.</p>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">web</span>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_1_title">Contenido con IA</h3>
+<p class="text-on-surface-variant" data-i18n="service_1_desc">Videos, imágenes y textos para tus redes sociales. Producción sin costos de agencia.</p>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">psychology</span>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_4_title">Libros con IA</h3>
+<p class="text-on-surface-variant" data-i18n="service_4_desc">De la idea al libro impreso. Para posicionarte como experto en tu industria.</p>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-8 hover:border-primary-container transition-all">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">menu_book</span>
+<h3 class="font-headline-md text-headline-md mb-4" data-i18n="service_5_title">Automatizaciones</h3>
+<p class="text-on-surface-variant" data-i18n="service_5_desc">Elimina tareas manuales repetitivas. Tu equipo hace lo que importa.</p>
+</div>
+</div>
+</section>
+<!-- Social Proof & Testimonials -->
+<section id="testimonio" class="bg-inverse-surface text-white py-section-gap-md">
+<div class="px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+
+  <!-- Header -->
+  <div class="text-center max-w-3xl mx-auto mb-16">
+    <p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4" data-i18n="proof_label">Resultados reales</p>
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-6 text-white" data-i18n="proof_title">Dos empresarios de la Zona Franca tenían ideas digitales esperando. Esto pasó cuando yo las hice realidad.</h2>
+    <p class="font-body-lg text-body-lg text-surface-variant" data-i18n="proof_body">Uno llevaba años administrando su negocio entre papeles, Excel y memoria. El otro necesitaba controlar inventario entre locales y bodega sin perderse en el camino. Ninguno necesitaba más tecnología. Necesitaban una herramienta construida alrededor de cómo ya trabajaban.</p>
+  </div>
+
+  <!-- Grid de videos -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
+
+    <!-- Testimonio 1 — Pravin Adwani -->
+    <div class="flex flex-col items-center">
+      <div class="w-full rounded-xl overflow-hidden shadow-lg">
+        <div style="position:relative;padding-bottom:177.78%;height:0;">
+          <iframe
+            src="https://www.youtube.com/embed/SH_bZEFWMbY"
+            title="Testimonio Pravin Adwani - Vida Digital Ltda"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"
+          ></iframe>
+        </div>
+      </div>
+      <div class="mt-6 text-center px-2">
+        <p class="font-body-lg text-white italic mb-4 leading-snug">"<span data-i18n="proof_quote_pravin">Casi tres cuartos de mi trabajo ha disminuido, al cual yo puedo dedicar mi tiempo más en ventas y en otras cosas que siempre no he tenido tiempo para hacer.</span>"</p>
+        <p class="font-label-bold text-label-bold text-primary-container uppercase tracking-widest">Pravin Adwani</p>
+        <p class="text-surface-variant text-sm mt-1">Vida Digital Ltda · Zona Franca</p>
+      </div>
+    </div>
+
+    <!-- Testimonio 2 — Anil Chandani -->
+    <div class="flex flex-col items-center">
+      <div class="w-full rounded-xl overflow-hidden shadow-lg">
+        <div style="position:relative;padding-bottom:177.78%;height:0;">
+          <iframe
+            src="https://www.youtube.com/embed/Rd6wI3qY4zc"
+            title="Testimonio Anil Chandani - Zona Franca"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"
+          ></iframe>
+        </div>
+      </div>
+      <div class="mt-6 text-center px-2">
+        <p class="font-body-lg text-white italic mb-4 leading-snug">"<span data-i18n="proof_quote_anil">Con Pablo la diferencia es que yo le decía cómo lo quería, y él lo modificaba a mi manera. Esa diferencia se marcó como un traje a la medida.</span>"</p>
+        <p class="font-label-bold text-label-bold text-primary-container uppercase tracking-widest">Anil Chandani</p>
+        <p class="text-surface-variant text-sm mt-1">Import Export Arjun · Zona Franca</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Puente hacia CTA -->
+  <div class="mt-16 text-center max-w-2xl mx-auto border-t border-white/10 pt-12">
+    <p class="font-body-lg text-body-lg text-surface-variant" data-i18n="proof_bridge">No vendo aplicaciones genéricas. Construyo la herramienta que tu negocio necesita, alrededor de cómo tú ya trabajas — no al revés.</p>
+  </div>
+
+</div>
+</section>
+<!-- Why Me checklist -->
+<section class="py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+<div class="max-w-3xl">
+<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4" data-i18n="diff_label">Por qué yo</p>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-12" data-i18n="diff_title">Lo que no encontrarás en una agencia tradicional.</h2>
+<ul class="space-y-8">
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
+<div>
+<p class="text-on-surface-variant" data-i18n="diff_1">Soy de Iquique. Puedo reunirme contigo en persona, entender tu negocio de verdad, y estar disponible cuando me necesitas.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
+<div>
+<p class="text-on-surface-variant" data-i18n="diff_2">Trabajo con IA de última generación. Lo que antes tomaba semanas, hoy lo entrego en días, sin sacrificar calidad.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
+<div>
+<p class="text-on-surface-variant" data-i18n="diff_3">Sin estructura de agencia, sin costos inflados. Pagas por resultado, no por horas de reuniones y burocracia.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
+<div>
+<p class="text-on-surface-variant" data-i18n="diff_4">Un solo interlocutor: yo. El mismo que entiende tu idea, la ejecuta, y responde si algo necesita ajuste.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary-container font-bold">check_circle</span>
+<div>
+<p class="text-on-surface-variant" data-i18n="diff_5">Trabajo con empresas de la zona franca, retail del mall, y negocios de servicios en toda la ciudad. Conozco el contexto local.</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<!-- How It Works -->
+<section class="bg-surface-container py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-gutter" id="proceso">
+<div class="max-w-container-max mx-auto text-center mb-16">
+<p class="text-primary-container font-label-bold text-label-bold uppercase tracking-widest mb-4" data-i18n="how_label">Cómo empezamos</p>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg" data-i18n="how_title">Simple. Sin formularios complicados.</h2>
+</div>
+<div class="max-w-container-max mx-auto grid md:grid-cols-3 gap-12 relative">
+<div class="hidden md:block absolute top-12 left-0 w-full h-px bg-outline-variant z-0"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="w-20 h-20 bg-primary-container text-white rounded-full flex items-center justify-center font-display-md text-headline-lg mb-6 shadow-lg">1</div>
+<h4 class="font-headline-md text-headline-md mb-4" data-i18n="how_1_title">Me cuentas tu idea</h4>
+<p class="text-on-surface-variant" data-i18n="how_1_desc">Por WhatsApp, teléfono, o en persona. Sin tecnicismos. Me dices qué tienes en mente y yo entiendo cómo convertirlo en algo real.</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="w-20 h-20 bg-primary-container text-white rounded-full flex items-center justify-center font-display-md text-headline-lg mb-6 shadow-lg">2</div>
+<h4 class="font-headline-md text-headline-md mb-4" data-i18n="how_2_title">Te presento una propuesta clara</h4>
+<p class="text-on-surface-variant" data-i18n="how_2_desc">Qué voy a hacer, cuánto cuesta, y cuándo lo tienes. Sin letra chica, sin sorpresas después.</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="w-20 h-20 bg-primary-container text-white rounded-full flex items-center justify-center font-display-md text-headline-lg mb-6 shadow-lg">3</div>
+<h4 class="font-headline-md text-headline-md mb-4" data-i18n="how_3_title">Lo ejecutamos y lo recibes funcionando</h4>
+<p class="text-on-surface-variant" data-i18n="how_3_desc">Trabajo rápido. En días tienes algo concreto, no promesas. Y seguimos en contacto si necesitas ajustes.</p>
+</div>
+</div>
+</section>
+<div id="footer-placeholder"></div>
+<!-- i18n Script -->
+<script>
+function initI18n() {
+  const LANGS = {
+  es: { flag: '🇨🇱', code: 'ES' },
+  en: { flag: '🇺🇸', code: 'EN' },
+  hi: { flag: '🇮🇳', code: 'HI' },
+  zh: { flag: '🇨🇳', code: 'ZH' },
+  ur: { flag: '🇵🇰', code: 'UR' },
+  ko: { flag: '🇰🇷', code: 'KO' }
+};
+const RTL_LANGS = ['ur'];
+let translations = {};
+let menuOpen = false;
+
+const menu = document.getElementById('lang-menu');
+const trigger = document.getElementById('lang-trigger');
+
+// Position and toggle menu
+function toggleLangMenu() {
+  if (menuOpen) {
+    menu.style.display = 'none';
+    menuOpen = false;
+    return;
+  }
+  const rect = trigger.getBoundingClientRect();
+  menu.style.top = (rect.bottom + 8) + 'px';
+  menu.style.left = Math.max(8, rect.right - 148) + 'px';
+  menu.style.display = 'block';
+  menuOpen = true;
+}
+
+trigger.addEventListener('click', function(e) {
+  e.stopPropagation();
+  toggleLangMenu();
+});
+
+// Close on outside click
+document.addEventListener('click', function(e) {
+  if (menuOpen && !menu.contains(e.target) && e.target !== trigger) {
+    menu.style.display = 'none';
+    menuOpen = false;
+  }
+});
+
+// Lang option clicks
+menu.querySelectorAll('button[data-lang]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const lang = this.getAttribute('data-lang');
+    menu.style.display = 'none';
+    menuOpen = false;
+    loadLang(lang);
+  });
+});
+
+async function loadLang(lang) {
+  try {
+    const res = await fetch('i18n/' + lang + '.json');
+    translations = await res.json();
+    applyTranslations(lang);
+    localStorage.setItem('pbt-lang', lang);
+    updateLangSelector(lang);
+  } catch(e) {
+    console.error('Error loading language:', lang, e);
+  }
+}
+
+function applyTranslations(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n');
+    if (translations[key]) el.textContent = translations[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[key]) el.placeholder = translations[key];
+  });
+  document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+}
+
+function updateLangSelector(lang) {
+  const info = LANGS[lang] || LANGS['es'];
+  document.getElementById('current-lang-flag').textContent = info.flag;
+  document.getElementById('current-lang-code').textContent = info.code;
+}
+
+function detectLang() {
+  const saved = localStorage.getItem('pbt-lang');
+  if (saved && LANGS[saved]) return saved;
+  const browser = navigator.language.split('-')[0].toLowerCase();
+  if (LANGS[browser]) return browser;
+  return 'es';
+}
+
+function enviarAWhatsApp() {
+  const texto = document.getElementById('hero-input').value.trim();
+  const prefix = translations['whatsapp_message_prefix'] || 'Hola, te contacto desde tu sitio web. Necesito lo siguiente: ';
+  const defaultMsg = translations['whatsapp_message_default'] || 'Hola, me gustaría contarte una idea que tengo para mi empresa.';
+  const mensaje = texto ? prefix + texto : defaultMsg;
+  window.open('https://wa.me/56920948874?text=' + encodeURIComponent(mensaje), '_blank');
+}
+
+// Dynamic year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Init
+function toggleMobileMenu() {
+  const m = document.getElementById('mobile-menu');
+  const isOpen = m.style.display === 'flex';
+  m.style.display = isOpen ? 'none' : 'flex';
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').style.display = 'none';
+}
+
+function setMobileLang(lang) {
+  loadLang(lang);
+  closeMobileMenu();
+}
+
+  loadLang(detectLang());
+  // Exponer funciones globales para onclick handlers
+  window.toggleMobileMenu = toggleMobileMenu;
+  window.closeMobileMenu = closeMobileMenu;
+  window.setMobileLang = setMobileLang;
+  window.enviarAWhatsApp = enviarAWhatsApp;
+}
+// Si los componentes ya están cargados, inicializar ahora
+// (en caso de que DOMContentLoaded ya haya disparado)
+if (document.getElementById('lang-trigger')) {
+  initI18n();
+}
+</script>
+</body></html>
