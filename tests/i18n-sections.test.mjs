@@ -148,14 +148,14 @@ const COPY_V2_TOKENS = {
 // viejo es identico dos veces y un cruce de mensajes pasaria inadvertido.
 const WA_BASE = 'https://wa.me/56920948874?text=';
 const waHref = (msg) => WA_BASE + encodeURIComponent(msg);
-const WA_DEFAULT = 'Hola, quiero cotizar la edición de reels para mi negocio.';
+const WA_DEFAULT = 'Hola, quiero comprar mi Pack de Reels.';
 const WA_CTA = [
   { key: 'videos_hero_cta_whatsapp', section: 'hero', old: 'href="[LINK_WHATSAPP]"', msg: WA_DEFAULT },
   { key: 'videos_plans_p1_cta', section: 'plansA', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero contratar el Plan Económica (4 reels al mes).' },
   { key: 'videos_plans_p2_cta', section: 'plansA', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero contratar el Plan Equilibrada (8 reels al mes).' },
   { key: 'videos_plans_p3_cta', section: 'plansB', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero contratar el Plan Premium (12 reels al mes).' },
-  { key: 'videos_single_reel_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero cotizar un reel suelto.' },
-  { key: 'videos_single_long_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero cotizar un video largo.' },
+  { key: 'videos_single_reel_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero comprar un reel suelto.' },
+  { key: 'videos_single_long_cta', section: 'single', old: 'href="[LINK_WHATSAPP]"', msg: 'Hola, quiero comprar un video largo.' },
   { key: 'videos_cta_whatsapp', section: 'cta', old: 'href="[LINK_WHATSAPP]"', msg: WA_DEFAULT },
   { key: 'videos_mobile_whatsapp', section: 'mobile', old: 'href="https://wa.me/"', msg: WA_DEFAULT },
 ];
@@ -172,6 +172,26 @@ const CTA_CLASS_SWAPS = {
   'w-full inline-flex items-center justify-center gap-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT transition-colors':
     'btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT',
 };
+
+// --- "cotiza" -> "compra" (slice 17, 2026-10-13) ------------------------------
+// Decision de Pablo: los precios estan publicados; la pagina invita a COMPRAR, no a cotizar.
+// Swaps de frase (no de clave): "Cotización a medida" se repite 4 veces en extras y COPY_V2
+// exige 1 ocurrencia por clave. secBaseV2 los aplica con replaceAll; G-COMPRA vigila que
+// cada uno muerda la base y que no quede ningun "cotiz" visible.
+const COMPRA_SWAPS = [
+  ["se pueden cotizar por separado", "se pueden comprar por separado"],
+  ["se cotiza aparte", "se compra aparte"],
+  ["se cotizan por separado", "se compran por separado"],
+  ["Cotizar Reel Suelto", "Comprar Reel Suelto"],
+  ["Cotizar Video Largo", "Comprar Video Largo"],
+  ["se cotizan exclusivamente", "se compran exclusivamente"],
+  ["Trabajos adicionales cotizados por separado", "Trabajos adicionales que se compran por separado"],
+  ["Cotización a medida", "Compra a medida"],
+  ["se cotiza de manera independiente", "se compra de manera independiente"],
+  ["se cotizan aparte", "se compran aparte"],
+  ["se puede cotizar como servicio adicional", "se puede comprar como servicio adicional"],
+  ["puede cotizarse por separado", "puede comprarse por separado"],
+];
 
 // Lista explicita, en el orden del contrato. G-COPYV2 la compara con las claves reales de
 // COPY_V2: si alguien agrega o quita una divergencia, este array lo delata.
@@ -354,7 +374,7 @@ const SECTIONS = [
         'Cero ambigüedades. Cada video se procesa bajo estándares de ritmo rápido, audio depurado y gráficos optimizados para retención de audiencia en plataformas verticales.',
       videos_includes_note_title: 'Nota de alcance transparente',
       videos_includes_note_body:
-        'Grabación presencial en tu local, publicación de videos en tus redes, gestión de comentarios/mensajes y videos generados 100% con IA no están incluidos en estos planes (se pueden cotizar por separado).',
+        'Grabación presencial en tu local, publicación de videos en tus redes, gestión de comentarios/mensajes y videos generados 100% con IA no están incluidos en estos planes (se pueden comprar por separado).',
       videos_includes_card1_title: 'Formato 9:16 vertical',
       videos_includes_card1_body:
         'Videos de hasta 60 segundos listos para Instagram Reels, TikTok y YouTube Shorts con encuadre dinámico.',
@@ -595,7 +615,7 @@ const SECTIONS = [
       videos_plans_p3_cta: 'Elegir Premium',
       videos_plans_note_title: 'Términos de servicio de edición mensual:',
       videos_plans_note_body:
-        'El b-roll se incluye dentro de los límites indicados y solo cuando sea técnicamente y visualmente adecuado para el contenido. La generación completa de videos con IA se cotiza aparte. Los videos no usados dentro del mes calendario no se acumulan para el mes siguiente. El precio mensual corresponde al servicio de edición; grabación, traslados, publicación y gestión de comunidad se cotizan por separado.',
+        'El b-roll se incluye dentro de los límites indicados y solo cuando sea técnicamente y visualmente adecuado para el contenido. La generación completa de videos con IA se compra aparte. Los videos no usados dentro del mes calendario no se acumulan para el mes siguiente. El precio mensual corresponde al servicio de edición; grabación, traslados, publicación y gestión de comunidad se compran por separado.',
     },
     // Los 5 textos dentro de un <span data-i18n> NUEVO (sin class): su contenedor tiene un
     // <strong> adentro y el motor hace textContent =, que lo borraria. note_body es el cuerpo
@@ -685,15 +705,15 @@ const SECTIONS = [
       videos_single_reel_p1: 'Nivel Económica',
       videos_single_reel_p2: 'Nivel Equilibrada',
       videos_single_reel_p3: 'Nivel Premium',
-      videos_single_reel_cta: 'Cotizar Reel Suelto',
+      videos_single_reel_cta: 'Comprar Reel Suelto',
       videos_single_long_title: '1 Video Largo Individual',
       videos_single_long_format: 'Duración de 5 a 6 minutos (YouTube / Web)',
       videos_single_long_p1: 'Nivel Económica',
       videos_single_long_p2: 'Nivel Equilibrada',
       videos_single_long_p3: 'Nivel Premium',
-      videos_single_long_cta: 'Cotizar Video Largo',
+      videos_single_long_cta: 'Comprar Video Largo',
       videos_single_note:
-        '* Los videos largos se cotizan exclusivamente como trabajos individuales y no forman parte de los planes mensuales.',
+        '* Los videos largos se compran exclusivamente como trabajos individuales y no forman parte de los planes mensuales.',
     },
     // Ningun <span data-i18n="k"> pelado: los 6 spans de nivel llevan su class del diseno
     // (P6 filtra por attrs === data-i18n solo), y los 2 CTA viven en el <a> con su texto.
@@ -717,7 +737,7 @@ const SECTIONS = [
       ['videos_single_long_p2', 'videos_plans_p2_title'],
       ['videos_single_long_p3', 'videos_plans_p3_title'],
     ],
-    mustInclude: ['Flexibilidad Total', 'Cotizar Reel Suelto', 'Nivel Premium'],
+    mustInclude: ['Flexibilidad Total', 'Comprar Reel Suelto', 'Nivel Premium'],
     mustExclude: ['id="planes"', 'Términos de servicio', 'id="como-funciona"'],
   },
 
@@ -883,30 +903,30 @@ const SECTIONS = [
       'videos_extras_card4_footer',
     ],
     // Texto ES = el de Stitch, literal. OJO: la etiqueta de las 4 tarjetas es la MISMA frase
-    // ("Cotización a medida"), pero P3 exige 1 ocurrencia por clave en videos.html: por eso son
+    // ("Compra a medida"), pero P3 exige 1 ocurrencia por clave en videos.html: por eso son
     // 4 claves (precedente D1 del slice 7 con "Nivel X" x 6), coherentes por P-GUARD, no por
     // una clave compartida.
     es: {
       videos_extras_kicker: 'Servicios Complementarios',
-      videos_extras_title: 'Trabajos adicionales cotizados por separado',
+      videos_extras_title: 'Trabajos adicionales que se compran por separado',
       videos_extras_subtitle:
         'Si requieres apoyo más allá de la edición de video, disponemos de soluciones a la medida con presupuesto individualizado según tus necesidades.',
-      videos_extras_card1_badge: 'Cotización a medida',
+      videos_extras_card1_badge: 'Compra a medida',
       videos_extras_card1_title: 'Grabación en tu local',
       videos_extras_card1_body:
         'Contratación de personal para grabación presencial en Iquique y localidades de la Región de Tarapacá.',
       videos_extras_card1_footer: 'Presencial Tarapacá',
-      videos_extras_card2_badge: 'Cotización a medida',
+      videos_extras_card2_badge: 'Compra a medida',
       videos_extras_card2_title: 'Publicación y Programación',
       videos_extras_card2_body:
         'Subida calendarizada de reels con copy, hashtags optimizados y portada en tus canales sociales.',
       videos_extras_card2_footer: 'Gestión de subida',
-      videos_extras_card3_badge: 'Cotización a medida',
+      videos_extras_card3_badge: 'Compra a medida',
       videos_extras_card3_title: 'Manejo de Comunidad',
       videos_extras_card3_body:
         'Respuesta y filtro de comentarios y mensajes directos derivados de las publicaciones.',
       videos_extras_card3_footer: 'Moderación activa',
-      videos_extras_card4_badge: 'Cotización a medida',
+      videos_extras_card4_badge: 'Compra a medida',
       videos_extras_card4_title: 'Videos 100% con IA',
       videos_extras_card4_body:
         'Creación integral de avatar, voz sintetizada y escenas íntegramente generadas por Inteligencia Artificial.',
@@ -936,7 +956,7 @@ const SECTIONS = [
     ],
     mustInclude: [
       'Servicios Complementarios',
-      'Trabajos adicionales cotizados por separado',
+      'Trabajos adicionales que se compran por separado',
       'Producción sintética',
     ],
     mustExclude: ['id="preguntas-frecuentes"', 'Claridad Absoluta', 'id="como-funciona"'],
@@ -980,16 +1000,16 @@ const SECTIONS = [
       videos_faq_q1_title: '¿Tengo que grabar los videos?',
       videos_faq_q1_strong: 'Sí.',
       videos_faq_q1_body:
-        'El cliente entrega el material en bruto grabado desde su celular o cámara. El servicio de grabación presencial en Iquique se cotiza de manera independiente si no cuentas con tiempo para hacerlo.',
+        'El cliente entrega el material en bruto grabado desde su celular o cámara. El servicio de grabación presencial en Iquique se compra de manera independiente si no cuentas con tiempo para hacerlo.',
       videos_faq_q2_title: '¿Qué se considera una ronda de revisión?',
       videos_faq_q2_body:
-        'Se consideran cambios menores sobre la primera versión entregada (ajuste de ortografía en subtítulos, volumen de música o corte de un segundo específico). Cambios de concepto completo, re-estructuración de guion o el envío de nuevo material grabado se cotizan aparte.',
+        'Se consideran cambios menores sobre la primera versión entregada (ajuste de ortografía en subtítulos, volumen de música o corte de un segundo específico). Cambios de concepto completo, re-estructuración de guion o el envío de nuevo material grabado se compran aparte.',
       videos_faq_q3_title: '¿Publican los videos por mí?',
       videos_faq_q3_body:
-        'No está incluido en el precio base de edición. Te entregamos el archivo MP4 optimizado listo para subir. Si deseas que programemos y publiquemos por ti con portadas y copys, se puede cotizar como servicio adicional.',
+        'No está incluido en el precio base de edición. Te entregamos el archivo MP4 optimizado listo para subir. Si deseas que programemos y publiquemos por ti con portadas y copys, se puede comprar como servicio adicional.',
       videos_faq_q4_title: '¿Responden comentarios o mensajes de mis redes?',
       videos_faq_q4_body:
-        'No está incluido en el plan de edición. El community management y atención de consultas puede cotizarse por separado con horarios y alcance predefinidos.',
+        'No está incluido en el plan de edición. El community management y atención de consultas puede comprarse por separado con horarios y alcance predefinidos.',
       videos_faq_q5_title: '¿Incluyen videos generados completamente con IA?',
       videos_faq_q5_body:
         'No. Nuestros planes utilizan IA como asistencia técnica de montaje y pequeños clips de b-roll ilustrativo. La creación de videos 100% generados con IA (voces clonadas y avatares) se presupuesta tras evaluar tu requerimiento específico.',
@@ -1118,6 +1138,7 @@ function secBaseV2(d) {
         `${d.name}: quedaron placeholders de WhatsApp que WA_CTA no declara`,
       );
     }
+    for (const [oldP, newP] of COMPRA_SWAPS) s = s.replaceAll(oldP, newP);
     for (const [oldC, newC] of Object.entries(CTA_CLASS_SWAPS)) s = s.replaceAll(`class="${oldC}"`, `class="${newC}"`);
     secBaseCache.set(d.name, s);
   }
@@ -1525,6 +1546,21 @@ test('G-CTACLASS cada swap de clase existe en la base y muerde 5 botones en tota
     n += c;
   }
   assert.equal(n, 5, `los swaps cubren ${n} botones de la base (se esperaban 5)`);
+});
+
+test('G-COMPRA ningun texto visible de videos.html dice "cotiz" y cada swap existe en la base', () => {
+  for (const [oldP, newP] of COMPRA_SWAPS) {
+    assert.ok(count(VBASE, oldP) > 0, `el swap "${oldP}" no existe en la base 8a5fa69`);
+    assert.equal(count(V, oldP), 0, `videos.html aun dice "${oldP}"`);
+    assert.ok(count(V, newP) > 0, `videos.html no dice "${newP}"`);
+  }
+  const ks = [...UNION];
+  assert.ok(ks.length > 100, `el escaneo solo vio ${ks.length} claves: el guard seria vacuo`);
+  for (const k of ks) assert.doesNotMatch(J.es[k], /cotiz/i, `es.json: "${k}" sigue cotizando: ${J.es[k]}`);
+  for (const e of WA_CTA) assert.doesNotMatch(e.msg, /cotiz/i, `el mensaje de "${e.key}" sigue cotizando`);
+  // Anti-vacuidad del HTML: el unico "cotiz" que queda es el comentario-marcador de extras.
+  const visible = V.replace(/<!--[\s\S]*?-->/g, '');
+  assert.doesNotMatch(visible, /cotiz/i, 'queda un "cotiz" fuera de comentarios en videos.html');
 });
 
 // --- coherencia de precios (slice 13, 2026-10-13) -----------------------------
