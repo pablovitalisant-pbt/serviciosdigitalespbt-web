@@ -5,12 +5,27 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sala de edicion | Servicios Digitales PBT</title>
+<script>
+// 2a: el preloader solo existe si este script corre; si js/videos.js falla,
+// el setTimeout lo libera igual. El try/catch cubre storage bloqueado.
+(function () {
+  var root = document.documentElement;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try { if (sessionStorage.getItem('reels_v2_preloaded')) return; } catch (e) {}
+  root.classList.add('is-loading');
+  setTimeout(function () { root.classList.remove('is-loading'); }, 2500);
+})();
+</script>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter+Tight:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link href="css/videos.css" rel="stylesheet">
 </head>
 <body>
+<div class="preload" aria-hidden="true">
+  <p class="preload__label mono">RENDERING <span id="render-pct">000</span>%</p>
+  <div class="preload__bar"><i></i></div>
+</div>
 <main id="sala">
   <section class="lab" aria-labelledby="lab-title">
     <h1 class="lab__title" id="lab-title" data-i18n="reels_lab_title">Sala de edicion</h1>

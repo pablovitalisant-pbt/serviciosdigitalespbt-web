@@ -71,7 +71,7 @@ test('B4 fija GSAP y Lenis por version exacta, con defer y en orden', () => {
     assert.ok(HTML.includes(`src="${url}" defer`), `${url} sin defer`);
   }
   assert.ok(HTML.indexOf(urls[0]) < HTML.indexOf(urls[1]), 'ScrollTrigger antes que gsap');
-  assert.ok(HTML.indexOf(urls[1]) < HTML.indexOf('js/videos.js'), 'js/videos.js antes de las librerias');
+  assert.ok(HTML.indexOf(urls[1]) < HTML.indexOf('src="js/videos.js"'), 'js/videos.js antes de las librerias');
   assert.equal(count(HTML, 'latest'), 0, 'hay una version flotante (latest)');
   assert.equal(count(HTML, 'href="css/videos.css"'), 1, 'no enlaza css/videos.css');
   assert.equal(count(HTML, 'src="js/videos.js" defer'), 1, 'no carga js/videos.js con defer');
@@ -123,4 +123,6 @@ test('B11 E2E flujo principal: pagina y assets locales responden 200 por HTTP', 
     assert.equal((await fetch(`${srv.base}/${u}`)).status, 200, `${u} no respondio 200`);
   }
   assert.ok((await (await fetch(`${srv.base}/videos-v2.html`)).text()).includes('id="sala"'), 'la pagina servida no es la esperada');
+  // Sub-slice 2a: el bootstrap del preloader viaja en el HTML servido, no en un asset aparte.
+  assert.ok((await (await fetch(`${srv.base}/videos-v2.html`)).text()).includes('reels_v2_preloaded'), 'la pagina servida no trae el bootstrap del preloader');
 });
