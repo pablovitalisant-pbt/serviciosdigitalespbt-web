@@ -246,3 +246,7 @@ Mapa de URLs final:
 
 Navbar: logo y anclas -> `index.html`, item Videos -> `videos.html`. Tests: `slice-20-index`
 eliminado y reemplazado por `slice-24-rutas` (S24-1..6). Sin feature flag (sitio estatico).
+
+## Slice 25 — Landing desacoplada de components/ (2026-10-19)
+
+La landing lleva un mini-footer propio inline: no carga ningun componente compartido y cualquier cambio en `components/footer.html` ya no la afecta. Sin feature flag (sitio estatico).

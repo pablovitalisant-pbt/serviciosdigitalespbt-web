@@ -741,7 +741,16 @@
 </div>
 </div>
 </section>
-</div></main><div id="footer-placeholder"></div>
+</div></main>
+<!-- Footer -->
+<footer class="bg-[#111111] text-surface-variant py-16 px-margin-mobile md:px-gutter border-t border-white/5">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<img src="logo-pbt-white.png" alt="Servicios Digitales PBT" style="height: 48px; width: auto;">
+<div class="text-center md:text-right">
+<p class="font-label-bold text-label-bold mb-2">© <span id="year"></span> Servicios Digitales PBT. <span data-i18n="footer_rights">Todos los derechos reservados.</span></p>
+</div>
+</div>
+</footer>
 
 <script>
 // Carrusel de reels (slice 19): solo el del frente carga el reproductor (en bucle, sin
@@ -793,31 +802,13 @@
 </script>
 
 <script>
-(function() {
-  function loadComponent(id, url, callback) {
-    fetch(url)
-      .then(function(r) { return r.text(); })
-      .then(function(html) {
-        document.getElementById(id).innerHTML = html;
-        if (callback) callback();
-      });
-  }
-
-  // Landing sin navbar (slice 18): solo se carga el footer, y con el corre initI18n.
-  document.addEventListener('DOMContentLoaded', function() {
-    loadComponent('footer-placeholder', 'components/footer.html', function() {
-      var yearEl = document.getElementById('year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-      // videos.html conserva el CTA propio de Stitch: se oculta el CTA compartido
-      // para que no haya dos llamados a la accion en la misma pagina.
-      var ctaSection = document.querySelector('#footer-placeholder section#contacto');
-      if (ctaSection) ctaSection.style.display = 'none';
-
-      initI18n();
-    });
-  });
-})();
+// Slice 25: footer propio inline, sin componentes compartidos. initI18n vive en el script
+// siguiente; este listener corre cuando todo el documento ya se parseo.
+document.addEventListener('DOMContentLoaded', function() {
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  initI18n();
+});
 </script>
 
 <script>

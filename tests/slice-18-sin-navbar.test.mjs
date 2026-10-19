@@ -22,10 +22,12 @@ test('S18-2 <main> ya no reserva el alto del header fijo (pt-20)', () => {
   assert.ok(!main.split(' ').includes('pt-20'), 'main conserva pt-20: queda una franja vacia arriba');
 });
 
-test('S18-3 el footer se sigue cargando y dispara initI18n', () => {
-  assert.ok(BODY.includes("loadComponent('footer-placeholder', 'components/footer.html'"), 'no carga el footer');
-  const cb = BODY.slice(BODY.indexOf("loadComponent('footer-placeholder'"));
-  assert.ok(cb.indexOf('initI18n();') > 0, 'el callback del footer no llama a initI18n');
+test('S18-3 el footer inline dispara initI18n en DOMContentLoaded', () => {
+  assert.equal(count(BODY, 'footer-placeholder'), 0, 'queda el footer-placeholder (slice 25)');
+  assert.equal(count(BODY, 'components/footer.html'), 0, 'sigue cargando el footer compartido (slice 25)');
+  assert.equal(count(BODY, '<footer'), 1, 'no hay footer inline');
+  const cb = BODY.slice(BODY.indexOf("addEventListener('DOMContentLoaded'"));
+  assert.ok(cb.indexOf('initI18n();') > 0, 'el listener de DOMContentLoaded no llama a initI18n');
   assert.equal(count(BODY, 'navbarDone'), 0, 'queda la bandera del navbar: initI18n nunca correria');
 });
 

@@ -1042,6 +1042,10 @@ const UNION = new Set(SECTIONS.flatMap((d) => d.keys));
 // compartido (slice 11). Viven en los mismos 6 JSON, asi que G1/G2/G5 tienen que contarlas
 // o acusan "claves que no declara ninguna seccion" / "faltan claves".
 const NAV_KEYS = ['nav_videos'];
+// Slice 25: claves reutilizadas del sitio general que la landing puede mostrar SIN
+// descriptor propio. Lista explicita y cerrada: cualquier otra clave fuera de UNION
+// sigue haciendo fallar G3. No entran a UNION ni a NAV_KEYS (no son claves nuevas).
+const SHARED_KEYS = ['footer_rights'];
 
 // Extraccion perezosa: si un marcador se rompe, el throw falla solo los tests que tocan
 // esa seccion en vez de tumbar el archivo entero al importarlo.
@@ -1428,7 +1432,7 @@ test('G2 las claves de la base quedaron intactas y las agregadas son las de los 
 
 test('G3 todo data-i18n de videos.html pertenece a un descriptor (nada de i18n fuera de las secciones)', () => {
   const found = [...new Set(i18nElems(V).map((e) => e.key))];
-  const fuera = found.filter((k) => !UNION.has(k));
+  const fuera = found.filter((k) => !UNION.has(k) && !SHARED_KEYS.includes(k));
   assert.deepEqual(fuera, [], 'hay data-i18n fuera de las secciones traducidas: se adelanto trabajo de un slice futuro');
 });
 

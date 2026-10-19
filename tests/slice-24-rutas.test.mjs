@@ -35,11 +35,12 @@ test('S24-2 videos.html es la landing de reels, con su title propio', () => {
   );
 });
 
-test('S24-3 la landing no tiene navbar; conserva el footer que dispara initI18n', () => {
+test('S24-3 la landing no tiene navbar; lleva su propio footer inline (slice 25)', () => {
   assert.equal(count(VIDEOS, 'components/navbar.html'), 0, 'la landing carga el navbar');
   assert.equal(count(VIDEOS, 'navbar-placeholder'), 0, 'queda el navbar-placeholder');
   assert.equal(count(VIDEOS, '<header'), 0, 'hay un <header> en la landing');
-  assert.equal(count(VIDEOS, 'components/footer.html'), 1, 'la landing perdio el footer (S18-3 lo exige)');
+  assert.equal(count(VIDEOS, 'components/footer.html'), 0, 'la landing volvio a cargar el footer compartido');
+  assert.equal(count(VIDEOS, '<footer'), 1, 'la landing perdio su footer');
 });
 
 test('S24-4 servicios.html vuelve a ser solo la redireccion a /', () => {

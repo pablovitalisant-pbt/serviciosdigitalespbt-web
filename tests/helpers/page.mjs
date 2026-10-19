@@ -323,7 +323,9 @@ export function uncoveredBodyText(html) {
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<script[\s\S]*?<\/script>/g, '')
     .replace(/<div id="navbar-placeholder"><\/div>/g, '')
-    .replace(/<div id="footer-placeholder"><\/div>/g, '');
+    .replace(/<div id="footer-placeholder"><\/div>/g, '')
+    // Slice 25: el mini-footer inline de la landing se vigila en su propio test (S25).
+    .replace(/<footer[\s\S]*?<\/footer>/g, '');
   const covered = count(body, 'data-i18n="');
   const sinI18n = body.replace(I18N_ELEM_RE, '');
   const icons = (sinI18n.match(ICON_SPAN_RE) || []).length;

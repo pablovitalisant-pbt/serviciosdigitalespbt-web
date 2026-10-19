@@ -6,11 +6,9 @@ import assert from 'node:assert/strict';
 import {
   read,
   count,
-  idsOf,
   tailwindConfig,
   configTokens,
   configDependentClasses,
-  scriptBlockWith,
   extractSections,
   gitShowBaseline,
 } from './helpers/page.mjs';
@@ -27,7 +25,6 @@ const FOOT = '<div id="footer-placeholder"></div>';
 const WA_BAR = '<div class="fixed bottom-4 left-4 right-4 z-50 md:hidden">';
 
 const HEAD = VIDEOS.slice(0, VIDEOS.indexOf('</head>'));
-const BODY = VIDEOS.slice(VIDEOS.indexOf('<body'), VIDEOS.indexOf('</body>'));
 
 // --- C1/C2 — navbar ---------------------------------------------------------
 
@@ -39,13 +36,14 @@ test('C2 el <header> propio de Stitch fue eliminado (no comentado)', () => {
 
 // --- C3/C4/C5 — footer y boton fijo movil ----------------------------------
 
-test('C3 el footer-placeholder existe una sola vez, tras </main>', () => {
-  assert.equal(count(VIDEOS, FOOT), 1, `se esperaba 1 footer-placeholder, hay ${count(VIDEOS, FOOT)}`);
-  assert.ok(VIDEOS.indexOf(FOOT) > VIDEOS.indexOf('</main>'), 'el footer-placeholder quedo antes de </main>');
+// Slice 25: el placeholder y el loader se eliminan; el footer pasa a ser inline.
+test('C3 no queda footer-placeholder: el footer vive inline tras </main>', () => {
+  assert.equal(count(VIDEOS, FOOT), 0, `sigue el footer-placeholder (${count(VIDEOS, FOOT)})`);
+  assert.ok(VIDEOS.indexOf('<footer') > VIDEOS.indexOf('</main>'), 'el footer inline quedo antes de </main>');
 });
 
-test('C4 el <footer> propio de Stitch fue eliminado (no comentado)', () => {
-  assert.equal(count(VIDEOS, '<footer'), 0, 'queda el footer de Stitch en videos.html');
+test('C4 hay exactamente un <footer> propio (el mini-footer del slice 25)', () => {
+  assert.equal(count(VIDEOS, '<footer'), 1, `se esperaba 1 <footer>, hay ${count(VIDEOS, '<footer')}`);
 });
 
 const WA_HREF = 'https://wa.me/56920948874?text=';
@@ -90,20 +88,16 @@ test('C7 los placeholders de WhatsApp de Stitch ya no existen (los resolvio el s
 // detalle de QUE claves y QUE spans lleva cada seccion vive en tests/i18n-sections.test.mjs
 // (P1/P3/P6/G3), que ademas cubre el archivo entero: aca queda solo el invariante.
 test('C8 solo las secciones ya traducidas llevan i18n (los slices siguientes intactos)', () => {
+  // Slice 25: el mini-footer aporta footer_rights fuera de extractSections; se descuenta.
+  const footer = VIDEOS.slice(VIDEOS.indexOf('<footer'), VIDEOS.indexOf('</footer>') + '</footer>'.length);
   assert.equal(
     count(extractSections(VIDEOS), 'data-i18n="'),
-    count(VIDEOS, 'data-i18n="'),
-    'hay data-i18n fuera de las secciones traducidas: se adelanto trabajo de un slice futuro',
+    count(VIDEOS, 'data-i18n="') - count(footer, 'data-i18n="'),
+    'hay data-i18n fuera de las secciones traducidas y del mini-footer: se adelanto trabajo de un slice futuro',
   );
 });
 
-// --- C9 — loader de componentes y bandera de carrera -----------------------
-
-// Slice 18: sin navbar, el loader carga solo el footer (y S18-3 vigila que llame a initI18n).
-test('C9 el loader vive al final del <body> y carga el footer en su placeholder', () => {
-  assert.ok(BODY.indexOf('function loadComponent(') > BODY.indexOf(FOOT), 'el loader no esta al final del <body>');
-  assert.ok(BODY.includes("loadComponent('footer-placeholder', 'components/footer.html'"), 'no carga el footer en su placeholder');
-});
+// --- C9 — loader de componentes (retirado en el slice 25) ------------------
 
 test('el head de Stitch queda sin los scripts del slice (decision aprobada: van al final del body)', () => {
   assert.ok(!HEAD.includes('loadComponent'), 'el loader se colo en el <head>');
@@ -120,22 +114,8 @@ test('R6 videos.html no contiene ningun \\r (LF, como Stitch y el resto del repo
   assert.equal(count(VIDEOS, '\r'), 0, 'videos.html quedo con finales de linea CRLF/mezclados');
 });
 
-// --- C11 — un solo CTA en la pagina ---------------------------------------
-
-test('C11 el callback del footer oculta section#contacto con display:none (un solo CTA)', () => {
-  const loader = scriptBlockWith(VIDEOS, 'function loadComponent(');
-  const i = loader.indexOf("loadComponent('footer-placeholder'");
-  assert.ok(i !== -1, 'no hay callback de footer en el loader');
-  assert.ok(
-    loader.includes("document.querySelector('#footer-placeholder section#contacto')"),
-    'el callback del footer no busca #footer-placeholder section#contacto',
-  );
-  assert.match(loader, /\.style\.display\s*=\s*'none'/, "no oculta el CTA con style.display='none' (decision aprobada)");
-  assert.ok(
-    loader.indexOf(".style.display = 'none'") > i,
-    'el ocultamiento no esta dentro del callback del footer',
-  );
-});
+// --- C11 — un solo CTA en la pagina (retirado en el slice 25) --------------
+// Ya no se inyecta section#contacto: no hay CTA compartido que ocultar (S25-1 lo vigila).
 
 // --- C12/C13 — head y anclas de Stitch -----------------------------------
 
@@ -175,12 +155,13 @@ test('C13 las anclas de Stitch siguen presentes (las usan el CTA y el navbar com
 
 // --- Riesgos R3/R4 del analisis (Fase B, paso 1) --------------------------
 
-test('R4 sin colision de ids entre videos.html y los componentes inyectados', () => {
-  const v = idsOf(VIDEOS);
-  const comp = idsOf(FOOTER);
-  const clash = [...v].filter((id) => comp.has(id));
-  assert.deepEqual(clash, [], `ids duplicados entre videos.html y los componentes: ${clash.join(', ')}`);
-  assert.equal([...v].filter((id) => id === 'contacto').length, 0, 'videos.html ya tiene un #contacto propio');
+test('R4 videos.html no tiene ids duplicados ni un #contacto propio', () => {
+  // Slice 25: ya no se inyectan componentes, asi que no hay colision posible con
+  // footer.html. El invariante que queda es el del propio archivo.
+  const ids = [...VIDEOS.matchAll(/id="([^"]+)"/g)].map((m) => m[1]);
+  const dupes = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+  assert.deepEqual(dupes, [], `ids duplicados en videos.html: ${dupes.join(', ')}`);
+  assert.equal(count(VIDEOS, 'id="contacto"'), 0, 'videos.html ya tiene un #contacto propio');
 });
 
 test('R4 todas las clases de diseno que usa el footer existen en el tailwind-config de videos.html', () => {
