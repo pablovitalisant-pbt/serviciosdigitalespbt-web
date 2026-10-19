@@ -2,12 +2,24 @@
 
 Registro de pendientes que NO pertenecen al slice en curso.
 
+## Landing v2
+
+- **favicon.ico 404**: `videos-v2.html` no declara `<link rel="icon">` y el navegador pide
+  `/favicon.ico`, que no existe (el archivo del repo es `favico.ico`, con typo). Agregar el
+  link al icono correcto o renombrar el archivo en el slice de limpieza.
+
 ## Slice de limpieza (post swap)
 
 - **`.gitattributes` LF/CRLF**: git normaliza a CRLF en checkout (`core.autocrlf` de Windows)
   y avisa en cada commit. Definir `* text=auto eol=lf` (o por tipo: `*.html`, `*.css`, `*.js`,
   `*.mjs`, `*.json`, `*.md`) y renormalizar con `git add --renormalize .` en un commit aislado,
   sin cambios funcionales.
+
+## Zonas de riesgo
+
+- **Fix de la tilde vs SplitText (2b2)**: SplitText reemplaza los `.hero__line` del H1 y puede
+  anular `.hero__line + .hero__line{margin-top}`. 2b2 debe mantener H9 verde con el titular ya
+  partido y verificar visualmente que la tilde de "TÚ" no vuelva a chocar.
 
 ## Swap a videos.html (brief slice 9)
 
