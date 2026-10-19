@@ -25,12 +25,25 @@ body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;o
 .preload__bar i{display:block;height:100%;width:100%;background:var(--signal);
   transform-origin:left;animation:render-bar 1.2s linear forwards}
 @keyframes render-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-/* Banco temporal de placeholders: lo reemplaza el hero en el slice 2. */
-#sala{min-height:100dvh;display:grid;place-items:center;padding:6vh 16px}
-.lab{width:min(1100px,100%)}
-.lab__title{margin:0;font-family:var(--display);font-weight:900;line-height:.9;
-  font-size:clamp(2rem,8vw,5rem);text-transform:uppercase}
-.lab__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:32px;align-items:start}
+/* Hero (2b1): video full-bleed, crop marks, timecode, REC y CTA. */
+#sala{min-height:100dvh}
+.hero{position:relative;min-height:100dvh;display:grid;align-content:end;padding:24px 16px 48px;overflow:hidden}
+.hero__media.ph-video{position:absolute;inset:0;aspect-ratio:auto;border:0}
+.crop{position:absolute;z-index:2;width:22px;height:22px;border:2px solid var(--signal)}
+.crop:nth-child(1){top:14px;left:14px;border-right:0;border-bottom:0}
+.crop:nth-child(2){top:14px;right:14px;border-left:0;border-bottom:0}
+.crop:nth-child(3){bottom:14px;left:14px;border-right:0;border-top:0}
+.crop:nth-child(4){bottom:14px;right:14px;border-left:0;border-top:0}
+.hero__hud{position:absolute;top:20px;right:16px;z-index:2}
+.hero__title{position:relative;z-index:2;margin:0;font-family:var(--display);font-weight:900;
+  font-size:clamp(3.5rem,12vw,11rem);line-height:.9;text-transform:uppercase}
+.hero__line{display:block}
+.hero__cta{position:relative;z-index:2;display:flex;align-items:center;gap:14px;margin-top:24px}
+.rec{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.7rem;color:var(--rec)}
+.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rec);animation:rec-blink 1.2s steps(2) infinite}
+.hero__cta a{background:var(--signal);color:var(--ink);padding:14px 22px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em;text-decoration:none}
+@keyframes rec-blink{50%{opacity:0}}
 .ph-video,.ph-img{position:relative;display:grid;place-items:center;overflow:hidden;background:var(--ink-2);border:1px solid #ffffff14;color:var(--mute)}
 .ph-video{aspect-ratio:9/16}
 .ph-video[data-ratio="16/9"]{aspect-ratio:16/9}

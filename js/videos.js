@@ -18,6 +18,19 @@
     requestAnimationFrame(step);
   }
 
+  // 2b1: timecode vivo, independiente de GSAP/Lenis. Sin JS queda en cero.
+  var tc = document.getElementById && document.getElementById('timecode');
+  if (tc) {
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var updateTc = function () {
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var total = Math.round(Math.min(1, Math.max(0, window.scrollY) / max) * 1440);
+      tc.textContent = pad(Math.floor(total / 86400)) + ':' + pad(Math.floor(total / 1440) % 60) + ':' + pad(Math.floor(total / 24) % 60) + ':' + pad(total % 24);
+    };
+    window.addEventListener('scroll', updateTc, { passive: true });
+    updateTc();
+  }
+
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var gsap = window.gsap;
   var ScrollTrigger = window.ScrollTrigger;

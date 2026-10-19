@@ -27,13 +27,21 @@
   <div class="preload__bar"><i></i></div>
 </div>
 <main id="sala">
-  <section class="lab" aria-labelledby="lab-title">
-    <h1 class="lab__title" id="lab-title" data-i18n="reels_lab_title">Sala de edicion</h1>
-    <p class="mono" data-i18n="reels_lab_note">Esqueleto - slice 1</p>
-    <div class="lab__grid">
-      <div class="ph-video" data-ratio="9/16"><span>VIDEO 9:16 - REEMPLAZAR</span></div>
-      <div class="ph-video" data-ratio="16/9"><span>VIDEO 16:9 - REEMPLAZAR</span></div>
-      <div class="ph-img"><span>IMG - REEMPLAZAR</span></div>
+  <section class="hero" aria-label="Hero">
+    <div class="ph-video hero__media">
+      <i class="crop"></i><i class="crop"></i><i class="crop"></i><i class="crop"></i>
+      <span>VIDEO 16:9 - REEMPLAZAR</span>
+    </div>
+    <div class="hero__hud">
+      <span class="mono" id="timecode" aria-hidden="true">00:00:00:00</span>
+    </div>
+    <h1 class="hero__title" data-i18n="reels_hero_title" aria-label="EDITAMOS. TÚ PUBLICAS.">
+      <span class="hero__line">EDITAMOS.</span>
+      <span class="hero__line">TÚ PUBLICAS.</span>
+    </h1>
+    <div class="hero__cta">
+      <span class="rec" aria-hidden="true">REC</span>
+      <a href="https://wa.me/56920948874?text=Hola%2C%20quiero%20mi%20pack%20de%20reels." rel="noopener noreferrer" target="_blank" data-i18n="reels_hero_cta">Quiero mi pack de reels</a>
     </div>
   </section>
 </main>
