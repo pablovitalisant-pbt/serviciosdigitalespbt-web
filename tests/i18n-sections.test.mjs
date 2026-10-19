@@ -56,7 +56,7 @@ const LANGS = ['es', 'en', 'hi', 'zh', 'ur', 'ko'];
 // secciones por VALOR, y es deliberado.
 const PLAN_WORD = { es: 'Plan', en: 'Plan', hi: 'प्लान', zh: '方案', ur: 'پلان', ko: '플랜' };
 
-const V = read('index.html');
+const V = read('videos.html');
 const VBASE = gitShowBaseline(BASE, 'videos.html');
 const RAW = Object.fromEntries(LANGS.map((l) => [l, read(`i18n/${l}.json`)]));
 const J = Object.fromEntries(LANGS.map((l) => [l, JSON.parse(stripBom(RAW[l]))]));

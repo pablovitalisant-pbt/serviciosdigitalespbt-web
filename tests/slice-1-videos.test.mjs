@@ -15,7 +15,7 @@ import {
   gitShowBaseline,
 } from './helpers/page.mjs';
 
-const VIDEOS = read('index.html');
+const VIDEOS = read('videos.html');
 // Base congelada del slice 1: los conteos globales se derivan de ahi, no de numeros
 // fijos (un slice de i18n no puede cambiarlos, pero un slice futuro si podria: que falle
 // entonces, y no en cada slice nuevo por un numero cableado).

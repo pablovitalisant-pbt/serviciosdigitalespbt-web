@@ -230,3 +230,19 @@ Vigilancia: `C12b` de `tests/slice-1-videos.test.mjs` (1 solo `<title>` en todo 
 texto exacto, <= 60 caracteres, contiene "Reels" y la marca, y va pegado al charset). `C12`
 suma los conteos de `<meta>` (3) y `<link>` (5) del head de Stitch para que cualquier otra
 adicion tenga que romper ahi.
+
+## Slice 24 — Restaurar rutas originales (2026-10-19)
+
+Se revierte el mapa del slice 20 sin `git revert` (se conservan los slices 21-23): la landing
+de reels vuelve a `videos.html` y el sitio general vuelve a `index.html`.
+
+Mapa de URLs final:
+
+| URL | Archivo | Contenido |
+|-----|---------|-----------|
+| `/` | `index.html` | Sitio general original (restaurado byte a byte del `servicios.html` del slice 20) |
+| `/videos.html` | `videos.html` | Landing de reels (slices 21-23 intactos; sin navbar, con footer que dispara initI18n) |
+| `/servicios.html` | `servicios.html` | Redireccion `noindex` a `/` (protege enlaces compartidos desde el 13-oct) |
+
+Navbar: logo y anclas -> `index.html`, item Videos -> `videos.html`. Tests: `slice-20-index`
+eliminado y reemplazado por `slice-24-rutas` (S24-1..6). Sin feature flag (sitio estatico).
