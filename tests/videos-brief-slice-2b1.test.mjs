@@ -82,3 +82,20 @@ test('H8 E2E 2b1: la pagina servida trae el hero y los assets responden 200', as
     assert.equal((await fetch(`${srv.base}/${a}`)).status, 200, `${a} no responde 200`);
   }
 });
+
+test('H9 el titular abre aire entre lineas (fix estructural de la tilde)', () => {
+  const m = CSS.match(/\.hero__line \+ \.hero__line\{([^}]*)\}/);
+  assert.ok(m, 'no hay regla de separacion entre lineas');
+  const v = m[1].match(/margin-top:\s*([\d.]+)em/);
+  assert.ok(v, 'la separacion no usa em');
+  assert.ok(Number(v[1]) > 0, 'la separacion es cero');
+});
+
+test('H10 el hero usa svh con respaldo vh y no queda ningun dvh', () => {
+  assert.match(CSS, /\.hero\{[^}]*min-height:100vh;\s*min-height:100svh/, 'falta el patron vh -> svh en .hero');
+  assert.equal(count(CSS, '100dvh'), 0, 'quedan alturas dvh');
+});
+
+test('H11 los medios del placeholder usan object-fit:cover', () => {
+  assert.match(CSS, /\.ph-video[^{]*\bvideo\b[^{]*\{[^}]*object-fit:\s*cover/, 'falta object-fit:cover para video');
+});
