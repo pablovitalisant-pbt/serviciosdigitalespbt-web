@@ -1,835 +1,1164 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Edición de Reels para Negocios | Servicios Digitales PBT</title><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&amp;family=Hanken+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.btn-cta{position:relative;overflow:hidden;background:#15803d;transition:background-color .2s;}.btn-cta:hover{background:#166534;}.btn-cta::after{content:"";position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:cta-shine 3s ease-in-out infinite;pointer-events:none;}.btn-cta.btn-white{background:#ffffff;color:#1a1c1c;box-shadow:inset 0 0 0 2px #1a1c1c;}.btn-cta.btn-white:hover{background:#f3f3f3;}.btn-cta.btn-white::after{background:linear-gradient(120deg,transparent,rgba(0,0,0,.1),transparent);}.btn-cta.btn-orange{background:#c2410c;}.btn-cta.btn-orange:hover{background:#9a3412;}@keyframes cta-shine{0%{left:-75%;}40%,100%{left:125%;}}.dot-blink{animation:dot-blink 2.4s ease-in-out infinite;}@keyframes dot-blink{0%,100%{opacity:.15;box-shadow:none;}50%{opacity:1;box-shadow:0 0 10px 3px rgba(242,101,34,.7);}}.reel-card{position:absolute;inset:0;padding:0;border:6px solid #e2e2e2;border-radius:1rem;overflow:hidden;background:#000;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);transition:transform .4s ease,opacity .4s ease;cursor:pointer;}.reel-card img,.reel-card iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;}.reel-card iframe{pointer-events:none;}.reel-card[data-pos="0"]{z-index:3;cursor:default;}.reel-card[data-pos="1"]{z-index:2;transform:translateX(30%) rotate(6deg) scale(.85);opacity:.7;}.reel-card[data-pos="2"]{z-index:1;transform:translateX(-30%) rotate(-6deg) scale(.85);opacity:.7;}@media (prefers-reduced-motion:reduce){.reel-card{transition:none;}}@media (prefers-reduced-motion:reduce){.btn-cta::after,.dot-blink{animation:none;}}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-primary-fixed-variant":"#7f2b00","inverse-surface":"#2f3131","tertiary-container":"#909191","on-error-container":"#93000a","on-background":"#1a1c1c","surface-container":"#eeeeee","error":"#ba1a1a","secondary-fixed":"#e5e2e1","surface-tint":"#a63b00","secondary":"#5f5e5e","secondary-fixed-dim":"#c8c6c5","primary-fixed":"#ffdbce","outline":"#8d7166","on-tertiary-container":"#282a2b","surface-container-highest":"#e2e2e2","tertiary":"#5d5f5f","on-secondary":"#ffffff","on-error":"#ffffff","inverse-primary":"#ffb599","secondary-container":"#e2dfde","on-surface-variant":"#594138","on-surface":"#1a1c1c","on-primary-container":"#4f1800","primary":"#a63b00","surface-bright":"#f9f9f9","error-container":"#ffdad6","tertiary-fixed":"#e2e2e2","surface":"#f9f9f9","surface-variant":"#e2e2e2","on-tertiary-fixed":"#1a1c1c","on-primary":"#ffffff","on-secondary-container":"#636262","on-primary-fixed":"#370e00","surface-dim":"#dadada","tertiary-fixed-dim":"#c6c6c7","surface-container-high":"#e8e8e8","on-secondary-fixed-variant":"#474746","primary-container":"#f26522","surface-container-lowest":"#ffffff","outline-variant":"#e1bfb3","inverse-on-surface":"#f1f1f1","on-secondary-fixed":"#1c1b1b","background":"#f9f9f9","primary-fixed-dim":"#ffb599","surface-container-low":"#f3f3f3","on-tertiary":"#ffffff","on-tertiary-fixed-variant":"#454747"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-mobile":"16px","section-gap-md":"80px","container-max":"1280px","unit":"8px","gutter":"24px","section-gap-lg":"120px"},"fontFamily":{"body-lg":["Hanken Grotesk"],"headline-md":["Archivo Narrow"],"headline-lg":["Archivo Narrow"],"display-lg":["Archivo Narrow"],"headline-lg-mobile":["Archivo Narrow"],"display-md":["Archivo Narrow"],"label-bold":["Hanken Grotesk"],"body-md":["Hanken Grotesk"]},"fontSize":{"body-lg":["20px",{"lineHeight":"1.6","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"headline-lg":["40px",{"lineHeight":"1.2","fontWeight":"700"}],"display-lg":["72px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg-mobile":["32px",{"lineHeight":"1.2","fontWeight":"700"}],"display-md":["56px",{"lineHeight":"1.1","letterSpacing":"-0.01em","fontWeight":"700"}],"label-bold":["14px",{"lineHeight":"1.0","letterSpacing":"0.05em","fontWeight":"700"}],"body-md":["16px",{"lineHeight":"1.6","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface min-h-screen flex flex-col"><svg width="0" height="0" class="absolute" aria-hidden="true"><symbol id="icon-claqueta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="10" width="18" height="11" rx="1.5"/><path d="M3 14h18M9 10l-2 4M15 10l-2 4"/><polygon points="3,10 19.9,3.8 18.9,1 2,7.2"/><path d="M7.7 8.3l1.3-3.7M13.3 6.2l1.4-3.6"/></symbol></svg><main class="w-full bg-surface flex-grow"><div class="flex flex-col w-full">
-<!-- =========================================================================
-       1. HERO SECTION (Alto Impacto - Dark Canvas #1A1C1C, tipografía audaz)
-       ========================================================================= -->
-<section class="relative w-full bg-inverse-surface text-inverse-on-surface overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32">
-<!-- Subtle architectural brand glow in top-right -->
-<div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary-container/10 blur-3xl pointer-events-none"></div>
-<div class="max-w-container-max mx-auto px-gutter relative z-10">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-x-8 items-start">
-<!-- Badge Superior (fila 1) -->
-<div class="lg:col-span-7 lg:row-start-1">
-<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container/10 border-0 rounded-DEFAULT">
-<span class="w-2 h-2 rounded-full bg-primary-container dot-blink"></span>
-<span class="font-label-bold text-label-bold uppercase text-primary-fixed tracking-wider" data-i18n="videos_hero_badge">
-              Edición de reels para negocios que quieren vender en redes
-            </span>
-</div>
-</div>
-<!-- Titular -> CTA (fila 2): el carrusel se estira exactamente a la altura de este bloque (slice 21) -->
-<div class="lg:col-span-7 lg:row-start-2 flex flex-col items-start gap-6" id="hero-copy">
-<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg uppercase text-inverse-on-surface tracking-tight leading-[1.05]" data-i18n="videos_hero_title">
-            Publica videos profesionales sin quedarte editando
-          </h1>
-<!-- Bajada explicativa -->
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary-fixed max-w-2xl" data-i18n="videos_hero_subtitle">
-            Ya sea que vendas productos, servicios o experiencias, tú entregas tus grabaciones en bruto y recibes reels editados listos para publicar. Primera versión en un máximo de 48 horas tras recibir todo el material e instrucciones.
-          </p>
-<!-- Botones de Acción -->
-<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
-<a class="btn-cta inline-flex items-center justify-center gap-3 text-on-primary font-label-bold text-label-bold uppercase px-8 py-4 rounded-DEFAULT shadow-md text-center" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20comprar%20mi%20Pack%20de%20Reels." rel="noopener noreferrer" target="_blank">
-<svg class="w-5 h-5 shrink-0" aria-hidden="true"><use href="#icon-claqueta"/></svg>
-              <span data-i18n="videos_hero_cta_whatsapp">Quiero mi Pack de Reels</span>
-            </a>
-</div>
-</div>
-<!-- Proof points numéricos discretos (fila 3) -->
-<div class="lg:col-span-7 lg:row-start-3 grid grid-cols-3 gap-6 pt-6 w-full max-w-md">
-<div>
-<div class="font-headline-lg text-headline-md md:text-headline-lg uppercase text-primary-fixed tracking-tight">48H</div>
-<div class="font-body-md text-label-bold text-secondary-fixed uppercase" data-i18n="videos_hero_stat_delivery">Primera entrega</div>
-</div>
-<div>
-<div class="font-headline-lg text-headline-md md:text-headline-lg uppercase text-primary-fixed tracking-tight">9:16</div>
-<div class="font-body-md text-label-bold text-secondary-fixed uppercase" data-i18n="videos_hero_stat_format">Formato vertical</div>
-</div>
-<div>
-<div class="font-headline-lg text-headline-md md:text-headline-lg uppercase text-primary-fixed tracking-tight" data-i18n="videos_hero_stat_ia">IA + EDIT</div>
-<div class="font-body-md text-label-bold text-secondary-fixed uppercase" data-i18n="videos_hero_stat_human">Criterio humano</div>
-</div>
-</div>
-<!-- Columna Derecha: carrusel de reels (slice 19). IDs de YouTube en data-yt -->
-<div class="lg:col-span-5 lg:col-start-8 lg:row-start-2 lg:self-stretch relative flex justify-center items-center py-4 lg:py-0">
-<div class="relative w-56 md:w-64 aspect-[9/16] lg:absolute lg:inset-y-0 lg:w-auto lg:left-1/2 lg:-translate-x-1/2" id="reel-carousel">
-<button type="button" class="reel-card" data-yt="SH_bZEFWMbY" aria-label="Reel 1"><img src="https://i.ytimg.com/vi/SH_bZEFWMbY/hqdefault.jpg" alt="" loading="lazy"></button>
-<button type="button" class="reel-card" data-yt="Rd6wI3qY4zc" aria-label="Reel 2"><img src="https://i.ytimg.com/vi/Rd6wI3qY4zc/hqdefault.jpg" alt="" loading="lazy"></button>
-<button type="button" class="reel-card" data-yt="SH_bZEFWMbY" aria-label="Reel 3"><img src="https://i.ytimg.com/vi/SH_bZEFWMbY/hqdefault.jpg" alt="" loading="lazy"></button>
-<button type="button" id="reel-sound" aria-pressed="false" class="absolute bottom-3 right-3 z-10 w-11 h-11 rounded-full bg-on-background/70 text-on-primary flex items-center justify-center"><span class="material-symbols-outlined">volume_off</span><span class="sr-only" data-i18n="videos_hero_sound">Sonido</span></button>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       2. PROBLEMA Y SOLUCIÓN (Superficie Blanca, Conexión Empática)
-       ========================================================================= -->
-<section class="w-full bg-surface-container-lowest text-on-surface py-section-gap-md">
-<div class="max-w-container-max mx-auto px-gutter">
-<!-- Encabezado de Sección -->
-<div class="max-w-3xl mb-16">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest block mb-2" data-i18n="videos_problem_kicker">Diagnóstico Claro</span>
-<h2 class="font-display-md text-headline-lg-mobile md:text-display-md uppercase tracking-tight text-on-surface leading-tight" data-i18n="videos_problem_title">
-          Tu tiempo vale más atendiendo clientes que peleando con software de edición
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary mt-4" data-i18n="videos_problem_subtitle">
-          Tiendas, mayoristas, gimnasios, centros de estética, inmobiliarias, agencias de turismo, salas de eventos, consultas y oficinas: todos saben que tienen que estar activos en redes. El obstáculo nunca es la cámara: es perder horas valiosas cortando silencios, afinando subtítulos y buscando música sin derechos.
-        </p>
-</div>
-<!-- 3 Bloques de Ritmo Asimétrico -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Bloque 1 -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between hover:-translate-y-1 transition-transform">
-<div>
-<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-6">
-<span class="material-symbols-outlined text-[28px]">schedule</span>
-</div>
-<div class="font-label-bold text-label-bold uppercase text-tertiary tracking-wider mb-2" data-i18n="videos_problem_block1_step">01 / El Problema</div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface mb-3" data-i18n="videos_problem_block1_title">El dilema del tiempo</h3>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_problem_block1_body">
-              Grabas un video en 5 minutos entre una venta y otra, pero terminas perdiendo todo el fin de semana probando filtros, sincronizando subtítulos y exportando videos que no quedan como imaginabas.
-            </p>
-</div>
-<div class="mt-8 pt-4 bg-surface-container/50 px-4 py-2 rounded-DEFAULT text-on-surface-variant font-label-bold text-label-bold uppercase text-xs" data-i18n="videos_problem_block1_result">
-            Resultado: Cuentas inactivas por semanas
-          </div>
-</div>
-<!-- Bloque 2 (Destacado central PBT) -->
-<div class="bg-on-background text-on-primary p-8 rounded-xl flex flex-col justify-between relative shadow-xl hover:-translate-y-1 transition-transform">
-<div class="absolute top-4 right-4 bg-primary-container text-on-primary font-label-bold text-[10px] uppercase px-2 py-0.5 rounded-DEFAULT" data-i18n="videos_problem_formula_badge">
-            Fórmula PBT
-          </div>
-<div>
-<div class="w-12 h-12 rounded-lg bg-inverse-surface flex items-center justify-center text-primary-fixed mb-6">
-<span class="material-symbols-outlined text-[28px]">smart_toy</span>
-</div>
-<div class="font-label-bold text-label-bold uppercase text-primary-fixed tracking-wider mb-2" data-i18n="videos_problem_block2_step">02 / La Metodología</div>
-<h3 class="font-headline-md text-headline-md uppercase text-surface-bright mb-3" data-i18n="videos_problem_block2_title">Edición híbrida IA + Humano</h3>
-<p class="font-body-md text-body-md text-secondary-fixed" data-i18n="videos_problem_block2_body">
-              Aprovechamos la aceleración computacional de agentes de IA para transcripción y b-roll selectivo, combinada con la revisión meticulosa y criterio estético de un editor profesional.
-            </p>
-</div>
-<div class="mt-8 pt-4 bg-inverse-surface px-4 py-2 rounded-DEFAULT text-primary-fixed font-label-bold text-label-bold uppercase text-xs" data-i18n="videos_problem_block2_result">
-            Calidad editorial + entrega en 48 horas
-          </div>
-</div>
-<!-- Bloque 3 -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between hover:-translate-y-1 transition-transform">
-<div>
-<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-6">
-<span class="material-symbols-outlined text-[28px]">payments</span>
-</div>
-<div class="font-label-bold text-label-bold uppercase text-tertiary tracking-wider mb-2" data-i18n="videos_problem_block3_step">03 / El Resultado</div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface mb-3" data-i18n="videos_problem_block3_title">Enfócate en tu negocio</h3>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_problem_block3_body">
-              Tú te dedicas a vender, atender y hacer crecer tu negocio sin desviarte de lo que genera ingresos reales. Nosotros nos encargamos de que tu material crudo se convierta en reels impecables que atraigan nuevos clientes.
-            </p>
-</div>
-<div class="mt-8 pt-4 bg-surface-container/50 px-4 py-2 rounded-DEFAULT text-on-surface-variant font-label-bold text-label-bold uppercase text-xs" data-i18n="videos_problem_block3_result">
-            Presencia constante y profesional
-          </div>
-</div>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       3. QUÉ RECIBES (Fondo Gris Claro #F5F5F5, Checklist Limpio y Aviso)
-       ========================================================================= -->
-<section class="w-full bg-surface-container-low text-on-surface py-section-gap-md">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-<!-- Text intro -->
-<div class="lg:col-span-4 flex flex-col gap-4">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest" data-i18n="videos_includes_kicker">Entregables Claros</span>
-<h2 class="font-display-md text-headline-lg-mobile md:text-headline-lg uppercase tracking-tight text-on-surface" data-i18n="videos_includes_title">
-            ¿Qué incluye exactamente el servicio?
-          </h2>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_includes_subtitle">
-            Cero ambigüedades. Cada video se procesa bajo estándares de ritmo rápido, audio depurado y gráficos optimizados para retención de audiencia en plataformas verticales.
-          </p>
-<!-- Tarjeta de alcance destacada -->
-<div class="mt-6 p-5 bg-surface-container-lowest rounded-xl shadow-sm">
-<div class="flex items-center gap-2 text-primary mb-2">
-<span class="material-symbols-outlined text-[20px]">info</span>
-<span class="font-label-bold text-label-bold uppercase" data-i18n="videos_includes_note_title">Nota de alcance transparente</span>
-</div>
-<p class="font-body-md text-[13px] text-secondary leading-relaxed" data-i18n="videos_includes_note_body">
-              Grabación presencial en tu local, publicación de videos en tus redes, gestión de comentarios/mensajes y videos generados 100% con IA no están incluidos en estos planes (se pueden comprar por separado).
-            </p>
-</div>
-</div>
-<!-- 5 Tarjetas en Grid -->
-<div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div class="bg-surface-container-lowest p-6 rounded-xl flex items-start gap-4 shadow-sm">
-<div class="w-10 h-10 rounded-DEFAULT bg-primary-fixed flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary text-[20px]">stay_current_portrait</span>
-</div>
-<div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-1" data-i18n="videos_includes_card1_title">Formato 9:16 vertical</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_includes_card1_body">
-                Videos de hasta 60 segundos listos para Instagram Reels, TikTok y YouTube Shorts con encuadre dinámico.
-              </p>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-6 rounded-xl flex items-start gap-4 shadow-sm">
-<div class="w-10 h-10 rounded-DEFAULT bg-primary-fixed flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary text-[20px]">movie_filter</span>
-</div>
-<div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-1" data-i18n="videos_includes_card2_title">Edición desde tu bruto</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_includes_card2_body">
-                Cortes de silencios y tiempos muertos, eliminación de titubeos, estabilización y el mejor ritmo para mostrar lo que ofreces.
-              </p>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-6 rounded-xl flex items-start gap-4 shadow-sm">
-<div class="w-10 h-10 rounded-DEFAULT bg-primary-fixed flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary text-[20px]">subtitles</span>
-</div>
-<div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-1" data-i18n="videos_includes_card3_title">Subtítulos &amp; Gráficos</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_includes_card3_body">
-                Subtítulos dinámicos de alta legibilidad, tipografía y elementos visuales acordes al plan elegido.
-              </p>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-6 rounded-xl flex items-start gap-4 shadow-sm">
-<div class="w-10 h-10 rounded-DEFAULT bg-primary-fixed flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary text-[20px]">send_and_archive</span>
-</div>
-<div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-1" data-i18n="videos_includes_card4_title">Archivo listo para subir</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_includes_card4_body">
-                Entrega en archivo MP4 Full HD optimizado para que no pierda resolución al cargarlo desde tu celular.
-              </p>
-</div>
-</div>
-<div class="sm:col-span-2 bg-surface-container-lowest p-6 rounded-xl flex items-start gap-4 shadow-sm">
-<div class="w-10 h-10 rounded-DEFAULT bg-primary-fixed flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary text-[20px]">published_with_changes</span>
-</div>
-<div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-1" data-i18n="videos_includes_card5_title">Rondas de revisión incluidas</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_includes_card5_body">
-                Entre 1 y 2 rondas de ajustes menores según el plan contratado para asegurar que cada video quede a tu entera conformidad antes del lanzamiento.
-              </p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       4. TABLA DE PLANES MENSUALES (Fondo Blanco, id='planes')
-       ========================================================================= -->
-<section class="w-full bg-surface-container-lowest text-on-surface py-section-gap-lg" id="planes">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="text-center max-w-2xl mx-auto mb-16">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest block mb-2" data-i18n="videos_plans_kicker">Suscripciones Mensuales</span>
-<h2 class="font-display-lg text-headline-lg-mobile md:text-display-md uppercase tracking-tight text-on-surface" data-i18n="videos_plans_title">
-          Planes Mensuales
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary mt-3" data-i18n="videos_plans_subtitle">
-          Precios transparentes. Sin contratos forzosos ni letras chicas.
-        </p>
-</div>
-<!-- Grid de 3 Planes -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-<!-- PLAN 1: ECONÓMICA -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between hover:shadow-lg transition-all">
-<div>
-<div class="font-label-bold text-label-bold uppercase text-tertiary tracking-wider mb-2" data-i18n="videos_plans_p1_kicker">Para comenzar</div>
-<h3 class="font-headline-lg text-headline-lg uppercase text-on-surface" data-i18n="videos_plans_p1_title">Plan Económica</h3>
-<div class="my-6">
-<div class="flex items-baseline gap-1">
-<span class="font-display-md text-headline-lg-mobile md:text-display-md text-on-surface tracking-tight">$80.000</span>
-<span class="font-headline-md text-body-md uppercase text-secondary" data-i18n="videos_plans_p1_unit">CLP / mes</span>
-</div>
-<span class="font-body-md text-xs text-secondary-fixed-variant" data-i18n="videos_plans_p1_reel_price">$20.000 CLP por reel</span>
-</div>
-<ul class="flex flex-col gap-3 py-6">
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class=""><strong data-i18n="videos_plans_p1_b1_n">4 reels al mes</strong> <span data-i18n="videos_plans_p1_b1_s">(hasta 60s cada uno)</span></span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p1_b2">Edición usando estilo base ya definido</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p1_b3">Gráficos de plantilla visual existente</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-tertiary">
-<span class="material-symbols-outlined text-tertiary text-[20px] shrink-0">remove</span>
-<span class="" data-i18n="videos_plans_p1_b4">Sin b-roll generado por IA incluido</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p1_b5">1 ronda de cambios menores por reel</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">bolt</span>
-<span class="" data-i18n="videos_plans_p1_b6">Entrega 1ª versión en máx. 48h hábiles</span>
-</li>
-</ul>
-</div>
-<div class="pt-6">
-<a class="btn-cta btn-white w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20contratar%20el%20Plan%20Econ%C3%B3mica%20(4%20reels%20al%20mes)." rel="noopener noreferrer" target="_blank" data-i18n="videos_plans_p1_cta">
-              Elegir Económica
-            </a>
-</div>
-</div>
-<!-- PLAN 2: EQUILIBRADA (DESTACADO) -->
-<div class="bg-surface-container-lowest p-8 rounded-xl flex flex-col justify-between shadow-2xl relative lg:-translate-y-4 hover:-translate-y-5 transition-transform bg-gradient-to-b from-primary-fixed/20 via-surface-container-lowest to-surface-container-lowest">
-<!-- Badge Más Popular -->
-<div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary font-label-bold text-label-bold uppercase tracking-widest px-4 py-1.5 rounded-DEFAULT shadow-md" data-i18n="videos_plans_p2_badge">
-            Más Popular • Recomendado
-          </div>
-<div>
-<div class="font-label-bold text-label-bold uppercase text-primary tracking-wider mb-2 pt-2" data-i18n="videos_plans_p2_kicker">El equilibrio perfecto</div>
-<h3 class="font-headline-lg text-headline-lg uppercase text-on-surface" data-i18n="videos_plans_p2_title">Plan Equilibrada</h3>
-<div class="my-6">
-<div class="flex items-baseline gap-1">
-<span class="font-display-md text-headline-lg-mobile md:text-display-md text-primary-container tracking-tight">$150.000</span>
-<span class="font-headline-md text-body-md uppercase text-secondary" data-i18n="videos_plans_p2_unit">CLP / mes</span>
-</div>
-<span class="font-body-md text-xs text-secondary-fixed-variant" data-i18n="videos_plans_p2_reel_price">$18.750 CLP por reel • Mayor presencia semanal</span>
-</div>
-<ul class="flex flex-col gap-3 py-6">
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class=""><strong data-i18n="videos_plans_p2_b1_n">8 reels al mes</strong> <span data-i18n="videos_plans_p2_b1_s">(hasta 60s cada uno)</span></span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p2_b2">Estilo adaptado a la identidad de tu negocio</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p2_b3">Ajuste de colores, tipografía, logo y marca</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">auto_awesome</span>
-<span class=""><span data-i18n="videos_plans_p2_b4_pre">Hasta</span> <strong data-i18n="videos_plans_p2_b4_strong">2 clips breves de b-roll IA</strong> <span data-i18n="videos_plans_p2_b4_post">por reel</span></span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p2_b5">1 ronda de cambios menores por reel</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">bolt</span>
-<span class="" data-i18n="videos_plans_p2_b6">Entrega 1ª versión en máx. 48h hábiles</span>
-</li>
-</ul>
-</div>
-<div class="pt-6">
-<a class="btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT shadow-md" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20contratar%20el%20Plan%20Equilibrada%20(8%20reels%20al%20mes)." rel="noopener noreferrer" target="_blank" data-i18n="videos_plans_p2_cta">
-              Elegir Equilibrada
-            </a>
-</div>
-</div>
-<!-- PLAN 3: PREMIUM -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between hover:shadow-lg transition-all">
-<div>
-<div class="font-label-bold text-label-bold uppercase text-tertiary tracking-wider mb-2" data-i18n="videos_plans_p3_kicker">Máximo impacto</div>
-<h3 class="font-headline-lg text-headline-lg uppercase text-on-surface" data-i18n="videos_plans_p3_title">Plan Premium</h3>
-<div class="my-6">
-<div class="flex items-baseline gap-1">
-<span class="font-display-md text-headline-lg-mobile md:text-display-md text-on-surface tracking-tight">$210.000</span>
-<span class="font-headline-md text-body-md uppercase text-secondary" data-i18n="videos_plans_p3_unit">CLP / mes</span>
-</div>
-<span class="font-body-md text-xs text-secondary-fixed-variant" data-i18n="videos_plans_p3_reel_price">$17.500 CLP por reel • Máxima frecuencia</span>
-</div>
-<ul class="flex flex-col gap-3 py-6">
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class=""><strong data-i18n="videos_plans_p3_b1_n">12 reels al mes</strong> <span data-i18n="videos_plans_p3_b1_s">(hasta 60s cada uno)</span></span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p3_b2">Edición personalizada según tus referencias</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class="" data-i18n="videos_plans_p3_b3">Gráficos a medida en el estilo acordado</span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">auto_awesome</span>
-<span class=""><span data-i18n="videos_plans_p3_b4_pre">Hasta</span> <strong data-i18n="videos_plans_p3_b4_strong">4 clips breves de b-roll IA</strong> <span data-i18n="videos_plans_p3_b4_post">por reel</span></span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">check_circle</span>
-<span class=""><strong data-i18n="videos_plans_p3_b5_strong">Hasta 2 rondas</strong> <span data-i18n="videos_plans_p3_b5_post">de cambios menores por reel</span></span>
-</li>
-<li class="flex items-start gap-3 text-body-md font-body-md text-on-surface">
-<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">bolt</span>
-<span class="" data-i18n="videos_plans_p3_b6">Entrega 1ª versión en máx. 48h hábiles</span>
-</li>
-</ul>
-</div>
-<div class="pt-6">
-<a class="btn-cta btn-orange w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-4 rounded-DEFAULT" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20contratar%20el%20Plan%20Premium%20(12%20reels%20al%20mes)." rel="noopener noreferrer" target="_blank" data-i18n="videos_plans_p3_cta">
-              Elegir Premium
-            </a>
-</div>
-</div>
-</div>
-<!-- Nota comercial al pie de los planes -->
-<div class="mt-12 p-6 bg-surface-container rounded-xl">
-<p class="font-body-md text-body-md text-secondary leading-relaxed">
-<strong class="text-on-surface" data-i18n="videos_plans_note_title">Términos de servicio de edición mensual:</strong> <span data-i18n="videos_plans_note_body">El b-roll se incluye dentro de los límites indicados y solo cuando sea técnicamente y visualmente adecuado para el contenido. La generación completa de videos con IA se compra aparte. Los videos no usados dentro del mes calendario no se acumulan para el mes siguiente. El precio mensual corresponde al servicio de edición; grabación, traslados, publicación y gestión de comunidad se compran por separado.</span>
-        </p>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       5. PRECIO POR TRABAJOS INDIVIDUALES (Fondo Gris Claro #F5F5F5)
-       ========================================================================= -->
-<section class="w-full bg-surface-container-low text-on-surface py-section-gap-md">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="max-w-3xl mb-12">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest block mb-2" data-i18n="videos_single_kicker">Flexibilidad Total</span>
-<h2 class="font-display-md text-headline-lg-mobile md:text-display-md uppercase tracking-tight text-on-surface" data-i18n="videos_single_title">
-          ¿Prefieres probar antes de suscribirte?
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary mt-3" data-i18n="videos_single_subtitle">
-          Opciones de edición por video individual sin compromiso mensual. Ideal para validar nuestro flujo de trabajo o proyectos específicos.
-        </p>
-</div>
-<!-- Grilla de trabajos individuales -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<!-- Bloque 1 Reel -->
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
-<div class="flex items-center gap-3 mb-6">
-<span class="material-symbols-outlined text-primary text-[28px]">stay_current_portrait</span>
-<div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface" data-i18n="videos_single_reel_title">1 Reel Individual</h3>
-<p class="font-body-md text-label-bold text-secondary" data-i18n="videos_single_reel_format">Formato vertical de hasta 60 segundos</p>
-</div>
-</div>
-<div class="space-y-4">
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-DEFAULT">
-<span class="font-headline-md text-body-md uppercase text-on-surface" data-i18n="videos_single_reel_p1">Nivel Económica</span>
-<span class="font-headline-md text-headline-md text-primary tracking-tight">$22.000 CLP</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-DEFAULT">
-<span class="font-headline-md text-body-md uppercase text-on-surface" data-i18n="videos_single_reel_p2">Nivel Equilibrada</span>
-<span class="font-headline-md text-headline-md text-primary tracking-tight">$30.000 CLP</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-DEFAULT">
-<span class="font-headline-md text-body-md uppercase text-on-surface" data-i18n="videos_single_reel_p3">Nivel Premium</span>
-<span class="font-headline-md text-headline-md text-primary tracking-tight">$40.000 CLP</span>
-</div>
-</div>
-<div class="mt-6 pt-4">
-<a class="btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20comprar%20un%20reel%20suelto." rel="noopener noreferrer" target="_blank" data-i18n="videos_single_reel_cta">
-              Comprar Reel Suelto
-            </a>
-</div>
-</div>
-<!-- Bloque Video Largo -->
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
-<div class="flex items-center gap-3 mb-6">
-<span class="material-symbols-outlined text-primary text-[28px]">slideshow</span>
-<div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface" data-i18n="videos_single_long_title">1 Video Largo Individual</h3>
-<p class="font-body-md text-label-bold text-secondary" data-i18n="videos_single_long_format">Duración de 5 a 6 minutos (YouTube / Web)</p>
-</div>
-</div>
-<div class="space-y-4">
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-DEFAULT">
-<span class="font-headline-md text-body-md uppercase text-on-surface" data-i18n="videos_single_long_p1">Nivel Económica</span>
-<span class="font-headline-md text-headline-md text-primary tracking-tight">$45.000 CLP</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-DEFAULT">
-<span class="font-headline-md text-body-md uppercase text-on-surface" data-i18n="videos_single_long_p2">Nivel Equilibrada</span>
-<span class="font-headline-md text-headline-md text-primary tracking-tight">$65.000 CLP</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-DEFAULT">
-<span class="font-headline-md text-body-md uppercase text-on-surface" data-i18n="videos_single_long_p3">Nivel Premium</span>
-<span class="font-headline-md text-headline-md text-primary tracking-tight">$90.000 CLP</span>
-</div>
-</div>
-<div class="mt-6 pt-4">
-<a class="btn-cta w-full inline-flex items-center justify-center gap-2 text-on-primary font-label-bold text-label-bold uppercase py-3 rounded-DEFAULT" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20comprar%20un%20video%20largo." rel="noopener noreferrer" target="_blank" data-i18n="videos_single_long_cta">
-              Comprar Video Largo
-            </a>
-</div>
-</div>
-</div>
-<!-- Aclaración explícita -->
-<div class="mt-8 p-4 bg-surface-container/60 rounded-DEFAULT text-center">
-<p class="font-label-bold text-label-bold text-secondary-fixed-variant uppercase" data-i18n="videos_single_note">
-          * Los videos largos se compran exclusivamente como trabajos individuales y no forman parte de los planes mensuales.
-        </p>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       6. CÓMO FUNCIONA (Fondo Blanco, id='como-funciona', 3 Pasos)
-       ========================================================================= -->
-<section class="w-full bg-surface-container-lowest text-on-surface py-section-gap-lg" id="como-funciona">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="text-center max-w-2xl mx-auto mb-16">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest block mb-2" data-i18n="videos_how_kicker">Proceso Ágil</span>
-<h2 class="font-display-lg text-headline-lg-mobile md:text-display-md uppercase tracking-tight text-on-surface" data-i18n="videos_how_title">
-          Cómo Funciona
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary mt-2" data-i18n="videos_how_subtitle">
-          Un flujo de trabajo diseñado para que no pierdas ni un minuto de tu jornada laboral.
-        </p>
-</div>
-<!-- 3 Pasos Horizontales -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-<!-- Step 1 -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between relative group hover:bg-surface-container transition-colors">
-<div class="font-display-lg text-display-md text-primary-container font-headline-lg tracking-tight mb-4">
-            01
-          </div>
-<div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface mb-3" data-i18n="videos_how_step1_title">
-              Envías tu material
-            </h3>
-<p class="font-body-md text-body-md text-secondary leading-relaxed" data-i18n="videos_how_step1_body">
-              Eliges tu plan y nos envías tus grabaciones en bruto por Drive, WhatsApp o enlace, junto a tus instrucciones breves y referencias deseadas.
-            </p>
-</div>
-<div class="mt-6 flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase">
-<span class="material-symbols-outlined text-[18px]">cloud_upload</span><span data-i18n="videos_how_step1_note">
-            Sin complicaciones técnicas
-          </span></div>
-</div>
-<!-- Step 2 -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between relative group hover:bg-surface-container transition-colors">
-<div class="font-display-lg text-display-md text-primary-container font-headline-lg tracking-tight mb-4">
-            02
-          </div>
-<div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface mb-3" data-i18n="videos_how_step2_title">
-              Editamos con precisión
-            </h3>
-<p class="font-body-md text-body-md text-secondary leading-relaxed" data-i18n="videos_how_step2_body">
-              Editamos tu contenido aplicando las especificaciones de tu plan: corte de pausas, subtítulos dinámicos legibles, audio optimizado y b-roll asistido.
-            </p>
-</div>
-<div class="mt-6 flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase">
-<span class="material-symbols-outlined text-[18px]">tune</span><span data-i18n="videos_how_step2_note">
-            Filtro de calidad humano
-          </span></div>
-</div>
-<!-- Step 3 -->
-<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between relative group hover:bg-surface-container transition-colors">
-<div class="font-display-lg text-display-md text-primary-container font-headline-lg tracking-tight mb-4">
-            03
-          </div>
-<div>
-<h3 class="font-headline-md text-headline-md uppercase text-on-surface mb-3" data-i18n="videos_how_step3_title">
-              Recibes en 48 horas
-            </h3>
-<p class="font-body-md text-body-md text-secondary leading-relaxed" data-i18n="videos_how_step3_body">
-              Recibes la primera versión en un máximo de 48 horas hábiles desde la recepción completa del material y las instrucciones para tu revisión.
-            </p>
-</div>
-<div class="mt-6 flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase">
-<span class="material-symbols-outlined text-[18px]">timer</span><span data-i18n="videos_how_step3_note">
-            Listo para publicar
-          </span></div>
-</div>
-</div>
-<!-- Nota de revisiones -->
-<div class="mt-10 text-center max-w-2xl mx-auto">
-<p class="font-body-md text-body-md text-secondary">
-<span class="font-label-bold text-on-surface uppercase" data-i18n="videos_how_note_title">Aclaración:</span><span data-i18n="videos_how_note_body"> Los cambios solicitados se aplican posterior a esta primera entrega, conforme a las rondas de revisión incluidas en tu plan.
-        </span></p>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       7. TRABAJO ADICIONAL COTIZADO POR SEPARADO
-       ========================================================================= -->
-<section class="w-full bg-surface-container text-on-surface py-section-gap-md">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="max-w-3xl mb-12">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest block mb-2" data-i18n="videos_extras_kicker">Servicios Complementarios</span>
-<h2 class="font-display-md text-headline-lg-mobile md:text-headline-lg uppercase tracking-tight text-on-surface" data-i18n="videos_extras_title">
-          Trabajos adicionales que se compran por separado
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary mt-3" data-i18n="videos_extras_subtitle">
-          Si requieres apoyo más allá de la edición de video, disponemos de soluciones a la medida con presupuesto individualizado según tus necesidades.
-        </p>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Item 1 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl flex flex-col justify-between shadow-sm">
-<div>
-<div class="inline-block bg-surface-container-high text-on-surface font-label-bold text-[11px] uppercase px-2.5 py-1 rounded-DEFAULT mb-4" data-i18n="videos_extras_card1_badge">
-              Compra a medida
-            </div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2" data-i18n="videos_extras_card1_title">Grabación en tu local</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_extras_card1_body">
-              Contratación de personal para grabación presencial en Iquique y localidades de la Región de Tarapacá.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center gap-1 text-primary font-label-bold text-xs uppercase">
-<span class="material-symbols-outlined text-[16px]">videocam</span><span data-i18n="videos_extras_card1_footer"> Presencial Tarapacá
-          </span></div>
-</div>
-<!-- Item 2 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl flex flex-col justify-between shadow-sm">
-<div>
-<div class="inline-block bg-surface-container-high text-on-surface font-label-bold text-[11px] uppercase px-2.5 py-1 rounded-DEFAULT mb-4" data-i18n="videos_extras_card2_badge">
-              Compra a medida
-            </div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2" data-i18n="videos_extras_card2_title">Publicación y Programación</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_extras_card2_body">
-              Subida calendarizada de reels con copy, hashtags optimizados y portada en tus canales sociales.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center gap-1 text-primary font-label-bold text-xs uppercase">
-<span class="material-symbols-outlined text-[16px]">calendar_month</span><span data-i18n="videos_extras_card2_footer"> Gestión de subida
-          </span></div>
-</div>
-<!-- Item 3 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl flex flex-col justify-between shadow-sm">
-<div>
-<div class="inline-block bg-surface-container-high text-on-surface font-label-bold text-[11px] uppercase px-2.5 py-1 rounded-DEFAULT mb-4" data-i18n="videos_extras_card3_badge">
-              Compra a medida
-            </div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2" data-i18n="videos_extras_card3_title">Manejo de Comunidad</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_extras_card3_body">
-              Respuesta y filtro de comentarios y mensajes directos derivados de las publicaciones.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center gap-1 text-primary font-label-bold text-xs uppercase">
-<span class="material-symbols-outlined text-[16px]">forum</span><span data-i18n="videos_extras_card3_footer"> Moderación activa
-          </span></div>
-</div>
-<!-- Item 4 -->
-<div class="bg-surface-container-lowest p-6 rounded-xl flex flex-col justify-between shadow-sm">
-<div>
-<div class="inline-block bg-surface-container-high text-on-surface font-label-bold text-[11px] uppercase px-2.5 py-1 rounded-DEFAULT mb-4" data-i18n="videos_extras_card4_badge">
-              Compra a medida
-            </div>
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2" data-i18n="videos_extras_card4_title">Videos 100% con IA</h4>
-<p class="font-body-md text-body-md text-secondary" data-i18n="videos_extras_card4_body">
-              Creación integral de avatar, voz sintetizada y escenas íntegramente generadas por Inteligencia Artificial.
-            </p>
-</div>
-<div class="mt-6 pt-4 flex items-center gap-1 text-primary font-label-bold text-xs uppercase">
-<span class="material-symbols-outlined text-[16px]">memory</span><span data-i18n="videos_extras_card4_footer"> Producción sintética
-          </span></div>
-</div>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       8. PREGUNTAS FRECUENTES (Fondo Gris Claro #F5F5F5, id='preguntas-frecuentes')
-       ========================================================================= -->
-<section class="w-full bg-surface-container-low text-on-surface py-section-gap-lg" id="preguntas-frecuentes">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="max-w-3xl mb-16">
-<span class="font-label-bold text-label-bold uppercase text-primary tracking-widest block mb-2" data-i18n="videos_faq_kicker">Claridad Absoluta</span>
-<h2 class="font-display-lg text-headline-lg-mobile md:text-display-md uppercase tracking-tight text-on-surface" data-i18n="videos_faq_title">
-          Preguntas Frecuentes
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary mt-3" data-i18n="videos_faq_subtitle">
-          Respuestas directas a las dudas habituales antes de iniciar tu servicio de edición.
-        </p>
-</div>
-<!-- FAQ Container -->
-<div class="max-w-4xl flex flex-col gap-4">
-<!-- Pregunta 1 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">01</span>
-            <span data-i18n="videos_faq_q1_title">¿Tengo que grabar los videos?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7">
-<strong data-i18n="videos_faq_q1_strong">Sí.</strong> <span data-i18n="videos_faq_q1_body">El cliente entrega el material en bruto grabado desde su celular o cámara. El servicio de grabación presencial en Iquique se compra de manera independiente si no cuentas con tiempo para hacerlo.</span>
-          </p>
-</div>
-<!-- Pregunta 2 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">02</span>
-            <span data-i18n="videos_faq_q2_title">¿Qué se considera una ronda de revisión?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7" data-i18n="videos_faq_q2_body">
-            Se consideran cambios menores sobre la primera versión entregada (ajuste de ortografía en subtítulos, volumen de música o corte de un segundo específico). Cambios de concepto completo, re-estructuración de guion o el envío de nuevo material grabado se compran aparte.
-          </p>
-</div>
-<!-- Pregunta 3 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">03</span>
-            <span data-i18n="videos_faq_q3_title">¿Publican los videos por mí?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7" data-i18n="videos_faq_q3_body">
-            No está incluido en el precio base de edición. Te entregamos el archivo MP4 optimizado listo para subir. Si deseas que programemos y publiquemos por ti con portadas y copys, se puede comprar como servicio adicional.
-          </p>
-</div>
-<!-- Pregunta 4 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">04</span>
-            <span data-i18n="videos_faq_q4_title">¿Responden comentarios o mensajes de mis redes?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7" data-i18n="videos_faq_q4_body">
-            No está incluido en el plan de edición. El community management y atención de consultas puede comprarse por separado con horarios y alcance predefinidos.
-          </p>
-</div>
-<!-- Pregunta 5 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">05</span>
-            <span data-i18n="videos_faq_q5_title">¿Incluyen videos generados completamente con IA?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7" data-i18n="videos_faq_q5_body">
-            No. Nuestros planes utilizan IA como asistencia técnica de montaje y pequeños clips de b-roll ilustrativo. La creación de videos 100% generados con IA (voces clonadas y avatares) se presupuesta tras evaluar tu requerimiento específico.
-          </p>
-</div>
-<!-- Pregunta 6 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">06</span>
-            <span data-i18n="videos_faq_q6_title">¿Cuándo comienza a correr el plazo de 48 horas?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7">
-            <span data-i18n="videos_faq_q6_pre">Comienza a contar desde el momento exacto en que recibimos todos los archivos brutos y las instrucciones completas acordadas. La entrega en 48 horas hábiles corresponde a la</span> <strong data-i18n="videos_faq_q6_strong">primera versión editable</strong> <span data-i18n="videos_faq_q6_post">para tu revisión.</span>
-          </p>
-</div>
-<!-- Pregunta 7 -->
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<h4 class="font-headline-md text-headline-md uppercase text-on-surface mb-2 flex items-center gap-3">
-<span class="text-primary-container font-headline-lg text-body-lg">07</span>
-            <span data-i18n="videos_faq_q7_title">¿Incluye grabación, traslados o inversión publicitaria?</span>
-          </h4>
-<p class="font-body-md text-body-md text-secondary pl-7" data-i18n="videos_faq_q7_body">
-            No. Estos ítems son ajenos a la edición de video digital y se gestionan como presupuestos independientes según cada cliente.
-          </p>
-</div>
-</div>
-</div>
-</section>
-<!-- =========================================================================
-       9. CIERRE FINAL DE ALTO IMPACTO (Fondo Negro #1A1C1C, Directo y Asertivo)
-       ========================================================================= -->
-<section class="relative w-full bg-inverse-surface text-inverse-on-surface py-section-gap-lg overflow-hidden">
-<div class="max-w-container-max mx-auto px-gutter relative z-10 text-center">
-<div class="max-w-3xl mx-auto flex flex-col items-center gap-6">
-<span class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container/10 rounded-DEFAULT font-label-bold text-label-bold uppercase text-primary-fixed tracking-widest" data-i18n="videos_cta_kicker">
-          Empecemos esta semana
-        </span>
-<h2 class="font-display-lg text-headline-lg-mobile md:text-display-lg uppercase tracking-tight text-inverse-on-surface leading-[1.05]" data-i18n="videos_cta_title">
-          Empieza hoy a publicar reels profesionales
-        </h2>
-<p class="font-body-lg text-body-md md:text-body-lg text-secondary-fixed max-w-xl" data-i18n="videos_cta_subtitle">
-          Tú envías tu material y recibes la primera versión en un máximo de 48 horas desde que la entrega está completa. Deja la edición en nuestras manos.
-        </p>
-<!-- CTA Principal de Cierre -->
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto pt-4">
-<a class="btn-cta w-full sm:w-auto inline-flex items-center justify-center gap-3 text-on-primary font-label-bold text-label-bold uppercase px-10 py-5 rounded-DEFAULT shadow-xl text-center" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20comprar%20mi%20Pack%20de%20Reels." rel="noopener noreferrer" target="_blank">
-<svg class="w-6 h-6 shrink-0" aria-hidden="true"><use href="#icon-claqueta"/></svg><span data-i18n="videos_cta_whatsapp">
-            Quiero mi Pack de Reels
-          </span></a>
-</div>
-<!-- Garantía de respuesta -->
-<p class="font-body-md text-xs text-secondary-fixed uppercase tracking-wider pt-2" data-i18n="videos_cta_footer">
-          Servicio 100% online: trabajamos con negocios de todo el mundo
-        </p>
-</div>
-</div>
-</section>
-</div></main>
-<!-- Footer -->
-<footer class="bg-[#111111] text-surface-variant py-16 px-margin-mobile md:px-gutter border-t border-white/5">
-<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-<img src="logo-pbt-white.png" alt="Servicios Digitales PBT" style="height: 48px; width: auto;">
-<div class="text-center md:text-right">
-<p class="font-label-bold text-label-bold mb-2">© <span id="year"></span> Servicios Digitales PBT. <span data-i18n="footer_rights">Todos los derechos reservados.</span></p>
-</div>
-</div>
-</footer>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edición de Reels para Negocios | Servicios Digitales PBT</title>
+<meta name="description" content="Tú grabas con tu celular, nosotros editamos. Reels listos para subir en 48 horas. Planes desde USD 95 al mes.">
+<!-- QUITAR noindex AL PUBLICAR COMO /videos.html -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0A0D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.css">
 
+<!-- Bootstrap: clases de estado antes del primer paint + failsafe de 2.5 s -->
 <script>
-// Carrusel de reels (slice 19): solo el del frente carga el reproductor (en bucle, sin
-// controles, silenciado). Tocar uno de atras lo trae al frente. El sonido va por la API
-// postMessage del iframe de YouTube (enablejsapi=1), sin librerias.
-(function() {
-  var stack = document.getElementById('reel-carousel');
-  if (!stack) return;
-  var cards = [].slice.call(stack.querySelectorAll('.reel-card'));
-  var sound = document.getElementById('reel-sound');
-  var frame = null;
-
-  function cmd(func) {
-    if (frame) frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: [] }), '*');
-  }
-
-  function setMuted(muted) {
-    sound.setAttribute('aria-pressed', String(!muted));
-    sound.querySelector('.material-symbols-outlined').textContent = muted ? 'volume_off' : 'volume_up';
-  }
-
-  function show(i) {
-    cards.slice(i).concat(cards.slice(0, i)).forEach(function(c, pos) { c.setAttribute('data-pos', pos); });
-    if (frame) frame.remove();
-    var id = cards[i].getAttribute('data-yt');
-    frame = document.createElement('iframe');
-    frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&playsinline=1&rel=0&enablejsapi=1';
-    frame.allow = 'autoplay; encrypted-media';
-    frame.title = 'Reel';
-    frame.tabIndex = -1;
-    cards[i].appendChild(frame);
-    setMuted(true);
-  }
-
-  cards.forEach(function(c, i) {
-    c.addEventListener('click', function() {
-      if (c.getAttribute('data-pos') !== '0') show(i);
-    });
-  });
-
-  sound.addEventListener('click', function() {
-    var turnOn = sound.getAttribute('aria-pressed') !== 'true';
-    cmd(turnOn ? 'unMute' : 'mute');
-    setMuted(!turnOn);
-  });
-
-  show(0);
+(function () {
+  var d = document.documentElement, K = 'reels_v2_preloaded', seen = false, rm = false;
+  try { rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  try { seen = sessionStorage.getItem(K) === '1'; } catch (e) {}
+  d.classList.add('js');
+  if (!rm) { d.classList.add('js-intro', 'morph'); if (!seen) d.classList.add('is-loading'); }
+  setTimeout(function () {
+    d.classList.remove('is-loading', 'js-intro');
+    if (!window.__reelsMorph) d.classList.remove('morph');   /* sin GSAP: fondos estaticos por seccion */
+  }, 2500);
 })();
 </script>
 
-<script>
-// Slice 25: footer propio inline, sin componentes compartidos. initI18n vive en el script
-// siguiente; este listener corre cuando todo el documento ya se parseo.
-document.addEventListener('DOMContentLoaded', function() {
-  var yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-  initI18n();
-});
-</script>
+<style>
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root{
+  --ink:#0A0A0D; --ink-2:#15151B; --ink-3:#1F1F27;
+  --bone:#F2EEE6; --mute:#8A8794; --line:rgba(242,238,230,.12);
+  --signal:#D4FF3A; --uv:#7A5CFF; --rec:#FF3D2E;
+  /* Tokens de tema: los cambia el morph de color al hacer scroll */
+  --bg:#0A0A0D; --fg:#F2EEE6; --mut:#8A8794; --card:#15151B; --rule:rgba(242,238,230,.12); --acc:#D4FF3A;
+  --f-display:'Unbounded',system-ui,sans-serif;
+  --f-text:'Inter Tight',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+  --gut:clamp(16px,4vw,56px);
+  --sec:clamp(88px,13vw,180px);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+html.is-loading{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-text);
+  font-size:clamp(16px,1.05vw,18px);line-height:1.55;overflow-x:clip;
+  -webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,h4,p,ol,ul,dl,dd,figure,blockquote{margin:0}
+ol,ul{padding:0;list-style:none}
+::selection{background:var(--signal);color:var(--ink)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+
+.wrap{width:100%;max-width:1480px;margin-inline:auto;padding-inline:var(--gut)}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.label__n{color:var(--acc)}
+.ph-tag{font-style:normal;border:1px dashed var(--mut);padding:2px 8px;letter-spacing:.12em}
+.h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.1rem,6.2vw,6rem);line-height:1.02;letter-spacing:-.015em}
+.h2 .o,.o{color:transparent;-webkit-text-stroke:2px var(--fg)}
+.h2 .s{color:var(--acc)}
+.sec-head{display:grid;gap:22px;margin-bottom:clamp(40px,6vw,80px)}
+.sec-sub{color:var(--mut);max-width:46ch}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* =========================================================
+   TEMAS CLARO / OSCURO / UV
+   Sin JS: cada seccion pinta su propio fondo.
+   Con JS (html.morph): las secciones son transparentes y el color
+   de toda la pagina se funde suavemente al cruzar cada seccion.
+   ========================================================= */
+html:not(.morph) [data-theme]{background:var(--bg);color:var(--fg)}
+html:not(.morph) [data-theme="light"]{--bg:#F2EEE6;--fg:#0A0A0D;--mut:#5E5A66;--card:#E6E0D4;--rule:rgba(10,10,13,.14);--acc:#4B2FE0}
+html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--card:#1F1748;--rule:rgba(242,238,230,.14);--acc:#D4FF3A}
+
+/* Light leak: destello de pelicula al pasar de oscuro a claro y viceversa */
+.leak{position:fixed;inset:-10%;z-index:85;pointer-events:none;opacity:0;visibility:hidden;mix-blend-mode:screen;
+  background:radial-gradient(45% 70% at 25% 45%,rgba(255,168,84,.55),transparent 65%),
+             radial-gradient(40% 60% at 75% 55%,rgba(122,92,255,.5),transparent 65%)}
+
+/* =========================================================
+   GRANO DE PELICULA
+   ========================================================= */
+.grain{position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .9s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+/* =========================================================
+   PRELOADER "RENDER"
+   ========================================================= */
+.pre{position:fixed;inset:0;z-index:100;background:var(--ink);display:none;flex-direction:column;justify-content:space-between;padding:22px var(--gut) var(--gut)}
+.is-loading .pre{display:flex}
+.pre__row{display:flex;justify-content:space-between;gap:16px;font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.pre__num{font-family:var(--f-display);font-weight:900;font-size:clamp(5rem,22vw,20rem);line-height:.8;letter-spacing:-.03em}
+.pre__num small{font-size:.25em;color:var(--signal);letter-spacing:0;margin-left:.1em}
+.pre__bar{height:3px;background:var(--ink-3);margin:22px 0 14px;overflow:hidden}
+.pre__fill{height:100%;background:var(--signal);transform-origin:left;transform:scaleX(0)}
+
+/* =========================================================
+   HUD + PLAYHEAD + CURSOR
+   ========================================================= */
+.hud{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:44px calc(var(--gut) + 8px) 0;pointer-events:none;font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.hud__brand{display:flex;align-items:center;gap:10px;color:var(--fg)}
+.hud__right{display:flex;align-items:center;gap:22px}
+.hud__cta{pointer-events:auto;display:inline-flex;align-items:center;gap:10px;background:var(--signal);color:var(--ink);text-decoration:none;
+  font-family:var(--f-text);font-weight:700;font-size:14px;letter-spacing:.02em;text-transform:uppercase;padding:12px 18px;
+  transition:background .25s,color .25s,transform .35s var(--ease)}
+.hud__cta:hover{background:var(--fg);color:var(--bg)}
+.hud__tc{color:var(--mut);font-variant-numeric:tabular-nums;min-width:11ch;text-align:right}
+.hud__tc.is-end{color:var(--acc)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--rec);display:inline-block;animation:blink 1.1s steps(2,jump-none) infinite}
+@keyframes blink{50%{opacity:.15}}
+
+.rail{position:fixed;right:clamp(6px,1vw,14px);top:50%;height:38vh;width:2px;transform:translateY(-50%);background:var(--rule);z-index:50;pointer-events:none}
+.rail__fill{position:absolute;inset:0;background:var(--acc);transform-origin:top;transform:scaleY(0)}
+
+.cursor{position:fixed;left:0;top:0;z-index:95;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+  border:1.5px solid var(--acc);pointer-events:none;display:none;align-items:center;justify-content:center;
+  transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .35s var(--ease)}
+.cursor span{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;color:var(--bg);opacity:0;transition:opacity .2s}
+.has-cursor .cursor{display:flex}
+.cursor.is-play{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--acc)}
+.cursor.is-play span{opacity:1}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+.cta-wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.rec{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;color:var(--rec);display:inline-flex;align-items:center;gap:8px}
+.rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rec);animation:blink 1.1s steps(2,jump-none) infinite}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--signal);color:var(--ink);text-decoration:none;
+  font-family:var(--f-text);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:clamp(15px,1.2vw,18px);
+  padding:20px 28px;border:0;cursor:pointer;transition:transform .35s var(--ease),background .25s}
+.btn:hover{background:var(--fg);color:var(--bg)}
+.btn__arrow{display:inline-block;transition:transform .35s var(--ease)}
+.btn:hover .btn__arrow{transform:translateX(5px)}
+.btn--ghost{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--rule)}
+.btn--ghost:hover{background:var(--fg);color:var(--bg)}
+.btn--xl{font-size:clamp(16px,1.6vw,22px);padding:26px 36px}
+
+/* =========================================================
+   PLACEHOLDERS DE VIDEO / IMAGEN
+   Para reemplazar: dentro de .ph-video pon
+   <video src="..." muted loop playsinline preload="none" data-autoplay></video>
+   ========================================================= */
+.ph-video{position:relative;width:100%;aspect-ratio:var(--ar,16/9);overflow:hidden;
+  background:radial-gradient(110% 80% at 75% 15%,rgba(122,92,255,.28),transparent 60%),
+             radial-gradient(80% 60% at 10% 95%,rgba(212,255,58,.08),transparent 60%),var(--ink-2)}
+.ph-fill{position:absolute;inset:0;aspect-ratio:auto;height:100%}
+.ph-video::before{content:"";position:absolute;inset:-20%;opacity:.35;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .5s steps(4) infinite}
+.ph-video::after{content:"";position:absolute;left:0;right:0;height:18%;top:-20%;
+  background:linear-gradient(transparent,rgba(242,238,230,.05),transparent);animation:scan 4s linear infinite}
+@keyframes scan{to{top:110%}}
+.ph-video > video,.ph-video > img,.ph-video > iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;z-index:1}
+.ph-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:16px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+.ph-label::before{content:"▶";width:44px;height:44px;border-radius:50%;border:1.5px solid var(--mut);
+  display:flex;align-items:center;justify-content:center;font-size:13px;padding-left:3px;letter-spacing:0}
+.ph-video > video ~ .ph-label{display:none}
+
+/* Marcas de crop reutilizables */
+.corners{position:relative}
+.corners::after{content:"";position:absolute;inset:14px;pointer-events:none;z-index:3;--s:22px;--w:2px;--c:var(--signal);
+  background:
+   linear-gradient(var(--c),var(--c)) left top/var(--s) var(--w),
+   linear-gradient(var(--c),var(--c)) left top/var(--w) var(--s),
+   linear-gradient(var(--c),var(--c)) right top/var(--s) var(--w),
+   linear-gradient(var(--c),var(--c)) right top/var(--w) var(--s),
+   linear-gradient(var(--c),var(--c)) left bottom/var(--s) var(--w),
+   linear-gradient(var(--c),var(--c)) left bottom/var(--w) var(--s),
+   linear-gradient(var(--c),var(--c)) right bottom/var(--s) var(--w),
+   linear-gradient(var(--c),var(--c)) right bottom/var(--w) var(--s);
+  background-repeat:no-repeat}
+
+/* =========================================================
+   01 HERO
+   ========================================================= */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.hero__media{position:absolute;inset:0;transform-origin:50% 50%;overflow:hidden;will-change:transform}
+.hero__media::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(to top,rgba(10,10,13,.92) 0%,rgba(10,10,13,.35) 45%,rgba(10,10,13,.15) 100%)}
+.hero__content{position:relative;z-index:4;padding:clamp(96px,14vh,120px) calc(var(--gut) + 8px) clamp(28px,5vh,64px)}
+.hero__content .label{margin-bottom:clamp(18px,3vh,32px)}
+.hero__title{font-family:var(--f-display);font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.2rem,min(11.5vw,13.5vh),11rem);
+  font-size:clamp(2.2rem,min(11.5vw,13.5svh),11rem);line-height:.9;letter-spacing:-.025em}
+/* La mascara deja espacio a la tilde (bug 2b1): gap neto entre lineas = .16em */
+.hero__mask{display:block;overflow:hidden;padding-top:.22em;padding-bottom:.03em}
+.hero__mask + .hero__mask{margin-top:-.06em}
+.hero__mask:first-child{padding-top:.04em}
+.hero__inner{display:block;will-change:transform}
+.hero__inner--s{color:var(--acc)}
+.js-intro .hero__inner{transform:translateY(118%)}
+.hero__foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-top:clamp(18px,3vh,40px)}
+.hero__sub{max-width:40ch;color:var(--mut)}
+.hero__sub strong{color:var(--fg);font-weight:500}
+.hero__note{margin-top:14px;color:var(--mut);font-size:11px}
+.hero__specs{position:absolute;z-index:4;right:calc(var(--gut) + 8px);top:clamp(110px,15vh,140px);display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;color:var(--mut)}
+
+/* =========================================================
+   MARQUEE
+   ========================================================= */
+.marquee{position:relative;overflow:hidden;padding:clamp(40px,6vw,80px) 0}
+.marquee__band{background:var(--signal);color:var(--ink);transform:rotate(-2.2deg);width:110%;margin-left:-5%;padding:clamp(14px,1.6vw,22px) 0;overflow:hidden}
+.marquee__track{display:flex;width:max-content;will-change:transform;animation:mq 26s linear infinite}
+.marquee__track.is-js{animation:none}
+@keyframes mq{to{transform:translateX(-50%)}}
+.marquee__group{display:flex;align-items:center;gap:clamp(22px,3vw,44px);padding-right:clamp(22px,3vw,44px);
+  font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2rem,6vw,5.4rem);line-height:1;white-space:nowrap}
+.marquee__group .o{-webkit-text-stroke:2px var(--ink)}
+.marquee__group i{font-style:normal;font-size:.35em}
+
+/* =========================================================
+   02 EL PROBLEMA
+   ========================================================= */
+.problem{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:var(--sec)}
+.problem__grid{display:grid;gap:clamp(36px,5vw,64px)}
+.problem__text{font-family:var(--f-display);font-weight:700;font-size:clamp(1.8rem,4.6vw,4.4rem);line-height:1.12;letter-spacing:-.01em;max-width:18ch}
+.problem__text em{font-style:normal;color:var(--acc)}
+.problem__text .w{display:inline}
+.problem__chart{border-top:1px solid var(--rule);padding-top:18px;max-width:640px}
+.problem__chart svg{width:100%;height:auto;overflow:visible}
+.problem__legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:12px;color:var(--mut)}
+.problem__legend span::before{content:"";display:inline-block;width:18px;height:2px;margin-right:8px;vertical-align:middle;background:var(--mut)}
+.problem__legend span.l-edit::before{background:var(--acc)}
+.problem__fix{margin-top:26px;font-size:clamp(1.05rem,1.4vw,1.3rem);line-height:1.4;max-width:34ch;font-weight:500}
+.problem__chart .c-grid{stroke:var(--rule)}
+.problem__chart .c-raw{stroke:var(--mut)}
+.problem__chart .c-edit{stroke:var(--acc)}
+.problem__chart text{fill:var(--mut)}
+
+/* =========================================================
+   03 ANTES / DESPUES
+   ========================================================= */
+.ba{padding-block:var(--sec)}
+.ba__stage{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink-2);touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+.ba__layer{position:absolute;inset:0}
+.ba__before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0);z-index:2}
+.ph--raw{background:linear-gradient(160deg,#2B2B31,#1A1A1F);filter:saturate(0)}
+.ph--edit{background:radial-gradient(90% 90% at 80% 10%,rgba(122,92,255,.55),transparent 60%),radial-gradient(70% 70% at 15% 90%,rgba(212,255,58,.25),transparent 60%),#121018}
+.ba__caption{position:absolute;z-index:2;left:50%;bottom:16%;transform:translateX(-50%);font-family:var(--f-display);font-weight:900;text-transform:uppercase;
+  font-size:clamp(1rem,3vw,2.6rem);line-height:1.05;text-align:center;white-space:nowrap}
+.ba__caption mark{background:var(--signal);color:var(--ink);padding:0 .2em}
+.ba__handle{position:absolute;z-index:4;top:0;bottom:0;left:var(--pos,50%);width:2px;margin-left:-1px;background:var(--fg);pointer-events:none}
+.ba__handle span{position:absolute;top:50%;left:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:var(--fg);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:16px}
+.ba__tag{position:absolute;z-index:5;top:28px;padding:6px 10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;pointer-events:none}
+.ba__tag--raw{left:28px;background:var(--rec);color:var(--fg)}
+.ba__tag--edit{right:28px;background:var(--signal);color:var(--ink)}
+.ba__stage:focus-within{outline:2px solid var(--signal);outline-offset:4px}
+
+/* =========================================================
+   04 ESTILOS (scroll horizontal)
+   ========================================================= */
+.styles{padding-top:var(--sec)}
+.styles__pin{overflow:hidden;padding-bottom:var(--sec)}
+.styles__viewport{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.styles__viewport::-webkit-scrollbar{display:none}
+.styles__track{display:flex;gap:clamp(16px,2vw,28px);width:max-content;padding-inline:var(--gut)}
+.styles.is-h .styles__viewport{overflow:visible;scroll-snap-type:none}
+.styles.is-h .styles__pin{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-block:40px}
+.styles.is-h .sec-head{margin-bottom:clamp(28px,4vh,48px)}
+.style-card{width:clamp(230px,24vw,340px);flex:none;scroll-snap-align:start;scroll-margin-inline:var(--gut)}
+.style-card .ph-video{border-radius:4px}
+.style-card__meta{padding-top:18px;display:grid;gap:8px}
+.style-card__meta .mono{color:var(--acc)}
+.style-card h3{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:clamp(1.15rem,1.6vw,1.5rem);line-height:1.1}
+.style-card p{color:var(--mut);font-size:.95em}
+.styles.is-h .style-card .ph-video{max-height:56vh;aspect-ratio:9/16;width:auto;height:56vh}
+.styles.is-h .style-card{width:auto}
+.styles.is-h .style-card__meta{width:calc(56vh * 9 / 16)}
+.styles__progress{display:flex;align-items:center;gap:18px;margin-top:clamp(28px,4vh,48px);color:var(--mut)}
+.styles__bar{flex:1;height:2px;background:var(--rule);position:relative;overflow:hidden}
+.styles__bar i{position:absolute;inset:0;background:var(--acc);transform-origin:left;transform:scaleX(0)}
+
+/* =========================================================
+   05 PROCESO
+   ========================================================= */
+.process{padding-block:var(--sec)}
+.process__grid{display:grid;gap:48px}
+.steps{position:relative;display:grid;gap:clamp(48px,7vw,96px);padding-left:clamp(28px,4vw,56px)}
+.steps__line{position:absolute;left:0;top:10px;bottom:10px;width:2px;background:var(--rule)}
+.steps__line i{position:absolute;inset:0;background:var(--acc);transform-origin:top;transform:scaleY(1)}
+.steps.is-js .steps__line i{transform:scaleY(0)}
+.step{display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,3vw,40px);align-items:start}
+.step__n{font-family:var(--f-display);font-weight:900;font-size:clamp(3rem,7vw,6.5rem);line-height:.85;color:var(--acc);
+  -webkit-text-stroke:2px var(--acc);transition:color .5s var(--ease),-webkit-text-stroke-color .5s}
+.steps.is-js .step__n{color:transparent;-webkit-text-stroke-color:var(--mut)}
+.steps.is-js .step.is-on .step__n{color:var(--acc);-webkit-text-stroke-color:var(--acc)}
+.step h3{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:clamp(1.2rem,2vw,1.8rem);line-height:1.1;margin-bottom:10px}
+.step p{color:var(--mut);max-width:44ch}
+.step__tc{display:block;margin-top:14px;color:var(--mut)}
+
+/* =========================================================
+   06 CIFRAS
+   ========================================================= */
+.stats{padding-block:calc(var(--sec) * .7)}
+.stats .label{margin-bottom:clamp(36px,5vw,64px)}
+.stats__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(28px,4vw,56px) clamp(16px,3vw,40px)}
+.stat{display:flex;flex-direction:column-reverse;gap:10px;border-top:1px solid var(--rule);padding-top:18px}
+.stat dt{color:var(--mut);font-size:.95em}
+.stat dd{font-family:var(--f-display);font-weight:900;font-size:clamp(3rem,8vw,7.5rem);line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat dd small{font-size:.38em;color:var(--acc);margin-left:.08em;letter-spacing:0}
+
+/* =========================================================
+   07 PAQUETES
+   ========================================================= */
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.pricing{padding-block:var(--sec)}
+.plans{display:grid;gap:20px}
+.plan{position:relative;background:var(--card);padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;gap:26px;
+  transform-style:preserve-3d;transition:transform .5s var(--ease);will-change:transform}
+.plan header{display:grid;gap:10px}
+.plan header .mono{color:var(--mut)}
+.plan h3{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,2.6vw,2.4rem);line-height:1}
+.plan__price{font-family:var(--f-display);font-weight:700;font-size:clamp(2rem,3.4vw,3rem);line-height:1;display:flex;align-items:baseline;gap:10px}
+.plan__price small{font-family:var(--f-mono);font-size:12px;color:var(--mut);letter-spacing:.12em;font-weight:400}
+.plan ul{display:grid;gap:12px;flex:1}
+.plan li{display:flex;gap:12px;color:var(--fg)}
+.plan li::before{content:"+";font-family:var(--f-mono);color:var(--acc)}
+.plan .btn{justify-content:center}
+.plan--hot{background:var(--ink-3);--fg:#F2EEE6;--mut:#A9A6B2;--acc:#D4FF3A;--rule:rgba(242,238,230,.14);color:var(--fg)}
+.plan--hot::before{content:"";position:absolute;inset:-2px;z-index:-1;
+  background:conic-gradient(from var(--ang),var(--signal),var(--uv),var(--signal) 40%,transparent 55%,var(--signal));
+  animation:spin 4s linear infinite}
+.plan--hot{isolation:isolate}
+.plan--hot::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink-3)}
+@keyframes spin{to{--ang:360deg}}
+.plan__per{color:var(--mut);margin-top:10px}
+.terms{margin-top:28px;color:var(--mut);font-size:.92em;max-width:80ch}
+.singles-head{margin:clamp(72px,9vw,120px) 0 28px;display:grid;gap:12px}
+.singles-head h3{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,3.6vw,3.2rem);line-height:1.02}
+.singles{display:grid;gap:20px}
+.single{background:var(--card);padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:22px}
+.single header{display:grid;gap:8px}
+.single header .mono{color:var(--mut)}
+.single h4{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,2vw,1.8rem);line-height:1.05}
+.tiers div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.tiers dt{color:var(--mut)}
+.tiers dd{font-family:var(--f-display);font-weight:700;font-size:clamp(1.1rem,1.5vw,1.4rem)}
+.single .btn{justify-content:center}
+.single__note{color:var(--mut);font-size:.9em}
+.extras{display:grid;gap:20px}
+.extras li{border-top:2px solid var(--fg);padding-top:16px;display:grid;gap:8px}
+.extras strong{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:1.05rem;line-height:1.15}
+.extras span{color:var(--mut)}
+.plan__badge{position:absolute;top:-12px;right:20px;background:var(--signal);color:var(--ink);padding:5px 10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em}
+
+/* =========================================================
+   08 TESTIMONIOS
+   ========================================================= */
+.testi{padding-block:var(--sec)}
+.testi__row{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-inline:var(--gut);scrollbar-width:none;cursor:grab}
+.testi__row::-webkit-scrollbar{display:none}
+.testi__row.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.testi-card{flex:none;width:min(86vw,520px);scroll-snap-align:start;background:var(--card);display:grid;grid-template-columns:42% 1fr;min-height:320px}
+.testi-card .ph-video{height:100%;aspect-ratio:auto}
+.testi-card__body{padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.testi-card__idea{font-size:clamp(1.1rem,1.5vw,1.35rem);line-height:1.35;font-weight:500}
+.testi-card blockquote{font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.45}
+.testi-card blockquote::before{content:"“";display:block;font-family:var(--f-display);font-weight:900;font-size:3rem;line-height:.6;color:var(--acc);margin-bottom:12px}
+.testi-card footer{display:grid;gap:4px}
+.testi-card footer .mono{color:var(--mut);font-size:11px}
+
+/* =========================================================
+   09 FAQ
+   ========================================================= */
+.faq{padding-block:var(--sec)}
+.faq__grid{display:grid;gap:40px}
+.faq__list{border-top:1px solid var(--rule)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 0;
+  font-family:var(--f-display);font-weight:700;font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.25}
+.faq summary::-webkit-details-marker{display:none}
+.faq__icon{flex:none;width:34px;height:34px;border:1.5px solid var(--rule);border-radius:50%;position:relative;transition:transform .4s var(--ease),background .3s,border-color .3s}
+.faq__icon::before,.faq__icon::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.5px;margin:-.75px 0 0 -6px;background:var(--fg)}
+.faq__icon::after{transform:rotate(90deg)}
+.faq details[open] .faq__icon{transform:rotate(45deg);background:var(--acc);border-color:var(--acc)}
+.faq details[open] .faq__icon::before,.faq details[open] .faq__icon::after{background:var(--bg)}
+.faq__a{overflow:hidden}
+.faq__a p{padding:0 0 28px;color:var(--mut);max-width:62ch}
+
+/* =========================================================
+   10 CTA FINAL
+   ========================================================= */
+.final{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding-block:var(--sec)}
+.final__bg{position:absolute;inset:-15% 0;z-index:0}
+.final__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,var(--bg),rgba(10,10,13,.55) 30%,rgba(10,10,13,.55) 70%,var(--bg))}
+.final__inner{position:relative;z-index:2;display:grid;gap:clamp(28px,4vw,48px)}
+.final__title{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.4rem,10vw,10rem);line-height:1.02;letter-spacing:-.025em}
+.final__title span{display:block}
+.final__title .s{color:var(--acc)}
+.final__sub{color:var(--fg);opacity:.8;max-width:42ch;font-size:clamp(1.05rem,1.4vw,1.3rem)}
+
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:28px 40px;border-top:1px solid var(--rule);
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--acc)}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (min-width:760px){
+  .stats__grid{grid-template-columns:repeat(4,1fr)}
+  .plans{grid-template-columns:repeat(3,1fr);align-items:stretch}
+  .singles,.extras{grid-template-columns:repeat(2,1fr)}
+  .plan--hot{top:-14px}
+}
+@media (min-width:1100px){ .extras{grid-template-columns:repeat(4,1fr)} }
+@media (min-width:1000px){
+  .problem__grid{grid-template-columns:1.4fr 1fr;align-items:end}
+  .process__grid{grid-template-columns:.9fr 1.1fr;gap:clamp(40px,6vw,120px)}
+  .process__head{position:sticky;top:120px;align-self:start}
+  .faq__grid{grid-template-columns:.8fr 1.2fr;gap:clamp(40px,6vw,120px)}
+  .faq .sec-head{position:sticky;top:120px;align-self:start}
+}
+@media (max-width:759px){
+  .hud{padding-top:16px}
+  .hud__tc{display:none}
+  .hud__cta{font-size:12px;padding:10px 14px}
+  .hero__specs{display:none}
+  .ba__stage{aspect-ratio:4/5}
+  .ba__caption{white-space:normal;width:80%}
+  .testi-card{grid-template-columns:1fr;min-height:0}
+  .testi-card .ph-video{aspect-ratio:16/10;height:auto}
+  .btn{padding:18px 22px}
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .pre,.leak{display:none!important}
+  .js-intro .hero__inner{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="leak" aria-hidden="true"></div>
+
+<!-- ============ PRELOADER ============ -->
+<div class="pre" aria-hidden="true">
+  <div class="pre__row"><span>PBT // Sala de edición</span><span>Rendering</span></div>
+  <div>
+    <div class="pre__num"><span data-pre-num>000</span><small>%</small></div>
+    <div class="pre__bar"><div class="pre__fill" data-pre-fill></div></div>
+    <div class="pre__row"><span>REEL_FINAL_v3.mp4</span><span>1080 × 1920 · 30 FPS</span></div>
+  </div>
+</div>
+
+<!-- ============ HUD GLOBAL ============ -->
+<header class="hud">
+  <span class="hud__brand" aria-hidden="true"><span class="dot"></span> PBT // Edit</span>
+  <div class="hud__right">
+    <span class="hud__tc" data-tc aria-hidden="true">00:00:00:00</span>
+    <a class="hud__cta" href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+<div class="rail" aria-hidden="true"><div class="rail__fill" data-rail></div></div>
+<div class="cursor" aria-hidden="true"><span>PLAY</span></div>
+
+<main>
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero" id="play" data-theme="dark" aria-labelledby="hero-title">
+  <div class="hero__media corners" data-cursor="play">
+    <div class="ph-video ph-fill">
+      <!-- REEMPLAZAR: <video src="media/hero.mp4" muted loop playsinline autoplay preload="metadata"></video> -->
+      <span class="ph-label">Video hero 16:9 · Reemplazar</span>
+    </div>
+  </div>
+
+  <div class="hero__specs" aria-hidden="true"><span>1080 × 1920</span><span>MP4 Full HD</span><span>Hasta 60 s</span></div>
+
+  <div class="hero__content">
+    <p class="label"><span class="label__n">01</span> Edición de reels para negocios</p>
+    <h1 class="hero__title" id="hero-title" aria-label="Editamos. Tú publicas.">
+      <span class="hero__mask" aria-hidden="true"><span class="hero__inner">Editamos.</span></span>
+      <span class="hero__mask" aria-hidden="true"><span class="hero__inner hero__inner--s">Tú</span></span>
+      <span class="hero__mask" aria-hidden="true"><span class="hero__inner">publicas.</span></span>
+    </h1>
+    <div class="hero__foot">
+      <div>
+        <p class="hero__sub"><strong>Tú grabas con tu celular. Nosotros editamos.</strong> En 48 horas recibes tus reels listos para subir.</p>
+        <p class="hero__note mono">Planes desde USD 95 al mes · Sin contratos forzosos</p>
+      </div>
+      <div class="cta-wrap">
+        <span class="rec" aria-hidden="true">REC</span>
+        <a class="btn" data-magnetic href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<section class="marquee" data-theme="dark" aria-label="Para Instagram Reels, TikTok, YouTube Shorts y YouTube, en formato vertical 9:16">
+  <div class="marquee__band" aria-hidden="true">
+    <div class="marquee__track" data-marquee>
+      <div class="marquee__group"><span>Reels</span><i>●</i><span class="o">TikTok</span><i>●</i><span>Reels</span><i>●</i><span class="o">Shorts</span><i>●</i><span>Reels</span><i>●</i><span class="o">YouTube</span><i>●</i><span>Reels</span><i>●</i><span class="o">Instagram</span><i>●</i></div>
+      <div class="marquee__group"><span>Reels</span><i>●</i><span class="o">TikTok</span><i>●</i><span>Reels</span><i>●</i><span class="o">Shorts</span><i>●</i><span>Reels</span><i>●</i><span class="o">YouTube</span><i>●</i><span>Reels</span><i>●</i><span class="o">Instagram</span><i>●</i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 EL PROBLEMA ============ -->
+<section class="problem" id="problema" data-theme="light">
+  <div class="wrap problem__grid">
+    <div>
+      <p class="label" style="margin-bottom:32px"><span class="label__n">02</span> ¿Te pasa esto?</p>
+      <p class="problem__text" data-words>Grabas un video en minutos. Después pierdes todo el fin de semana editándolo. Y al final tus redes sociales siguen <em>sin contenido</em>.</p>
+    </div>
+    <figure class="problem__chart" aria-label="Gráfico de ejemplo: con un video sin editar la gente se va rápido; con un video editado se queda más tiempo">
+      <p class="mono" style="color:var(--mut);margin-bottom:14px">¿Cuánta gente sigue mirando? · Ejemplo</p>
+      <svg viewBox="0 0 600 220" aria-hidden="true">
+        <g class="c-grid" stroke-width="1">
+          <line x1="0" y1="20" x2="600" y2="20"/><line x1="0" y1="110" x2="600" y2="110"/><line x1="0" y1="200" x2="600" y2="200"/>
+        </g>
+        <path data-draw d="M0 22 C 40 30, 60 120, 120 150 S 260 185, 600 196" class="c-raw" fill="none" stroke-width="2.5" stroke-dasharray="6 6"/>
+        <path data-draw d="M0 22 C 80 26, 140 40, 220 52 S 420 70, 600 84" class="c-edit" fill="none" stroke-width="3"/>
+        <text x="0" y="216" font-family="JetBrains Mono, monospace" font-size="11">0s</text>
+        <text x="565" y="216" font-family="JetBrains Mono, monospace" font-size="11">30s</text>
+      </svg>
+      <div class="problem__legend mono"><span>Video sin editar</span><span class="l-edit">Video editado</span></div>
+      <p class="problem__fix">Tu tiempo vale más atendiendo clientes que peleando con un programa de edición.</p>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 03 ANTES / DESPUES ============ -->
+<section class="ba" id="antes-despues" data-theme="dark">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label"><span class="label__n">03</span> Antes y después</p>
+      <h2 class="h2" data-cut>Mismo video.<br><span class="o">Otra historia.</span></h2>
+      <p class="sec-sub">Arrastra la línea para comparar. La IA nos ayuda con lo repetitivo, como escribir los subtítulos. Una persona revisa cada corte.</p>
+    </header>
+
+    <div class="ba__stage corners" data-ba style="--pos:50%">
+      <div class="ba__layer ba__after">
+        <div class="ph-video ph-fill ph--edit">
+          <!-- REEMPLAZAR: <video src="media/despues.mp4" muted loop playsinline preload="none" data-autoplay></video> -->
+          <span class="ba__caption">Con ritmo, <mark>subtítulos</mark> y música</span>
+        </div>
+      </div>
+      <div class="ba__layer ba__before">
+        <div class="ph-video ph-fill ph--raw">
+          <!-- REEMPLAZAR: <video src="media/antes.mp4" muted loop playsinline preload="none" data-autoplay></video> -->
+          <span class="ph-label">Tu video tal cual · Reemplazar</span>
+        </div>
+      </div>
+      <div class="ba__handle" aria-hidden="true"><span>⟷</span></div>
+      <span class="ba__tag ba__tag--raw" aria-hidden="true">ANTES</span>
+      <span class="ba__tag ba__tag--edit" aria-hidden="true">DESPUÉS</span>
+      <label class="sr-only" for="ba-range">Comparar antes y después</label>
+      <input class="sr-only ba__range" id="ba-range" type="range" min="0" max="100" value="50">
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 QUE INCLUYE ============ -->
+<section class="styles" id="incluye" data-theme="dark">
+  <div class="styles__pin">
+    <header class="wrap sec-head">
+      <p class="label"><span class="label__n">04</span> Qué incluye</p>
+      <h2 class="h2" data-cut>Cada reel<br><span class="s">trae todo esto.</span></h2>
+    </header>
+
+    <div class="styles__viewport">
+      <ol class="styles__track">
+        <li class="style-card" data-cursor="play">
+          <div class="ph-video" style="--ar:9/16"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+          <div class="style-card__meta"><span class="mono">#01 · 9:16</span><h3>Formato vertical</h3><p>Videos de hasta 60 segundos para Instagram, TikTok y YouTube Shorts.</p></div>
+        </li>
+        <li class="style-card" data-cursor="play">
+          <div class="ph-video" style="--ar:9/16"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+          <div class="style-card__meta"><span class="mono">#02 · Cortes</span><h3>Sacamos lo que sobra</h3><p>Quitamos silencios, pausas y errores. Estabilizamos la imagen y le damos buen ritmo.</p></div>
+        </li>
+        <li class="style-card" data-cursor="play">
+          <div class="ph-video" style="--ar:9/16"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+          <div class="style-card__meta"><span class="mono">#03 · Texto</span><h3>Subtítulos y gráficos</h3><p>Subtítulos grandes y fáciles de leer, con el estilo de tu plan.</p></div>
+        </li>
+        <li class="style-card" data-cursor="play">
+          <div class="ph-video" style="--ar:9/16"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+          <div class="style-card__meta"><span class="mono">#04 · MP4 Full HD</span><h3>Listo para subir</h3><p>Un archivo que no pierde calidad cuando lo subes desde tu celular.</p></div>
+        </li>
+        <li class="style-card" data-cursor="play">
+          <div class="ph-video" style="--ar:9/16"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+          <div class="style-card__meta"><span class="mono">#05 · Cambios</span><h3>Revisiones incluidas</h3><p>Pides arreglos pequeños: 1 o 2 rondas por reel, según tu plan.</p></div>
+        </li>
+        <li class="style-card" data-cursor="play">
+          <div class="ph-video" style="--ar:9/16"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+          <div class="style-card__meta"><span class="mono">#06 · Ojo</span><h3>Lo que no incluye</h3><p>No grabamos, no publicamos ni respondemos mensajes. Eso se contrata aparte.</p></div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="wrap styles__progress mono" aria-hidden="true">
+      <span class="styles__bar"><i data-styles-bar></i></span><span data-styles-count>01 / 06</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 PROCESO ============ -->
+<section class="process" id="proceso" data-theme="light">
+  <div class="wrap process__grid">
+    <header class="sec-head process__head">
+      <p class="label"><span class="label__n">05</span> Cómo funciona</p>
+      <h2 class="h2" data-cut>Así de fácil.<br><span class="o">4 pasos.</span></h2>
+      <p class="sec-sub">Pensado para que no pierdas ni un minuto de tu día.</p>
+    </header>
+    <ol class="steps" data-steps>
+      <span class="steps__line" aria-hidden="true"><i></i></span>
+      <li class="step"><span class="step__n" aria-hidden="true">01</span><div><h3>Nos mandas tus videos</h3><p>Eliges tu plan y nos envías tus grabaciones por Drive, WhatsApp o un link. Nos cuentas qué quieres y, si tienes, ejemplos que te gusten.</p><span class="mono step__tc">Sin enredos técnicos</span></div></li>
+      <li class="step"><span class="step__n" aria-hidden="true">02</span><div><h3>Editamos</h3><p>Cortamos pausas, ponemos subtítulos, limpiamos el audio y sumamos clips de apoyo si tu plan los trae.</p><span class="mono step__tc">Revisado por una persona</span></div></li>
+      <li class="step"><span class="step__n" aria-hidden="true">03</span><div><h3>Recibes en 48 horas</h3><p>Te llega la primera versión en máximo 48 horas hábiles. El reloj parte cuando tenemos todo tu material y tus instrucciones.</p><span class="mono step__tc">Primera versión</span></div></li>
+      <li class="step"><span class="step__n" aria-hidden="true">04</span><div><h3>Revisas y publicas</h3><p>Nos pides tus cambios según las rondas de tu plan. Te mandamos el video final y tú lo subes.</p><span class="mono step__tc">Listo para publicar</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 06 CIFRAS ============ -->
+<section class="stats" data-theme="uv" aria-labelledby="stats-label">
+  <div class="wrap">
+    <p class="label" id="stats-label"><span class="label__n">06</span> En números</p>
+    <dl class="stats__grid">
+      <div class="stat"><dt>Horas para tu primera versión</dt><dd><span data-count="48">48</span><small>h</small></dd></div>
+      <div class="stat"><dt>Segundos máximos por reel</dt><dd><span data-count="60">60</span><small>s</small></dd></div>
+      <div class="stat"><dt>Reels al mes en el plan más grande</dt><dd><span data-count="12">12</span></dd></div>
+      <div class="stat"><dt>Contratos forzosos</dt><dd><span data-count="0">0</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ 07 PARA QUIEN ============ -->
+<section class="testi" id="para-quien" data-theme="dark">
+  <header class="wrap sec-head">
+    <p class="label"><span class="label__n">07</span> ¿Para quién es?</p>
+    <h2 class="h2" data-cut>Si vendes algo,<br><span class="o">esto es para ti.</span></h2>
+    <p class="sec-sub">Productos, servicios o experiencias. Todos necesitan estar activos en redes. Algunas ideas de reels:</p>
+  </header>
+  <div class="testi__row" data-drag>
+    <article class="testi-card">
+      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Muestra tus productos nuevos y las ofertas de la semana.</p><footer><strong>Tiendas y mayoristas</strong><span class="mono">Idea de reel</span></footer></div>
+    </article>
+    <article class="testi-card">
+      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Enseña tus clases, tus máquinas y a tu equipo en acción.</p><footer><strong>Gimnasios</strong><span class="mono">Idea de reel</span></footer></div>
+    </article>
+    <article class="testi-card">
+      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Muestra cómo es un tratamiento, paso a paso.</p><footer><strong>Centros de estética</strong><span class="mono">Idea de reel</span></footer></div>
+    </article>
+    <article class="testi-card">
+      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Haz un recorrido corto por cada propiedad.</p><footer><strong>Inmobiliarias</strong><span class="mono">Idea de reel</span></footer></div>
+    </article>
+    <article class="testi-card">
+      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Muestra tus lugares y salones como si el cliente ya estuviera ahí.</p><footer><strong>Turismo y salas de eventos</strong><span class="mono">Idea de reel</span></footer></div>
+    </article>
+    <article class="testi-card">
+      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Responde en 30 segundos las preguntas que más te hacen.</p><footer><strong>Consultas y oficinas</strong><span class="mono">Idea de reel</span></footer></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 08 PLANES ============ -->
+<section class="pricing" id="paquetes" data-theme="light">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label"><span class="label__n">08</span> Planes mensuales</p>
+      <h2 class="h2" data-cut>Elige cuántos<br><span class="s">reels quieres.</span></h2>
+      <p class="sec-sub">Precios claros. Sin contratos forzosos ni letra chica.</p>
+    </header>
+    <div class="plans">
+      <article class="plan" data-tilt>
+        <header><span class="mono">Para empezar</span><h3>Económica</h3></header>
+        <div><p class="plan__price"><span>USD 95</span><small>/ mes</small></p><p class="plan__per mono">USD 23,75 por reel</p></div>
+        <ul><li>4 reels al mes (hasta 60 s)</li><li>Estilo base que ya tenemos listo</li><li>Gráficos de plantilla</li><li>Sin clips de apoyo con IA</li><li>1 ronda de cambios por reel</li><li>Primera versión en 48 h hábiles</li></ul>
+        <a class="btn btn--ghost" href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </article>
+      <article class="plan plan--hot" data-tilt>
+        <span class="plan__badge">Recomendado</span>
+        <header><span class="mono">El equilibrio justo</span><h3>Equilibrada</h3></header>
+        <div><p class="plan__price"><span>USD 177</span><small>/ mes</small></p><p class="plan__per mono">USD 22,13 por reel</p></div>
+        <ul><li>8 reels al mes (hasta 60 s)</li><li>Estilo adaptado a tu negocio</li><li>Tus colores, tu letra y tu logo</li><li>Hasta 2 clips de apoyo con IA por reel</li><li>1 ronda de cambios por reel</li><li>Primera versión en 48 h hábiles</li></ul>
+        <a class="btn" href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </article>
+      <article class="plan" data-tilt>
+        <header><span class="mono">Máximo impacto</span><h3>Premium</h3></header>
+        <div><p class="plan__price"><span>USD 247</span><small>/ mes</small></p><p class="plan__per mono">USD 20,58 por reel</p></div>
+        <ul><li>12 reels al mes (hasta 60 s)</li><li>Edición según los ejemplos que nos des</li><li>Gráficos hechos a tu medida</li><li>Hasta 4 clips de apoyo con IA por reel</li><li>Hasta 2 rondas de cambios por reel</li><li>Primera versión en 48 h hábiles</li></ul>
+        <a class="btn btn--ghost" href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </article>
+    </div>
+    <p class="terms">Bueno saber: los reels que no uses en el mes no pasan al mes siguiente. Los clips de IA se agregan solo cuando le hacen bien al video. El precio es solo por editar: grabar, viajar, publicar y responder mensajes se cobra aparte.</p>
+
+    <div class="singles-head">
+      <h3>¿Quieres probar primero?</h3>
+      <p class="sec-sub">Paga por un solo video, sin plan mensual. Ideal para conocer cómo trabajamos.</p>
+    </div>
+    <div class="singles">
+      <article class="single">
+        <header><span class="mono">Hasta 60 segundos · vertical</span><h4>1 reel suelto</h4></header>
+        <dl class="tiers">
+          <div><dt>Nivel Económica</dt><dd>USD 27</dd></div>
+          <div><dt>Nivel Equilibrada</dt><dd>USD 36</dd></div>
+          <div><dt>Nivel Premium</dt><dd>USD 48</dd></div>
+        </dl>
+        <a class="btn btn--ghost" href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </article>
+      <article class="single">
+        <header><span class="mono">5 a 6 minutos · YouTube o web</span><h4>1 video largo</h4></header>
+        <dl class="tiers">
+          <div><dt>Nivel Económica</dt><dd>$45.000</dd></div>
+          <div><dt>Nivel Equilibrada</dt><dd>$65.000</dd></div>
+          <div><dt>Nivel Premium</dt><dd>$90.000</dd></div>
+        </dl>
+        <a class="btn btn--ghost" href="https://wa.me/56920948874?text=Hola%2C%20quiero%20comprar%20un%20video%20largo." target="_blank" rel="noopener">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+        <p class="single__note">Los videos largos solo se venden sueltos. No entran en los planes mensuales.</p>
+      </article>
+    </div>
+    <p class="terms">Reels y planes en dólares (USD), se pagan con PayPal. Video largo en pesos chilenos (CLP), se coordina por WhatsApp.</p>
+
+    <div class="singles-head">
+      <h3>Extras que se cotizan aparte</h3>
+      <p class="sec-sub">Si necesitas más que edición, te armamos un precio a tu medida.</p>
+    </div>
+    <ul class="extras">
+      <li><strong>Grabación en tu local</strong><span>Vamos a grabar a tu negocio en Iquique y la Región de Tarapacá.</span></li>
+      <li><strong>Publicamos por ti</strong><span>Subimos tus reels en fecha y hora, con texto, hashtags y portada.</span></li>
+      <li><strong>Respondemos tus mensajes</strong><span>Contestamos y filtramos comentarios y mensajes de tus publicaciones.</span></li>
+      <li><strong>Videos 100% con IA</strong><span>Avatar, voz y escenas creadas completamente con inteligencia artificial.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 09 FAQ ============ -->
+<section class="faq" id="faq" data-theme="dark">
+  <div class="wrap faq__grid">
+    <header class="sec-head">
+      <p class="label"><span class="label__n">09</span> Preguntas frecuentes</p>
+      <h2 class="h2" data-cut>Antes de<br><span class="s">darle play.</span></h2>
+    </header>
+    <div class="faq__list">
+      <details><summary>¿Tengo que grabar yo los videos?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>Sí. Grabas con tu celular o tu cámara y nos mandas los videos tal cual. Si no tienes tiempo, podemos ir a grabar a tu local en Iquique. Eso se paga aparte.</p></div></details>
+      <details><summary>¿Qué es una «ronda de cambios»?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>Son arreglos pequeños sobre la primera versión: una palabra mal escrita en los subtítulos, el volumen de la música o cortar un segundo. Cambiar toda la idea, rehacer el guion o mandar videos nuevos se paga aparte.</p></div></details>
+      <details><summary>¿Ustedes suben los videos a mis redes?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>No viene en el plan. Te mandamos el archivo MP4 listo para subir. Si quieres que los publiquemos con texto y portada, lo puedes contratar aparte.</p></div></details>
+      <details><summary>¿Responden los comentarios y mensajes?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>No viene en el plan de edición. Puedes contratarlo aparte, con horarios y alcance definidos.</p></div></details>
+      <details><summary>¿Los videos están hechos con IA?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>No. La IA solo nos ayuda: por ejemplo, para escribir los subtítulos y sumar clips cortos de apoyo. Una persona edita y revisa todo. Si quieres videos hechos 100% con IA (con avatar y voz), te los cotizamos aparte.</p></div></details>
+      <details><summary>¿Desde cuándo cuentan las 48 horas?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>Desde que tenemos todos tus videos y tus instrucciones completas. En máximo 48 horas hábiles recibes la primera versión para que la revises.</p></div></details>
+      <details><summary>¿Incluye grabación, viajes o publicidad pagada?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>No. Eso no es edición de video, así que se cotiza aparte según lo que necesites.</p></div></details>
+      <details><summary>¿Trabajan solo en Iquique?<span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a"><p>No. La edición es 100% online, así que trabajamos con negocios de cualquier lugar. Solo la grabación presencial es en Iquique y la Región de Tarapacá.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 CTA FINAL ============ -->
+<section class="final" id="contacto" data-theme="dark">
+  <div class="final__bg" data-speed="-12">
+    <div class="ph-video ph-fill"><span class="ph-label">Video de fondo · Reemplazar</span></div>
+  </div>
+  <div class="wrap final__inner">
+    <p class="label" data-speed="14"><span class="label__n">10</span> Empieza esta semana</p>
+    <h2 class="final__title" data-speed="6"><span>Deja la edición</span><span class="o">en nuestras</span><span class="s">manos.</span></h2>
+    <p class="final__sub">Nos mandas tus videos. En máximo 48 horas tienes tu primera versión. Tú solo publicas.</p>
+    <div class="cta-wrap">
+      <span class="rec" aria-hidden="true">REC</span>
+      <a class="btn btn--xl" data-magnetic href="https://reels.serviciosdigitalespbt.site/primer-reel">Editar mi primer reel <span class="btn__arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap foot" data-theme="dark">
+  <span>© Servicios Digitales PBT</span>
+  <span>Servicio 100% online · Iquique, Chile</span>
+  <a href="index.html">serviciosdigitalespbt.site</a>
+</footer>
+
+<!-- Librerias (versiones fijas). Si no cargan, la pagina queda estatica y legible. -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 
 <script>
-// Sin selector de idioma (slice 18): idioma guardado -> navegador -> es.
-function initI18n() {
-  const LANGS = ['es', 'en', 'hi', 'zh', 'ur', 'ko'];
-  let lang = null;
-  try { lang = localStorage.getItem('pbt-lang'); } catch (e) {}
-  if (!LANGS.includes(lang)) lang = String(navigator.language || '').split('-')[0].toLowerCase();
-  if (!LANGS.includes(lang)) lang = 'es';
-  fetch('i18n/' + lang + '.json')
-    .then(function(r) { return r.json(); })
-    .then(function(t) {
-      document.querySelectorAll('[data-i18n]').forEach(function(el) {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.textContent = t[key];
+(function () {
+  'use strict';
+  var d = document.documentElement;
+  var KEY = 'reels_v2_preloaded';
+  var mq = function (q) { try { return window.matchMedia(q).matches; } catch (e) { return false; } };
+  var reduce = mq('(prefers-reduced-motion: reduce)');
+  var fine = mq('(hover: hover) and (pointer: fine)');
+  var G = window.gsap, ST = window.ScrollTrigger, L = window.Lenis;
+  var motion = !reduce && !!G && !!ST;
+  var lenis = null;
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  if (motion) G.registerPlugin(ST);
+  if (!motion) d.classList.remove('js-intro', 'morph');
+
+  /* ---------- Lenis + ScrollTrigger ---------- */
+  if (motion && L) {
+    lenis = new L({ lerp: 0.1, smoothWheel: true });
+    lenis.on('scroll', ST.update);
+    G.ticker.add(function (t) { lenis.raf(t * 1000); });
+    G.ticker.lagSmoothing(0);
+    if (d.classList.contains('is-loading')) lenis.stop();
+  }
+
+  /* ---------- Preloader ---------- */
+  function preloader(done) {
+    if (!d.classList.contains('is-loading') || !$('.pre')) { done(); return; }
+    var num = $('[data-pre-num]'), fill = $('[data-pre-fill]');
+    var t0 = performance.now(), D = 1050, finished = false;
+    function finish() {
+      if (finished) return; finished = true;
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      done();                                   /* el intro se prepara antes del corte */
+      d.classList.remove('is-loading');         /* corte duro, sin fundido */
+      if (lenis) lenis.start();
+    }
+    function step(t) {
+      var p = Math.min(1, Math.max(0, (t - t0) / D));
+      var e = 1 - Math.pow(1 - p, 3);
+      num.textContent = String(Math.round(e * 100)).padStart(3, '0');
+      fill.style.transform = 'scaleX(' + e + ')';
+      if (p < 1 && d.classList.contains('is-loading')) requestAnimationFrame(step); else finish();
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- Intro del hero ---------- */
+  function intro() { try { introRun(); } catch (err) { d.classList.remove('js-intro'); } }
+  function introRun() {
+    if (!motion) { d.classList.remove('js-intro'); return; }
+    var inners = $$('.hero__inner');
+    d.classList.remove('js-intro');                 /* primero se quita el transform del CSS... */
+    G.set(inners, { y: 0, yPercent: 118 });         /* ...y GSAP parte de un estado limpio */
+    G.to(inners, { yPercent: 0, duration: 1.15, ease: 'expo.out', stagger: 0.09, delay: 0.05, clearProps: 'transform' });
+    G.from('.hero__foot > *, .hero__specs, .hero__content .label', { autoAlpha: 0, y: 24, duration: 0.9, ease: 'expo.out', stagger: 0.08, delay: 0.35 });
+    G.from('.hero__media .ph-video', { scale: 1.15, duration: 1.8, ease: 'expo.out' });
+  }
+
+  /* ---------- Loop: timecode, playhead, marquee, cursor ---------- */
+  var tcEl = $('[data-tc]'), railFill = $('[data-rail]'), FPS = 24, DUR = 90;
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  function timecode(p) {
+    if (p >= 0.995) return 'FIN';
+    var f = Math.round(p * DUR * FPS), s = Math.floor(f / FPS);
+    return pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s / 60) % 60) + ':' + pad(s % 60) + ':' + pad(f % FPS);
+  }
+  var track = $('[data-marquee]'), mqX = 0, mqDir = 1, mqW = 0, lastY = window.scrollY;
+  function measureMq() { if (track) mqW = track.firstElementChild.getBoundingClientRect().width; }
+  if (track && !reduce) { track.classList.add('is-js'); measureMq(); window.addEventListener('resize', measureMq); }
+
+  var cur = $('.cursor'), cx = -100, cy = -100, tx = -100, ty = -100, useCursor = fine && !reduce && cur;
+  if (useCursor) {
+    d.classList.add('has-cursor');
+    window.addEventListener('pointermove', function (e) { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    document.addEventListener('pointerover', function (e) {
+      cur.classList.toggle('is-play', !!(e.target.closest && e.target.closest('[data-cursor="play"]')));
+    });
+  }
+
+  var lastTc = '';
+  (function loop() {
+    var y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+    var t = timecode(p);
+    if (t !== lastTc && tcEl) { tcEl.textContent = t; tcEl.classList.toggle('is-end', t === 'FIN'); lastTc = t; }
+    if (railFill) railFill.style.transform = 'scaleY(' + p + ')';
+    if (track && !reduce && mqW) {
+      var dy = y - lastY;
+      if (dy !== 0) mqDir = dy > 0 ? 1 : -1;
+      mqX -= (0.6 + Math.min(Math.abs(dy), 80) * 0.22) * mqDir;
+      if (mqX <= -mqW) mqX += mqW;
+      if (mqX > 0) mqX -= mqW;
+      track.style.transform = 'translate3d(' + mqX + 'px,0,0)';
+    }
+    lastY = y;
+    if (useCursor) { cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2; cur.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)'; }
+    requestAnimationFrame(loop);
+  })();
+
+  /* ---------- CTA magnetico (max 8 px) ---------- */
+  if (fine && !reduce) {
+    $$('[data-magnetic]').forEach(function (b) {
+      b.addEventListener('pointermove', function (e) {
+        var r = b.getBoundingClientRect();
+        var mx = ((e.clientX - r.left) / r.width - 0.5) * 16, my = ((e.clientY - r.top) / r.height - 0.5) * 16;
+        b.style.transform = 'translate(' + mx.toFixed(1) + 'px,' + my.toFixed(1) + 'px)';
       });
-      document.documentElement.dir = lang === 'ur' ? 'rtl' : 'ltr';
-      document.documentElement.lang = lang;
-    })
-    .catch(function(e) { console.error('Error loading language:', lang, e); });
-}
+      b.addEventListener('pointerleave', function () { b.style.transform = ''; });
+    });
+    /* Tilt 3D de paquetes (max 6 grados) */
+    $$('[data-tilt]').forEach(function (c) {
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        c.style.transform = 'perspective(900px) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotateY(' + (x * 6).toFixed(2) + 'deg)';
+      });
+      c.addEventListener('pointerleave', function () { c.style.transform = ''; });
+    });
+  }
+
+  /* ---------- Antes / despues ---------- */
+  $$('[data-ba]').forEach(function (st) {
+    var range = $('.ba__range', st), drag = false, sweeping = null;
+    function set(v) { v = Math.max(0, Math.min(100, v)); st.style.setProperty('--pos', v + '%'); range.value = Math.round(v); }
+    function fromEvent(e) { var r = st.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); }
+    function stop() { if (sweeping) { cancelAnimationFrame(sweeping); sweeping = null; } }
+    st.addEventListener('pointerdown', function (e) {
+      drag = true; stop();
+      try { st.setPointerCapture(e.pointerId); } catch (err) {}
+      if (e.pointerType === 'mouse') fromEvent(e);
+    });
+    st.addEventListener('pointermove', function (e) { if (drag) fromEvent(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (ev) { st.addEventListener(ev, function () { drag = false; }); });
+    range.addEventListener('input', function () { stop(); set(+range.value); });
+    if (!reduce && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) {
+        if (!en[0].isIntersecting) return; io.disconnect();
+        var keys = [50, 84, 16, 50], dur = 2200, t0 = performance.now();
+        (function sw(t) {
+          var p = Math.min(1, (t - t0) / dur), seg = p * 3, i = Math.min(2, Math.floor(seg)), k = seg - i;
+          k = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+          set(keys[i] + (keys[i + 1] - keys[i]) * k);
+          if (p < 1) sweeping = requestAnimationFrame(sw); else sweeping = null;
+        })(t0);
+      }, { threshold: 0.6 });
+      io.observe(st);
+    }
+  });
+
+  /* ---------- Progreso de estilos (scroll nativo en movil) ---------- */
+  var sBar = $('[data-styles-bar]'), sCount = $('[data-styles-count]'), cards = $$('.style-card');
+  function stylesProgress(p) {
+    if (sBar) sBar.style.transform = 'scaleX(' + p + ')';
+    if (sCount) sCount.textContent = pad(Math.min(cards.length, Math.round(p * (cards.length - 1)) + 1)) + ' / ' + pad(cards.length);
+  }
+  var vp = $('.styles__viewport');
+  if (vp) vp.addEventListener('scroll', function () {
+    var m = vp.scrollWidth - vp.clientWidth; stylesProgress(m > 0 ? vp.scrollLeft / m : 0);
+  }, { passive: true });
+
+  /* Videos reales: play en hover (tarjetas) y al entrar en pantalla (data-autoplay) */
+  cards.forEach(function (c) {
+    c.addEventListener('mouseenter', function () { var v = $('video', c); if (v) v.play().catch(function () {}); });
+    c.addEventListener('mouseleave', function () { var v = $('video', c); if (v) v.pause(); });
+  });
+  if ('IntersectionObserver' in window) {
+    var vio = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) x.target.play().catch(function () {}); else x.target.pause(); });
+    }, { threshold: 0.4 });
+    $$('video[data-autoplay]').forEach(function (v) { vio.observe(v); });
+  }
+
+  /* ---------- Contadores ---------- */
+  if (!reduce && 'IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (!x.isIntersecting) return; cio.unobserve(x.target);
+        var el = x.target, to = +el.dataset.count, t0 = performance.now(), D = 1400;
+        (function c(t) {
+          var p = Math.min(1, (t - t0) / D), e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+          el.textContent = Math.round(to * e); if (p < 1) requestAnimationFrame(c);
+        })(t0);
+      });
+    }, { threshold: 0.6 });
+    $$('[data-count]').forEach(function (el) { el.textContent = '0'; cio.observe(el); });
+  }
+
+  /* ---------- Drag en testimonios (mouse) ---------- */
+  if (fine) $$('[data-drag]').forEach(function (row) {
+    var down = false, sx = 0, sl = 0, moved = false;
+    row.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = row.scrollLeft; });
+    window.addEventListener('pointermove', function (e) {
+      if (!down) return; var dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) { moved = true; row.classList.add('is-drag'); }
+      row.scrollLeft = sl - dx;
+    });
+    window.addEventListener('pointerup', function () { down = false; row.classList.remove('is-drag'); });
+    row.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  });
+
+  /* ---------- FAQ con altura animada ---------- */
+  $$('.faq details').forEach(function (det) {
+    var sum = $('summary', det), body = $('.faq__a', det);
+    sum.addEventListener('click', function (e) {
+      if (reduce || !body.animate) return;
+      e.preventDefault();
+      var opts = { duration: 380, easing: 'cubic-bezier(.16,1,.3,1)' };
+      var refresh = function () { if (ST) ST.refresh(); };
+      if (det.open) {
+        var a = body.animate([{ height: body.offsetHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], opts);
+        a.onfinish = function () { det.open = false; refresh(); };
+      } else {
+        det.open = true;
+        body.animate([{ height: '0px', opacity: 0 }, { height: body.offsetHeight + 'px', opacity: 1 }], opts).onfinish = refresh;
+      }
+    });
+  });
+
+  /* ---------- Escenas con GSAP ---------- */
+  function safe(fn) { try { fn(); } catch (err) { if (window.console) console.warn('[videos] escena omitida:', err); } }
+  function scenes() {
+    if (!motion) return;
+
+    safe(function () {
+    /* Hero: el video se encoge a tarjeta */
+    G.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=85%', scrub: 0.6, pin: true, anticipatePin: 1 } })
+      .to('.hero__media', { scale: 0.62, borderRadius: 18, ease: 'none' }, 0)
+      .to('.hero__content', { yPercent: -14, autoAlpha: 0, ease: 'none' }, 0)
+      .to('.hero__specs', { autoAlpha: 0, ease: 'none' }, 0);
+
+    });
+    safe(function () {
+    /* Problema: palabras que se encienden + curvas que se dibujan */
+    var pt = $('[data-words]');
+    if (pt) {
+      var nodes = Array.prototype.slice.call(pt.childNodes), words = [];
+      nodes.forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            var s = document.createElement('span'); s.className = 'w'; s.textContent = part; frag.appendChild(s); words.push(s);
+          });
+          pt.replaceChild(frag, n);
+        } else if (n.nodeType === 1) { n.classList.add('w'); words.push(n); }
+      });
+      var paths = $$('.problem [data-draw]');
+      paths.forEach(function (p) { var l = p.getTotalLength(); p.style.strokeDasharray = p.getAttribute('stroke-dasharray') ? p.getAttribute('stroke-dasharray') : l; G.set(p, { attr: { 'stroke-dashoffset': l }, strokeDashoffset: l }); p.dataset.len = l; });
+      G.set(words, { opacity: 0.14 });
+      var tl = G.timeline({ scrollTrigger: { trigger: '.problem', start: 'top top', end: '+=120%', scrub: 0.5, pin: true, anticipatePin: 1 } });
+      tl.to(words, { opacity: 1, stagger: 0.12, ease: 'none', duration: 0.4 }, 0);
+      paths.forEach(function (p) { tl.to(p, { strokeDashoffset: 0, ease: 'none', duration: words.length * 0.12 }, 0); });
+    }
+
+    });
+    safe(function () {
+    /* Estilos: scroll horizontal solo en pantallas anchas */
+    var mm = G.matchMedia();
+    mm.add('(min-width: 900px)', function () {
+      var sec = $('.styles'), trk = $('.styles__track'), view = $('.styles__viewport');
+      sec.classList.add('is-h');
+      var dist = function () { return Math.max(0, trk.scrollWidth - view.clientWidth); };
+      G.to(trk, {
+        x: function () { return -dist(); }, ease: 'none',
+        scrollTrigger: { trigger: '.styles__pin', start: 'top top', end: function () { return '+=' + dist(); }, pin: true, scrub: 0.5,
+          invalidateOnRefresh: true, onUpdate: function (s) { stylesProgress(s.progress); } }
+      });
+      return function () { sec.classList.remove('is-h'); G.set(trk, { clearProps: 'transform' }); };
+    });
+
+    });
+    safe(function () {
+    /* Proceso: linea que se dibuja y pasos que se encienden */
+    var steps = $('[data-steps]');
+    if (steps) {
+      steps.classList.add('is-js');
+      G.fromTo('.steps__line i', { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: steps, start: 'top 65%', end: 'bottom 65%', scrub: true } });
+      $$('.step', steps).forEach(function (s) {
+        ST.create({ trigger: s, start: 'top 65%', onEnter: function () { s.classList.add('is-on'); }, onLeaveBack: function () { s.classList.remove('is-on'); } });
+      });
+    }
+
+    });
+    safe(function () {
+    /* Titulares: "rack focus", entran de desenfocado a nitido siguiendo el scroll */
+    $$('[data-cut]').forEach(function (el) {
+      G.fromTo(el, { filter: 'blur(14px)', autoAlpha: 0, y: 48 },
+        { filter: 'blur(0px)', autoAlpha: 1, y: 0, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 92%', end: 'top 58%', scrub: 0.8 } });
+    });
+    });
+
+    safe(function () {
+    /* Antes/despues: el visor se abre como un encuadre que hace zoom */
+    $$('.ba__stage').forEach(function (el) {
+      G.fromTo(el, { clipPath: 'inset(9% 7% 9% 7% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top 95%', end: 'top 30%', scrub: 0.8 } });
+    });
+    /* Grupos que entran en cascada, atados al scroll (reversible) */
+    [['.plans', '.plan'], ['.singles', '.single'], ['.extras', 'li'], ['.testi__row', '.testi-card'], ['.stats__grid', '.stat'], ['.faq__list', 'details'], ['.problem__chart', 'svg']].forEach(function (g) {
+      var wr = $(g[0]); if (!wr) return;
+      var items = g[0] === g[1] ? [wr] : $$(g[1], wr);
+      if (!items.length) items = [wr];
+      G.fromTo(items, { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.08, ease: 'power2.out',
+        scrollTrigger: { trigger: wr, start: 'top 92%', end: 'top 50%', scrub: 0.8 } });
+    });
+
+    });
+    safe(function () {
+    /* CTA final: parallax por capas */
+    var fin = $('.final');
+    if (fin) {
+      var ptl = G.timeline({ scrollTrigger: { trigger: fin, start: 'top bottom', end: 'bottom top', scrub: true } });
+      $$('[data-speed]', fin).forEach(function (el) { ptl.fromTo(el, { yPercent: 0 }, { yPercent: +el.dataset.speed, ease: 'none' }, 0); });
+    }
+
+    });
+
+    safe(function () {
+    /* Morph de color entre secciones claras, oscuras y UV */
+    var THEMES = {
+      dark:  { bg: '#0A0A0D', fg: '#F2EEE6', mut: '#8A8794', card: '#15151B', rule: 'rgba(242,238,230,0.12)', acc: '#D4FF3A' },
+      light: { bg: '#F2EEE6', fg: '#0A0A0D', mut: '#5E5A66', card: '#E6E0D4', rule: 'rgba(10,10,13,0.14)',    acc: '#4B2FE0' },
+      uv:    { bg: '#140E33', fg: '#F2EEE6', mut: '#A59FC4', card: '#1F1748', rule: 'rgba(242,238,230,0.14)', acc: '#D4FF3A' }
+    };
+    var leak = $('.leak'), current = null;
+    function props(t) { var o = {}, v = THEMES[t]; for (var k in v) o['--' + k] = v[k]; return o; }
+    function setTheme(t, instant) {
+      if (!THEMES[t] || t === current) return;
+      var prev = current; current = t;
+      d.setAttribute('data-theme-now', t);
+      if (instant) { G.set(d, props(t)); return; }
+      G.to(d, Object.assign({ duration: 0.9, ease: 'power2.inOut', overwrite: 'auto' }, props(t)));
+      if (leak && prev && (prev === 'light') !== (t === 'light')) {
+        G.fromTo(leak, { autoAlpha: 0, xPercent: -25 }, { autoAlpha: 0.85, xPercent: 10, duration: 0.45, ease: 'sine.inOut', yoyo: true, repeat: 1, overwrite: true });
+      }
+    }
+    setTheme('dark', true);
+    $$('[data-theme]').forEach(function (sec) {
+      ST.create({ trigger: sec, start: 'top 55%', end: 'bottom 55%',
+        onEnter: function () { setTheme(sec.getAttribute('data-theme')); },
+        onEnterBack: function () { setTheme(sec.getAttribute('data-theme')); } });
+    });
+    window.__reelsMorph = true;
+    });
+
+    window.addEventListener('load', function () { ST.refresh(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ST.refresh(); });
+  }
+
+  /* El preloader y el intro corren primero: un error en una escena nunca bloquea la pagina */
+  preloader(intro);
+  try { scenes(); } catch (err) { if (window.console) console.warn('[videos] escena omitida:', err); }
+})();
 </script>
-</body></html>
+</body>
+</html>
