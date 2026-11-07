@@ -370,6 +370,17 @@ html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--car
 .testi__row.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none}
 .testi-card{flex:none;width:min(86vw,520px);scroll-snap-align:start;background:var(--card);display:grid;grid-template-columns:42% 1fr;min-height:320px}
 .testi-card .ph-video{aspect-ratio:9/16;height:auto}
+/* Reels reales: Play grande centrado + boton de sonido */
+.reel video{cursor:pointer}
+.reel__play{position:absolute;inset:0;margin:auto;z-index:2;width:clamp(76px,40%,112px);aspect-ratio:1;border-radius:50%;border:3px solid var(--signal);background:rgba(10,10,13,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .25s,opacity .25s}
+.reel__play svg{width:44%;height:44%;fill:var(--signal);margin-left:6%}
+.reel__play:hover,.reel__play:focus-visible{transform:scale(1.08)}
+.reel.is-playing .reel__play{opacity:0;pointer-events:none}
+.reel__mute{position:absolute;right:10px;bottom:10px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(10,10,13,.65);display:none;align-items:center;justify-content:center;cursor:pointer}
+.reel.is-started .reel__mute{display:flex}
+.reel__mute svg{width:20px;height:20px;fill:#F2EEE6}
+.reel__mute .i-off,.reel.is-muted .reel__mute .i-on{display:none}
+.reel.is-muted .reel__mute .i-off{display:block}
 .testi-card__body{padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;justify-content:space-between;gap:20px}
 .testi-card__idea{font-size:clamp(1.1rem,1.5vw,1.35rem);line-height:1.35;font-weight:500}
 .testi-card blockquote{font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.45}
@@ -665,27 +676,27 @@ html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--car
   </header>
   <div class="testi__row" data-drag>
     <article class="testi-card">
-      <div class="ph-video"><video src="media/reels/testimonio-pravin.mp4" poster="media/reels/testimonio-pravin.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Tiendas y mayoristas"></video></div>
+      <div class="ph-video reel"><video src="media/reels/testimonio-pravin.mp4" poster="media/reels/testimonio-pravin.jpg" loop playsinline preload="none" aria-label="Reel editado: Tiendas y mayoristas"></video><button class="reel__play" type="button" aria-label="Reproducir reel con sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><button class="reel__mute" type="button" aria-label="Silenciar" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg></button></div>
       <div class="testi-card__body"><p class="testi-card__idea">Un cliente cuenta, con sus propias palabras, cómo le fue trabajando contigo.</p><footer><strong>Tiendas y mayoristas</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><video src="media/reels/amalia-luna-barra.mp4" poster="media/reels/amalia-luna-barra.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Academias y gimnasios"></video></div>
+      <div class="ph-video reel"><video src="media/reels/amalia-luna-barra.mp4" poster="media/reels/amalia-luna-barra.jpg" loop playsinline preload="none" aria-label="Reel editado: Academias y gimnasios"></video><button class="reel__play" type="button" aria-label="Reproducir reel con sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><button class="reel__mute" type="button" aria-label="Silenciar" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg></button></div>
       <div class="testi-card__body"><p class="testi-card__idea">Enseña tus clases y a tus alumnos en acción.</p><footer><strong>Academias y gimnasios</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><video src="media/reels/lyb-arica-limpieza-facial.mp4" poster="media/reels/lyb-arica-limpieza-facial.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Centros de estética"></video></div>
+      <div class="ph-video reel"><video src="media/reels/lyb-arica-limpieza-facial.mp4" poster="media/reels/lyb-arica-limpieza-facial.jpg" loop playsinline preload="none" aria-label="Reel editado: Centros de estética"></video><button class="reel__play" type="button" aria-label="Reproducir reel con sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><button class="reel__mute" type="button" aria-label="Silenciar" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg></button></div>
       <div class="testi-card__body"><p class="testi-card__idea">Muestra cómo es un tratamiento, paso a paso.</p><footer><strong>Centros de estética</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><video src="media/reels/jeison-quintana-barberia.mp4" poster="media/reels/jeison-quintana-barberia.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Barberías y peluquerías"></video></div>
+      <div class="ph-video reel"><video src="media/reels/jeison-quintana-barberia.mp4" poster="media/reels/jeison-quintana-barberia.jpg" loop playsinline preload="none" aria-label="Reel editado: Barberías y peluquerías"></video><button class="reel__play" type="button" aria-label="Reproducir reel con sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><button class="reel__mute" type="button" aria-label="Silenciar" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg></button></div>
       <div class="testi-card__body"><p class="testi-card__idea">Muestra el antes y el después de cada cliente.</p><footer><strong>Barberías y peluquerías</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><video src="media/reels/podologia-angie.mp4" poster="media/reels/podologia-angie.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Salud y consultas"></video></div>
+      <div class="ph-video reel"><video src="media/reels/podologia-angie.mp4" poster="media/reels/podologia-angie.jpg" loop playsinline preload="none" aria-label="Reel editado: Salud y consultas"></video><button class="reel__play" type="button" aria-label="Reproducir reel con sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><button class="reel__mute" type="button" aria-label="Silenciar" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg></button></div>
       <div class="testi-card__body"><p class="testi-card__idea">Explica en segundos qué haces y cómo lo haces.</p><footer><strong>Salud y consultas</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><video src="media/reels/pbravo-roles.mp4" poster="media/reels/pbravo-roles.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Consultores y oficinas"></video></div>
+      <div class="ph-video reel"><video src="media/reels/pbravo-roles.mp4" poster="media/reels/pbravo-roles.jpg" loop playsinline preload="none" aria-label="Reel editado: Consultores y oficinas"></video><button class="reel__play" type="button" aria-label="Reproducir reel con sonido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><button class="reel__mute" type="button" aria-label="Silenciar" aria-pressed="false"><svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg></button></div>
       <div class="testi-card__body"><p class="testi-card__idea">Responde en 30 segundos las preguntas que más te hacen.</p><footer><strong>Consultores y oficinas</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
   </div>
@@ -1012,6 +1023,29 @@ html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--car
     window.addEventListener('pointerup', function () { down = false; row.classList.remove('is-drag'); });
     row.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
   });
+
+  /* ---------- Reels reales: Play con sonido, uno a la vez ---------- */
+  var reels = $$('.reel');
+  var stopOthers = function (cur) { reels.forEach(function (r) { var v = $('video', r); if (r !== cur && !v.paused) v.pause(); }); };
+  reels.forEach(function (r) {
+    var v = $('video', r), pb = $('.reel__play', r), mb = $('.reel__mute', r);
+    var setMute = function (m) {
+      v.muted = m; r.classList.toggle('is-muted', m);
+      mb.setAttribute('aria-pressed', m ? 'true' : 'false');
+      mb.setAttribute('aria-label', m ? 'Activar sonido' : 'Silenciar');
+    };
+    pb.addEventListener('click', function () { stopOthers(r); setMute(false); r.classList.add('is-started'); v.play().catch(function () {}); });
+    v.addEventListener('click', function () { if (v.paused) { stopOthers(r); r.classList.add('is-started'); v.play().catch(function () {}); } else v.pause(); });
+    mb.addEventListener('click', function (e) { e.stopPropagation(); setMute(!v.muted); });
+    v.addEventListener('play', function () { r.classList.add('is-playing'); });
+    v.addEventListener('pause', function () { r.classList.remove('is-playing'); });
+  });
+  if (reels.length && 'IntersectionObserver' in window) {
+    var rio = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (!x.isIntersecting && !x.target.paused) x.target.pause(); });
+    }, { threshold: 0.25 });
+    reels.forEach(function (r) { rio.observe($('video', r)); });
+  }
 
   /* ---------- FAQ con altura animada ---------- */
   $$('.faq details').forEach(function (det) {
