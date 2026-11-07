@@ -369,7 +369,7 @@ html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--car
 .testi__row::-webkit-scrollbar{display:none}
 .testi__row.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none}
 .testi-card{flex:none;width:min(86vw,520px);scroll-snap-align:start;background:var(--card);display:grid;grid-template-columns:42% 1fr;min-height:320px}
-.testi-card .ph-video{height:100%;aspect-ratio:auto}
+.testi-card .ph-video{aspect-ratio:9/16;height:auto}
 .testi-card__body{padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;justify-content:space-between;gap:20px}
 .testi-card__idea{font-size:clamp(1.1rem,1.5vw,1.35rem);line-height:1.35;font-weight:500}
 .testi-card blockquote{font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.45}
@@ -439,7 +439,7 @@ html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--car
   .ba__stage{aspect-ratio:4/5}
   .ba__caption{white-space:normal;width:80%}
   .testi-card{grid-template-columns:1fr;min-height:0}
-  .testi-card .ph-video{aspect-ratio:16/10;height:auto}
+  .testi-card .ph-video{aspect-ratio:9/16;height:auto;max-height:70vh}
   .btn{padding:18px 22px}
 }
 @media (max-width:440px){
@@ -661,32 +661,32 @@ html:not(.morph) [data-theme="uv"]{--bg:#140E33;--fg:#F2EEE6;--mut:#A59FC4;--car
   <header class="wrap sec-head">
     <p class="label"><span class="label__n">07</span> ¿Para quién es?</p>
     <h2 class="h2" data-cut>Si vendes algo,<br><span class="o">esto es para ti.</span></h2>
-    <p class="sec-sub">Productos, servicios o experiencias. Todos necesitan estar activos en redes. Algunas ideas de reels:</p>
+    <p class="sec-sub">Productos, servicios o experiencias. Todos necesitan estar activos en redes. Estos son reels reales que ya editamos:</p>
   </header>
   <div class="testi__row" data-drag>
     <article class="testi-card">
-      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
-      <div class="testi-card__body"><p class="testi-card__idea">Muestra tus productos nuevos y las ofertas de la semana.</p><footer><strong>Tiendas y mayoristas</strong><span class="mono">Idea de reel</span></footer></div>
+      <div class="ph-video"><video src="media/reels/testimonio-pravin.mp4" poster="media/reels/testimonio-pravin.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Tiendas y mayoristas"></video></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Un cliente cuenta, con sus propias palabras, cómo le fue trabajando contigo.</p><footer><strong>Tiendas y mayoristas</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
-      <div class="testi-card__body"><p class="testi-card__idea">Enseña tus clases, tus máquinas y a tu equipo en acción.</p><footer><strong>Gimnasios</strong><span class="mono">Idea de reel</span></footer></div>
+      <div class="ph-video"><video src="media/reels/amalia-luna-barra.mp4" poster="media/reels/amalia-luna-barra.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Academias y gimnasios"></video></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Enseña tus clases y a tus alumnos en acción.</p><footer><strong>Academias y gimnasios</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
-      <div class="testi-card__body"><p class="testi-card__idea">Muestra cómo es un tratamiento, paso a paso.</p><footer><strong>Centros de estética</strong><span class="mono">Idea de reel</span></footer></div>
+      <div class="ph-video"><video src="media/reels/lyb-arica-limpieza-facial.mp4" poster="media/reels/lyb-arica-limpieza-facial.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Centros de estética"></video></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Muestra cómo es un tratamiento, paso a paso.</p><footer><strong>Centros de estética</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
-      <div class="testi-card__body"><p class="testi-card__idea">Haz un recorrido corto por cada propiedad.</p><footer><strong>Inmobiliarias</strong><span class="mono">Idea de reel</span></footer></div>
+      <div class="ph-video"><video src="media/reels/jeison-quintana-barberia.mp4" poster="media/reels/jeison-quintana-barberia.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Barberías y peluquerías"></video></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Muestra el antes y el después de cada cliente.</p><footer><strong>Barberías y peluquerías</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
-      <div class="testi-card__body"><p class="testi-card__idea">Muestra tus lugares y salones como si el cliente ya estuviera ahí.</p><footer><strong>Turismo y salas de eventos</strong><span class="mono">Idea de reel</span></footer></div>
+      <div class="ph-video"><video src="media/reels/podologia-angie.mp4" poster="media/reels/podologia-angie.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Salud y consultas"></video></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Explica en segundos qué haces y cómo lo haces.</p><footer><strong>Salud y consultas</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
     <article class="testi-card">
-      <div class="ph-video"><span class="ph-label">Video 9:16 · Reemplazar</span></div>
-      <div class="testi-card__body"><p class="testi-card__idea">Responde en 30 segundos las preguntas que más te hacen.</p><footer><strong>Consultas y oficinas</strong><span class="mono">Idea de reel</span></footer></div>
+      <div class="ph-video"><video src="media/reels/pbravo-roles.mp4" poster="media/reels/pbravo-roles.jpg" muted loop playsinline preload="none" data-autoplay aria-label="Reel editado: Consultores y oficinas"></video></div>
+      <div class="testi-card__body"><p class="testi-card__idea">Responde en 30 segundos las preguntas que más te hacen.</p><footer><strong>Consultores y oficinas</strong><span class="mono">Reel editado por nosotros</span></footer></div>
     </article>
   </div>
 </section>
